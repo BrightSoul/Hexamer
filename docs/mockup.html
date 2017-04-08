@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>App esame</title>
+
+<!-- font -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+
+ <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+ <!-- css pagina -->
+
+    <style TYPE="text/css"> 
+    
+    body{font-family: 'Roboto', sans-serif;color:#1c1c1c;}
+
+    /* css header */
+
+    header{ width:100%; height:100px; position:fixed; top:0;}
+
+    .toolbar{width:100%; background-color:#004457; color:white; display:table;}
+
+    .back-to-home{background-color:transparent;border:0px; border-right:white solid 1px; display:inline-block; width:40px; height:30px;}
+
+    button.back-to-home:hover{background-color:rgba(255, 255, 255, 0.3);}
+
+    .glyphicon{top:0 !important;}
+
+    .glyphicon-home{color:white; font-size: 14px;vertical-align:middle; }
+
+    .profile-image{vertical-align: middle;display:inline;margin-top:5px; margin-bottom:5px;}
+
+    h3{font-size:14px; color:white; margin-left:5px;margin-right:10px; display:inline; vertical-align: middle; padding:0px;}
+
+    h2{font-size:28px; color:#1c1c1c; font-weight: 300; margin-top:0px; line-height:20px;}
+
+    h4{color:#818181; text-align: right; font-size:14px;font-weight: 300;}
+
+    time{color:#4da400;}
+    
+    .exam-summary{width:100%; display:table; padding:20px;}
+
+    input[type=checkbox]+label { cursor: pointer; }
+
+    label.review {height: 15px; display:inline-block; color:#818181; text-align: right; font-size:14px; font-weight: 300;}
+     
+     label.review::before {display:inline-block; content:' '; width:15px; height:15px;border-radius: 3px; border:1px solid #168fb2; background-color:white; margin-right:10px; vertical-align:middle; }
+     
+     input[type=checkbox]:checked+label.review::before { background-color:#168fb2; content:"\e013";color:white; font-family: 'Glyphicons Halflings'; font-size:10px;text-align:center;border-radius: 3px;}
+    
+    /* css sidebar */
+     aside{display:none; background-color:#e0e0e0; width:150px;position:fixed; top:140px; left:20px; bottom:100px;overflow-y: auto; }
+    
+     body.scenario aside{display:block;}
+    
+     body.scenario .content{left:170px;}
+
+     aside li.active{background-color:white;color:#1c1c1c;border-left:5px solid #e0e0e0;}
+
+     aside li{color:#1c1c1c;font-size:16px;text-align: center;padding:10px;}
+
+    /* css content */
+
+    .content {position:fixed; top:120px; bottom:100px; padding:20px;  overflow-y: auto; }
+
+    h5{font-weight:600;margin-top:20px;margin-bottom:20px;font-size:16px;}
+
+    p {font-size:16px; color:#1c1c1c; line-height:170%;}
+
+    .answers li{margin-top:10px; }
+
+    .answers label{font-size:18px; color:#1c1c1c; font-weight: 400; vertical-align: middle;display:table;}
+
+    /* css checkbox contenuto */
+
+     input[type=checkbox] {display:none; }
+     
+     label { height: 30px; display:inline-block; }
+     
+     label:before { display:inline-block; content:' '; width:30px; height:30px; border-radius: 3px;border:1px solid #168fb2; background-color:white; margin-right:10px; vertical-align:middle; }
+     
+     input[type=checkbox]:checked+label::before { background-color:#168fb2;border-radius: 3px; content:"\e013"; color:white;font-family: 'Glyphicons Halflings';font-size:18px;text-align:center;vertical-align:middle;}
+
+  
+
+    /* css footer */
+
+    footer {width:100%; position:fixed; bottom:0; padding:20px; text-align:center;}
+    
+    .pagination{margin:auto;}
+
+    .pagination span{vertical-align: middle;}
+
+    .pagination button{vertical-align: middle;}
+    .popover-source { display:none;}
+     .questions-index{min-width:185px;}
+    .questions-index button{min-width:32px; min-height:32px;display:inline-block;margin-bottom:2px; margin-left:0px !important;position:relative;}
+    .questions-index button.marked::after{content:"\e013"; color:white;font-family: 'Glyphicons Halflings'; position:absolute;bottom:-2px; right:-4px;font-size:9px;padding-top:1px;background-color:#4da400;border-radius:50%;width:15px; height: 15px;}
+
+    </style>
+
+</head>
+<body>
+    <header>
+        <section class="toolbar">
+          
+           <button type="button" class="back-to-home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+            <h3>Corso di programmazione in C#</h3>
+         
+          <div class="pull-right">
+              <img class="profile-image" src="https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png" alt="" width="20" height="20">
+              <h3>Moreno Gentili</h3>
+          </div>
+        </section>
+        <section class="exam-summary">
+          <div class="pull-left">
+             <h2>Domanda 6 di 36</h2>
+             <input  type="checkbox" class="review-checkbox"  id="review" name="review" /><label class="review" for="review" >Contrassegna per rivederla dopo</label>
+          </div>
+          <div class="pull-right">
+            <h2>Tempo residuo <time>1:45:36</time></h2>
+            <h4>Circa 2:30 a domanda</h4>
+          </div>
+        </section>
+    </header>
+    <aside class="pull-left">
+      <ul class="list-unstyled">
+        <li>Scenario</li>
+        <li>Specifica</li>
+        <li>Orologio.cs</li>
+        <li>TestOrologio.cs</li>
+        <li>Domanda 1</li>
+        <li>Domanda 2</li>
+        <li class="active">Domanda 3</li>
+        <li>Domanda 4</li>
+      </ul>
+    </aside>
+    <section class="content">
+       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut molestie mi. Quisque vitae maximus diam, ut facilisis nisl.
+          Vestibulum tempor vestibulum sagittis. Donec at imperdiet dui. Nam dui nisi, ornare sit amet mollis at, tincidunt a mauris. 
+          Nullam a dui consectetur, vestibulum nisi nec, pellentesque dolor. Quisque sed turpis aliquet, fermentum arcu non, tincidunt dolor.
+          Integer viverra sollicitudin mauris, non rhoncus eros faucibus in. Curabitur ut laoreet odio, in commodo sem.
+          
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut molestie mi. Quisque vitae maximus diam, ut facilisis nisl.
+          Vestibulum tempor vestibulum sagittis. Donec at imperdiet dui. Nam dui nisi, ornare sit amet mollis at, tincidunt a mauris. 
+          Nullam a dui consectetur, vestibulum nisi nec, pellentesque dolor. Quisque sed turpis aliquet, fermentum arcu non, tincidunt dolor.
+          Integer viverra sollicitudin mauris, non rhoncus eros faucibus in. Curabitur ut laoreet odio, in commodo sem.
+        </p>
+
+          <h5>Selezionare 1 risposta tra le seguenti:</h5>
+
+       <ul class="list-unstyled answers">
+          <li>
+            <input type="checkbox" class="list-group-item"  id="ciccio" name="ciccio" />
+            <label for="ciccio">Risposta 1- Lorem ipsum dolor sit amet, consectetur adipiscing elit.Curabitur ut laoreet odio, in commodo sem.</label>
+          </li>
+          <li>
+            <input  type="checkbox" class="list-group-item"  id="ciccio2" name="ciccio2" />
+            <label for="ciccio2">Risposta 2-Lorem ipsum dolor sit amet, consectetur adipiscing elit.</label>
+          </li>
+           <li>
+            <input  type="checkbox" class="list-group-item"  id="ciccio3" name="ciccio3" />
+            <label for="ciccio3">Risposta 3- Lorem ipsum dolor sit amet, consectetur adipiscing elit.Quisque sed turpis aliquet, fermentum arcu non, tincidunt dolor.</label>
+          </li>
+           <li>
+            <input  type="checkbox" class="list-group-item"  id="ciccio4" name="ciccio4" />
+            <label for="ciccio4">Risposta 4- Lorem ipsum dolor sit amet, consectetur adipiscing elit.</label>
+          </li>
+      </ul>
+
+    </section>
+    <footer>
+       <div class="btn-group pagination text-center" role="group">
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default" data-toggle="popover" data-placement="top">6 di 36</button>
+          <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Prossima</button>
+       </div>
+       <button type="button" class="btn btn-default pull-right">Mostra risposta</button>
+       <div class="popover-source">
+         <div class="questions-index"><button class="btn btn-primary btn-xs" type="button">1</button>
+           <button class="btn btn-primary btn-xs" type="button">2</button>
+           <button class="btn btn-primary btn-xs" type="button">3</button>
+           <button class="btn btn-default btn-xs marked" type="button">4</button>
+           <button class="btn btn-primary btn-xs" type="button">5</button>
+           <button class="btn btn-default btn-xs" type="button">6</button>
+           <button class="btn btn-default btn-xs" type="button">7</button>
+           <button class="btn btn-default btn-xs" type="button">8</button>
+           <button class="btn btn-default btn-xs" type="button">9</button>
+           <button class="btn btn-default btn-xs" type="button">10</button>
+           <button class="btn btn-default btn-xs" type="button">11</button>
+           <button class="btn btn-default btn-xs" type="button">12</button>
+           <button class="btn btn-default btn-xs" type="button">13</button>
+           <button class="btn btn-default btn-xs" type="button">14</button>
+           <button class="btn btn-default btn-xs" type="button">15</button>
+           <button class="btn btn-default btn-xs" type="button">16</button>
+           <button class="btn btn-default btn-xs" type="button">17</button>
+           <button class="btn btn-default btn-xs" type="button">18</button>
+           <button class="btn btn-default btn-xs" type="button">19</button>
+           <button class="btn btn-default btn-xs" type="button">20</button>
+           <button class="btn btn-default btn-xs" type="button">21</button>
+           <button class="btn btn-default btn-xs" type="button">22</button>
+           <button class="btn btn-default btn-xs" type="button">23</button>
+           <button class="btn btn-default btn-xs" type="button">24</button>
+           <button class="btn btn-default btn-xs" type="button">25</button>
+           <button class="btn btn-default btn-xs" type="button">26</button>
+           <button class="btn btn-default btn-xs" type="button">27</button>
+           <button class="btn btn-default btn-xs" type="button">28</button>
+           <button class="btn btn-default btn-xs" type="button">29</button>
+           <button class="btn btn-default btn-xs" type="button">30</button>
+           <button class="btn btn-default btn-xs" type="button">31</button>
+           <button class="btn btn-default btn-xs" type="button">32</button>
+           <button class="btn btn-default btn-xs" type="button">33</button>
+           <button class="btn btn-default btn-xs" type="button">34</button>
+           <button class="btn btn-default btn-xs" type="button">35</button>
+           <button class="btn btn-default btn-xs" type="button">36</button>
+           
+           
+         </div>
+      </div>
+    </footer>
+</body>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    $("[data-toggle=popover]").popover({
+    html: true, 
+	  content: function() { 
+      var content=$('.popover-source').html();
+       return content;
+        }
+});
+</script>
+</html>
