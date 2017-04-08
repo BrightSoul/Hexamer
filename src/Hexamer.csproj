@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\Localizations\en.json" />
+    <Content Include="wwwroot\Localizations\it.json" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\Exams\exam1\groups\contoso\" />
+    <Folder Include="Data\User\" />
+    <Folder Include="wwwroot\App\Login\" />
+    <Folder Include="wwwroot\App\ExamList\" />
+    <Folder Include="wwwroot\App\Exam\" />
+    <Folder Include="wwwroot\App\" />
+    <Folder Include="wwwroot\App\Review\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Data.SQLite" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="SimpleXUnit" Version="0.1.0" />
+  </ItemGroup>
+
+</Project>
