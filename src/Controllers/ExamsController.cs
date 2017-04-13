@@ -38,7 +38,7 @@ namespace Hexamer.Controllers
             if (dto == null)
                 return NotFound();
 
-            anse
+            
 
             return Ok(ExamDto.FromEntity(dto));
         }

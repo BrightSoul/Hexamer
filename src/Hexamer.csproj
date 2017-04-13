@@ -6,25 +6,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\Localizations\en.json" />
-    <Content Include="wwwroot\Localizations\it.json" />
+    <Content Remove="wwwroot/js\Question.js" />
+    <Content Remove="wwwroot/js\Question.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\localizations\en.json" />
+    <Content Include="wwwroot\localizations\it.json" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="Data\Exams\exam1\groups\contoso\" />
     <Folder Include="Data\User\" />
-    <Folder Include="wwwroot\App\Login\" />
-    <Folder Include="wwwroot\App\ExamList\" />
-    <Folder Include="wwwroot\App\Exam\" />
-    <Folder Include="wwwroot\App\" />
-    <Folder Include="wwwroot\App\Review\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.Data.SQLite" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="SimpleXUnit" Version="0.1.0" />
