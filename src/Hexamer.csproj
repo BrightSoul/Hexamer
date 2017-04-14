@@ -13,8 +13,11 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\app.css" />
-    <Content Include="wwwroot\js\templates\loginbar.tmpl.html" />
+    <Content Include="wwwroot\js\templates\Container.html" />
+    <Content Include="wwwroot\js\templates\Container.tmpl.html" />
+    <Content Include="wwwroot\js\templates\Contenitore.tmpl.html" />
     <Content Include="wwwroot\js\templates\QuestionTypes\MultipleChoice.tmpl.html" />
+    <Content Include="wwwroot\js\templates\QuestionTypes\Reorder.tmpl.html" />
     <Content Include="wwwroot\question.html">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -25,7 +28,6 @@
     <Content Include="wwwroot\js\require-config.js" />
     <Content Include="wwwroot\localizations\en.json" />
     <Content Include="wwwroot\localizations\it.json" />
-    <Content Include="wwwroot\js\templates\loginbar.html" />
   </ItemGroup>
 
 
