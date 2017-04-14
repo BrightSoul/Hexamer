@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hexamer</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+</head>
+<body>
+    <p>Login
+    </p>
+
+    <p>Language: <input data-bind="value: language" /></p>
+    <p>Framework: <input data-bind="value: framework" /></p>
+
+    <a href="login.html">Login</a>
+    <a href="exams.html">Exams</a>
+    <a href="question.html">Question</a>
+
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/knockout.js"></script>
+    <script src="./js/knockout-amd-helpers.min.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/require.js"></script>
+    <script src="./js/require-config.js"></script>
+    <script>
+        require(["exams"], function (module) {
+            module.init();
+        });
+    </script>
+</body>
+</html>

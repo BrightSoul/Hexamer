@@ -40,7 +40,9 @@ namespace Hexamer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseDefaultFiles();
+            app.UseDefaultFiles(new DefaultFilesOptions {
+                 DefaultFileNames = new List<string> { "login.html" }
+            });
             app.UseStaticFiles();
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

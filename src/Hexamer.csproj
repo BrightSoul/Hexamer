@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
+    <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,18 +12,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\css\app.css" />
+    <Content Include="wwwroot\js\templates\loginbar.tmpl.html" />
+    <Content Include="wwwroot\js\templates\QuestionTypes\MultipleChoice.tmpl.html" />
+    <Content Include="wwwroot\question.html">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\exams.html">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\login.html" />
+    <Content Include="wwwroot\js\require-config.js" />
     <Content Include="wwwroot\localizations\en.json" />
     <Content Include="wwwroot\localizations\it.json" />
+    <Content Include="wwwroot\js\templates\loginbar.html" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="Data\Exams\exam1\groups\contoso\" />
     <Folder Include="Data\User\" />
-    <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>

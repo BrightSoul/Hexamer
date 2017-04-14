@@ -1,0 +1,318 @@
+﻿body {
+    font-family: 'Roboto', sans-serif;
+    color: #1c1c1c;
+}
+
+/* css header */
+
+header {
+    width: 100%;
+    height: 100px;
+    position: fixed;
+    top: 0;
+}
+
+.toolbar {
+    width: 100%;
+    background-color: #004457;
+    color: white;
+    display: table;
+}
+
+.back-to-home {
+    background-color: transparent;
+    border: 0px;
+    border-right: white solid 1px;
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+}
+
+button.back-to-home:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.glyphicon {
+    top: 0 !important;
+}
+
+.glyphicon-home {
+    color: white;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.profile-image {
+    vertical-align: middle;
+    display: inline;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 14px;
+    color: white;
+    margin-left: 5px;
+    margin-right: 10px;
+    display: inline;
+    vertical-align: middle;
+    padding: 0px;
+}
+
+h2 {
+    font-size: 28px;
+    color: #1c1c1c;
+    font-weight: 300;
+    margin-top: 0px;
+    line-height: 20px;
+}
+
+h4 {
+    color: #818181;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+time {
+    color: #4da400;
+}
+
+.exam-summary {
+    width: 100%;
+    display: table;
+    padding: 20px;
+}
+
+input[type=checkbox] + label {
+    cursor: pointer;
+}
+
+label.review {
+    height: 15px;
+    display: inline-block;
+    color: #818181;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+    label.review::before {
+        display: inline-block;
+        content: ' ';
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        border: 1px solid #168fb2;
+        background-color: white;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+input[type=checkbox]:checked + label.review::before {
+    background-color: #168fb2;
+    content: "\e013";
+    color: white;
+    font-family: 'Glyphicons Halflings';
+    font-size: 10px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+/* css sidebar */
+aside {
+    display: none;
+    background-color: #e0e0e0;
+    width: 150px;
+    position: fixed;
+    top: 140px;
+    left: 20px;
+    bottom: 100px;
+    overflow-y: auto;
+}
+
+body.scenario aside {
+    display: block;
+}
+
+body.scenario .content {
+    left: 170px;
+}
+
+aside li.active {
+    background-color: white;
+    color: #1c1c1c;
+    border-left: 5px solid #e0e0e0;
+}
+
+aside li {
+    color: #1c1c1c;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+}
+
+/* css content */
+
+.content {
+    position: fixed;
+    top: 120px;
+    bottom: 100px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+h5 {
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+p {
+    font-size: 16px;
+    color: #1c1c1c;
+    line-height: 170%;
+}
+
+.answers li {
+    margin-top: 10px;
+}
+
+.answers label {
+    font-size: 18px;
+    color: #1c1c1c;
+    font-weight: 400;
+    vertical-align: middle;
+    display: table;
+}
+
+/* css checkbox contenuto */
+
+input[type=checkbox] {
+    display: none;
+}
+
+label {
+    height: 30px;
+    display: inline-block;
+}
+
+    label:before {
+        display: inline-block;
+        content: ' ';
+        width: 30px;
+        height: 30px;
+        border-radius: 3px;
+        border: 1px solid #168fb2;
+        background-color: white;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+input[type=checkbox]:checked + label::before {
+    background-color: #168fb2;
+    border-radius: 3px;
+    content: "\e013";
+    color: white;
+    font-family: 'Glyphicons Halflings';
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* css contenuto drag&drop */
+
+.drag-content {
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.drag-box {
+    min-width: 150px;
+    max-width: 420px;
+    height: 440px;
+}
+
+h6 {
+    font-weight: 600;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.drag-box button {
+    margin: 6px;
+}
+
+.drag-source {
+}
+
+.drag-target {
+}
+
+/* css contenuto domanda codice */
+
+.code {
+    font-size: 14px;
+    line-height: 40px;
+    margin: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* css footer */
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.pagination {
+    margin: auto;
+}
+
+    .pagination span {
+        vertical-align: middle;
+    }
+
+    .pagination button {
+        vertical-align: middle;
+    }
+
+.popover-source {
+    display: none;
+}
+
+.questions-index {
+    min-width: 185px;
+}
+
+    .questions-index button {
+        min-width: 32px;
+        min-height: 32px;
+        display: inline-block;
+        margin-bottom: 2px;
+        margin-left: 0px !important;
+        position: relative;
+    }
+
+        .questions-index button.marked::after {
+            content: "\e013";
+            color: white;
+            font-family: 'Glyphicons Halflings';
+            position: absolute;
+            bottom: -2px;
+            right: -4px;
+            font-size: 9px;
+            padding-top: 1px;
+            background-color: #4da400;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+        }
