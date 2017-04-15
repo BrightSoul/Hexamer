@@ -12,28 +12,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\templates\LoginBar.tmpl.html" />
+    <Content Include="wwwroot\templates\QuestionTypes\MultipleChoice.tmpl.html" />
+    <Content Include="wwwroot\templates\QuestionTypes\Reorder.tmpl.html" />
     <Content Include="wwwroot\css\app.css" />
-    <Content Include="wwwroot\js\templates\Container.html" />
-    <Content Include="wwwroot\js\templates\Container.tmpl.html" />
-    <Content Include="wwwroot\js\templates\Contenitore.tmpl.html" />
-    <Content Include="wwwroot\js\templates\QuestionTypes\MultipleChoice.tmpl.html" />
-    <Content Include="wwwroot\js\templates\QuestionTypes\Reorder.tmpl.html" />
-    <Content Include="wwwroot\question.html">
+    <Content Include="wwwroot\Exam.html">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="wwwroot\exams.html">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="wwwroot\login.html" />
-    <Content Include="wwwroot\js\require-config.js" />
-    <Content Include="wwwroot\localizations\en.json" />
-    <Content Include="wwwroot\localizations\it.json" />
+    <Content Include="wwwroot\Login.html" />
+    <Content Include="wwwroot\templates\Container.html" />
+    <Content Include="wwwroot\templates\LoginBar.html" />
+    <Content Include="wwwroot\templates\QuestionTypes\MultipleChoice.html" />
+    <Content Include="wwwroot\templates\QuestionTypes\Reorder.html" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="Data\Exams\exam1\groups\contoso\" />
     <Folder Include="Data\User\" />
+    <Folder Include="Templates\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
