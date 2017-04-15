@@ -41,7 +41,7 @@ namespace Hexamer
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseDefaultFiles(new DefaultFilesOptions {
-                 DefaultFileNames = new List<string> { "login.html" }
+                 DefaultFileNames = new List<string> { "/Layout.html" }
             });
             app.UseStaticFiles();
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

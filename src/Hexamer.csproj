@@ -12,21 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\templates\LoginBar.tmpl.html" />
-    <Content Include="wwwroot\templates\QuestionTypes\MultipleChoice.tmpl.html" />
-    <Content Include="wwwroot\templates\QuestionTypes\Reorder.tmpl.html" />
-    <Content Include="wwwroot\css\app.css" />
-    <Content Include="wwwroot\Exam.html">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
     <Content Include="wwwroot\exams.html">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="wwwroot\Login.html" />
-    <Content Include="wwwroot\templates\Container.html" />
-    <Content Include="wwwroot\templates\LoginBar.html" />
-    <Content Include="wwwroot\templates\QuestionTypes\MultipleChoice.html" />
-    <Content Include="wwwroot\templates\QuestionTypes\Reorder.html" />
   </ItemGroup>
 
 
@@ -36,6 +24,17 @@
     <Folder Include="Templates\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\css\app.css" />
+    <None Include="wwwroot\html\Container.html" />
+    <None Include="wwwroot\html\Exams.html" />
+    <None Include="wwwroot\Layout.html" />
+    <None Include="wwwroot\html\Login.html" />
+    <None Include="wwwroot\html\QuestionTypes\MultipleChoice.html" />
+    <None Include="wwwroot\html\QuestionTypes\Reorder.html" />
   </ItemGroup>
 
   <ItemGroup>

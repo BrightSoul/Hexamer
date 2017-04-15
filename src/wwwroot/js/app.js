@@ -1,85 +1,80 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 define("Exam", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     exports.__esModule = true;
-    var HelloViewModel = (function () {
-        function HelloViewModel(language, framework) {
+    var ExamViewModel = (function () {
+        function ExamViewModel() {
+            var _this = this;
             this.language = ko.observable(language);
             this.framework = ko.observable(framework);
+            this.templateName = ko.observable("QuestionTypes/MultipleChoice");
+            setTimeout(function () {
+                _this.templateName("QuestionTypes/Reorder");
+            }, 5000);
         }
-        return HelloViewModel;
+        return ExamViewModel;
     }());
-    function init() {
-        ko.applyBindings(new HelloViewModel("TypeScript", "Knockout"));
+    function initialize() {
+        return new ExamViewModel();
     }
-    exports.init = init;
-    ;
+    exports.initialize = initialize;
 });
 define("Exams", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     exports.__esModule = true;
-    var HelloViewModel = (function () {
-        function HelloViewModel(language, framework) {
-            this.language = ko.observable(language);
-            this.framework = ko.observable(framework);
+    var ExamsViewModel = (function () {
+        function ExamsViewModel() {
+            var _this = this;
+            this.Status = ko.observable("Rispondi...");
+            setTimeout(function () {
+                _this.Status("Risposta corretta!");
+            }, 2000);
         }
-        return HelloViewModel;
+        return ExamsViewModel;
     }());
-    function init() {
-        ko.applyBindings(new HelloViewModel("TypeScript", "Knockout"));
+    function initialize() {
+        console.log(arguments);
+        return new ExamsViewModel();
     }
-    exports.init = init;
-    ;
+    exports.initialize = initialize;
 });
 define("ILocalization", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
 });
-define("ViewModel", ["require", "exports", "knockout"], function (require, exports, ko) {
+define("Layout", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     exports.__esModule = true;
-    var ViewModel = (function () {
-        function ViewModel() {
-            ko["amdTemplateEngine"].defaultPath = "/templates";
+    var LoginViewModel = (function () {
+        function LoginViewModel() {
+            var _this = this;
+            ko["amdTemplateEngine"].defaultPath = "/html";
             ko["amdTemplateEngine"].defaultSuffix = ".html";
+            //TODO: determinalo in base all'url
+            this.CurrentModuleName = ko.observable("Login");
+            setTimeout(function () { _this.CurrentModuleName("Exams"); }, 10000);
         }
-        ViewModel.prototype.ChangeLanguage = function (language) {
+        LoginViewModel.prototype.ChangeLanguage = function (language) {
         };
-        return ViewModel;
+        return LoginViewModel;
     }());
-    exports.ViewModel = ViewModel;
+    exports.LoginViewModel = LoginViewModel;
 });
-define("Login", ["require", "exports", "knockout", "ViewModel"], function (require, exports, ko, ViewModel_1) {
+define("Login", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     exports.__esModule = true;
-    var HelloViewModel = (function (_super) {
-        __extends(HelloViewModel, _super);
-        function HelloViewModel(language, framework) {
-            var _this = _super.call(this) || this;
-            _this.language = ko.observable(language);
-            _this.framework = ko.observable(framework);
-            _this.templateName = ko.observable("QuestionTypes/MultipleChoice");
-            setTimeout(function () {
-                _this.templateName("QuestionTypes/Reorder");
-            }, 5000);
-            return _this;
+    var LoginViewModel = (function () {
+        function LoginViewModel() {
+            var _this = this;
+            this.Status = ko.observable("Accedi");
+            setTimeout(function () { _this.Status("Acceduto!"); }, 2000);
         }
-        return HelloViewModel;
-    }(ViewModel_1.ViewModel));
-    function init() {
-        ko.applyBindings(new HelloViewModel("TypeScript", "Knockout"));
+        return LoginViewModel;
+    }());
+    function initialize() {
+        console.log(arguments);
+        return new LoginViewModel();
     }
-    exports.init = init;
-    ;
+    exports.initialize = initialize;
 });
 define("Localizations/English", ["require", "exports"], function (require, exports) {
     "use strict";

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hexamer</title>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/app.css" rel="stylesheet" />
+</head>
+<body>
+    <p>
+        Layout
+    </p>
+
+
+    <a href="login.html">Login</a>
+    <a href="exams.html">Exams</a>
+    <a href="question.html">Question</a>
+    <div data-bind="module:{name: CurrentModuleName, data: 5}"></div>
+    <script src="/js/libs.js"></script>
+    <script>
+        require(['domReady', 'knockout', 'knockout-amd-helpers', 'Layout'], function (dom, ko, amd, module) {
+            ko.applyBindings(new module.LoginViewModel());
+        });
+    </script>
+
+</body>
+</html>

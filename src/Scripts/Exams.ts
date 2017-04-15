@@ -1,14 +1,16 @@
 ﻿import * as ko from "knockout";
 
-class HelloViewModel {
-    language: KnockoutObservable<string>
-    framework: KnockoutObservable<string>
+class ExamsViewModel {
+    public Status: KnockoutObservable<string>
 
-    constructor(language: string, framework: string) {
-        this.language = ko.observable(language);
-        this.framework = ko.observable(framework);
+    constructor() {
+        this.Status = ko.observable("Rispondi...");
+        setTimeout(() => {
+            this.Status("Risposta corretta!");
+        }, 2000);
     }
 }
-export function init() {
-    ko.applyBindings(new HelloViewModel("TypeScript", "Knockout"));
-};
+export function initialize() {
+    console.log(arguments);
+    return new ExamsViewModel();
+}

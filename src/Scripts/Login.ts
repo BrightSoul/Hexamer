@@ -1,21 +1,14 @@
 ﻿import * as ko from "knockout";
-import { ViewModel } from 'ViewModel';
 
-class HelloViewModel extends ViewModel {
-    language: KnockoutObservable<string>
-    framework: KnockoutObservable<string>
-    public templateName: KnockoutObservable<string>
+class LoginViewModel {
+    public Status: KnockoutObservable<string>
 
-    constructor(language: string, framework: string) {
-        super();
-        this.language = ko.observable(language);
-        this.framework = ko.observable(framework);
-        this.templateName = ko.observable("QuestionTypes/MultipleChoice");
-        setTimeout(() => {
-            this.templateName("QuestionTypes/Reorder");
-        }, 5000);
+    constructor() {
+        this.Status = ko.observable("Accedi");
+        setTimeout(() => { this.Status("Acceduto!"); }, 2000);
     }
 }
-export function init() {
-    ko.applyBindings(new HelloViewModel("TypeScript", "Knockout"));
-};
+export function initialize() {
+    console.log(arguments);
+    return new LoginViewModel();
+}

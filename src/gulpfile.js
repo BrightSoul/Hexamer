@@ -44,9 +44,8 @@ gulp.task('libs', function () {
 gulp.task('styles', function () {
     return gulp.src([
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
-            'Styles/App.css',
-        ])
-        .pipe(concat('style.css'))
+         ])
+        .pipe(concat('bootstrap.css'))
         .pipe(gulp.dest('wwwroot/css'));
 });
 gulp.task('fonts', function () {
@@ -55,16 +54,10 @@ gulp.task('fonts', function () {
     ])
         .pipe(gulp.dest('wwwroot/fonts'));
 });
-gulp.task('templates', function () {
-    return gulp.src([
-        'Templates/**/*'
-    ])
-        .pipe(gulp.dest('wwwroot/templates'));
-});
 
 gulp.task('clean', function () {
     gulp.src("wwwroot/js/**/*")
     .pipe(clean());
 });
 
-gulp.task('build', ['libs', 'modules', 'app', 'styles', 'fonts', 'templates']);
+gulp.task('build', ['libs', 'modules', 'app', 'styles', 'fonts']);
