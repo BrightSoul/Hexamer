@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Hexamer.Model.Dto;
+using Hexamer.Model.Results;
 using Hexamer.Services;
 using Hexamer.Extensions;
 
@@ -23,11 +23,11 @@ namespace Hexamer.Controllers
 
         // GET api/values
         [HttpGet]
-        public async Task<IEnumerable<ExamDto>> Get()
+        public async Task<IEnumerable<ExamResult>> Get()
         {
             var enabledExams = examRepository.GetAll().Visible().ToList();
             //TODO: join with user data from sqlite
-            return enabledExams.Select(exam => ExamDto.FromEntity(exam));
+            return enabledExams.Select(exam => ExamResult.FromEntity(exam));
         }
         
         [HttpGet("{id}/start")]
@@ -40,7 +40,7 @@ namespace Hexamer.Controllers
 
             
 
-            return Ok(ExamDto.FromEntity(dto));
+            return Ok(ExamResult.FromEntity(dto));
         }
     }
 }

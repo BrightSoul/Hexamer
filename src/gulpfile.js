@@ -7,11 +7,15 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var streamqueue = require('streamqueue');
 var clean = require('gulp-clean');
+var dotnet = require('gulp-dotnet');
 
 gulp.task('app', function () {
     return tsProject.src()
         .pipe(tsProject())
         .js.pipe(gulp.dest("wwwroot/js"));
+});
+gulp.task('dotnet', function(cb) {
+  return dotnet.build({ cwd: './' }, cb);
 });
 gulp.task('modules', function () {
     return streamqueue({ objectMode: true },
@@ -58,4 +62,4 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
-gulp.task('build', ['libs', 'modules', 'app', 'styles', 'fonts']);
+gulp.task('build', ['dotnet', 'libs', 'modules', 'app', 'styles', 'fonts']);

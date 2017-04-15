@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 using Hexamer.Model;
 using Hexamer.Services;
-
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Hexamer
 {
@@ -56,7 +56,7 @@ namespace Hexamer
             }
             app.UseMvc();
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUi(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hexamer API V1");
             });

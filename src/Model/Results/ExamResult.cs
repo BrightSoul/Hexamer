@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hexamer.Model.Dto
+namespace Hexamer.Model.Results
 {
-    public class ExamDto
+    public class ExamResult
     {
-        private ExamDto(Exam exam)
+        private ExamResult(Exam exam)
         {
             Id = exam.Id;
             Title = exam.Title;
@@ -15,12 +15,12 @@ namespace Hexamer.Model.Dto
             ValidTo = exam.ValidTo;
         }
 
-        public static ExamDto FromEntity(Exam exam)
+        public static ExamResult FromEntity(Exam exam)
         {
             if (exam == null)
                 return null;
 
-            return new ExamDto(exam);
+            return new ExamResult(exam);
         }
 
         public string Id { get; set; }

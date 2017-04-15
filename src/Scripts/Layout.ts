@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ILayout } from "Scripts/ILayout";
 import { User } from "Scripts/User";
 export class LayoutViewModel implements ILayout {
+
     Navigate(module: string) {
         this.CurrentModuleName(module);
     }

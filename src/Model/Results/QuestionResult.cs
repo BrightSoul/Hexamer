@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hexamer.Model.Dto
+namespace Hexamer.Model.Results
 {
-    public class QuestionDto
+    public class QuestionResult
     {
         public string Id { get; set; }
         public int Number { get; set; }
