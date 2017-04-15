@@ -6,8 +6,6 @@ class ExamViewModel {
     public templateName: KnockoutObservable<string>
 
     constructor() {
-        this.language = ko.observable(language);
-        this.framework = ko.observable(framework);
         this.templateName = ko.observable("QuestionTypes/MultipleChoice");
         setTimeout(() => {
             this.templateName("QuestionTypes/Reorder");

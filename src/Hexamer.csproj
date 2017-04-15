@@ -1,23 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
     <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
   </PropertyGroup>
-
   <ItemGroup>
     <Content Remove="wwwroot/js\Question.js" />
     <Content Remove="wwwroot/js\Question.js.map" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="wwwroot\exams.html">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="wwwroot\html\Exam.html" />
   </ItemGroup>
-
-
   <ItemGroup>
     <Folder Include="Data\Exams\exam1\groups\contoso\" />
     <Folder Include="Data\User\" />
@@ -25,8 +21,6 @@
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
-
-
   <ItemGroup>
     <None Include="wwwroot\css\app.css" />
     <None Include="wwwroot\html\Container.html" />
@@ -36,7 +30,6 @@
     <None Include="wwwroot\html\QuestionTypes\MultipleChoice.html" />
     <None Include="wwwroot\html\QuestionTypes\Reorder.html" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
@@ -45,6 +38,6 @@
     <PackageReference Include="Microsoft.Data.SQLite" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="SimpleXUnit" Version="0.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc1" />
   </ItemGroup>
-
 </Project>

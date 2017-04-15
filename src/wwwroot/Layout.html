@@ -15,11 +15,11 @@
     <a href="login.html">Login</a>
     <a href="exams.html">Exams</a>
     <a href="question.html">Question</a>
-    <div data-bind="module:{name: CurrentModuleName, data: 5}"></div>
+    <div data-bind="module:{name: CurrentModuleName, data: $root}"></div>
     <script src="/js/libs.js"></script>
     <script>
-        require(['domReady', 'knockout', 'knockout-amd-helpers', 'Layout'], function (dom, ko, amd, module) {
-            ko.applyBindings(new module.LoginViewModel());
+        require(['Layout', 'knockout', 'qs', 'js-cookie', 'text', 'domReady', 'knockout-amd-helpers'], function (module, ko) {
+            ko.applyBindings(new module.LayoutViewModel());
         });
     </script>
 

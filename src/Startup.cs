@@ -11,6 +11,7 @@ using AutoMapper;
 using Hexamer.Model;
 using Hexamer.Services;
 
+
 namespace Hexamer
 {
     public class Startup
@@ -33,8 +34,11 @@ namespace Hexamer
             // Add framework services.
             services.AddTransient<IExamRepository, ExamRepository>();
             services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration));
-
             services.AddMvc();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Hexamer API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +55,11 @@ namespace Hexamer
                 app.UseDeveloperExceptionPage();
             }
             app.UseMvc();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hexamer API V1");
+            });
             Mapper.Initialize(cfg => cfg.CreateMap<QuestionDefaults, Question>());
         }
     }

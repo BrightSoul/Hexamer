@@ -16,16 +16,18 @@
   },
   "dependencies": {
     "jquery": "1.12.4",
+    "axios": "0.16.1",
     "knockout": "3.4.2",
     "knockout-amd-helpers": "1.0.0",
     "bootstrap": "3.3.7",
     "qs": "6.4.0",
-    "browser-cookies": "1.1.0",
+    "js-cookie": "2.1.4",
     "requirejs": "2.3.3",
     "requirejs-text": "2.0.15",
     "requirejs-domready": "2.0.3",
     "@types/knockout": "3.4.40",
-    "@types/query-string": "4.3.1",
-    "@types/requirejs": "2.1.29"
+    "@types/axios": "0.14.0",
+    "@types/qs": "6.2.31",
+    "@types/js-cookie": "2.0.28"
   }
 }
