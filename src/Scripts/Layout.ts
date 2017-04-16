@@ -1,8 +1,23 @@
 ﻿import * as ko from 'knockout';
 import axios from 'axios';
-import { ILayout } from "Scripts/ILayout";
-import { User } from "Scripts/User";
+import { ILayout } from 'ILayout';
+import { User } from 'User';
+
 export class LayoutViewModel implements ILayout {
+
+    async Get<TResult>(url: string): Promise<TResult> {
+        let response = await axios.get(url);
+        if (response.status < 200 && response.status > 200)
+            throw new Error("Errore di comunicazione con il server");
+        return <TResult> response.data;
+    }
+    async Post<TResult, TData>(url: string, data: TData): Promise<TResult> {
+        let response = await axios.post(url, data);
+        if (response.status < 200 && response.status > 200)
+            throw new Error("Errore di comunicazione con il server");
+        return <TResult> response.data;
+    }
+
 
     Navigate(module: string) {
         this.CurrentModuleName(module);

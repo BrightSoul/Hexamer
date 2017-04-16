@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +8,7 @@ using AutoMapper;
 using Hexamer.Model;
 using Hexamer.Services;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Http;
 
 namespace Hexamer
 {
@@ -23,6 +21,10 @@ namespace Hexamer
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
             Configuration = builder.Build();
         }
 
@@ -33,6 +35,7 @@ namespace Hexamer
         {
             // Add framework services.
             services.AddTransient<IExamRepository, ExamRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration));
             services.AddMvc();
             services.AddSwaggerGen(c =>
@@ -53,13 +56,24 @@ namespace Hexamer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            } else {
+                app.UseExceptionHandler("/Error.html");
             }
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "CookieAuth",
+                LoginPath = new PathString("/"),
+                AccessDeniedPath = new PathString("/Error.html"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
             app.UseMvc();
             app.UseSwagger();
-            app.UseSwaggerUi(c =>
+            app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hexamer API V1");
             });
+
             Mapper.Initialize(cfg => cfg.CreateMap<QuestionDefaults, Question>());
         }
     }

@@ -1,10 +1,4 @@
 ﻿using Hexamer.Extensions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
 namespace Hexamer.Model
@@ -39,6 +33,11 @@ namespace Hexamer.Model
         public string[] SupportedLogins { get; set; }
         public string DefaultLocalization { get; set; }
 
+        public string SlackClientId { get; set; }
+        public string SlackSecret { get; set; }
+        public string SlackTeamId { get; set; }
+        public string SlackScope { get; set; }
+
         public static AppConfig FromConfiguration(IConfigurationRoot configuration)
         {
             return new AppConfig
@@ -46,7 +45,11 @@ namespace Hexamer.Model
                 ExamsDataDirectory = configuration["App:ExamsDataDirectory"],
                 UserDataDirectory = configuration["App:UserDataDirectory"],
                 Name = configuration["App:Name"],
-                DefaultLocalization = configuration["App:DefaultLocalization"]
+                DefaultLocalization = configuration["App:DefaultLocalization"],
+                SlackClientId = configuration["App:SlackClientId"],
+                SlackSecret = configuration["App:SlackSecret"],
+                SlackTeamId = configuration["App:SlackTeamId"],
+                SlackScope = configuration["App:SlackScope"]
             };
         }
     }

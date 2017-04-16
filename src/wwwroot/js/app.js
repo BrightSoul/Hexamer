@@ -35,7 +35,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 define("Exam", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     var ExamViewModel = (function () {
         function ExamViewModel() {
             var _this = this;
@@ -53,7 +52,6 @@ define("Exam", ["require", "exports", "knockout"], function (require, exports, k
 });
 define("Exams", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     var ExamsViewModel = (function () {
         function ExamsViewModel() {
             var _this = this;
@@ -72,7 +70,6 @@ define("Exams", ["require", "exports", "knockout"], function (require, exports, 
 });
 define("User", ["require", "exports"], function (require, exports) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     var User = (function () {
         function User() {
         }
@@ -82,11 +79,9 @@ define("User", ["require", "exports"], function (require, exports) {
 });
 define("ILayout", ["require", "exports"], function (require, exports) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
 });
-define("Layout", ["require", "exports", "knockout"], function (require, exports, ko) {
+define("Layout", ["require", "exports", "knockout", "axios"], function (require, exports, ko, axios_1) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     var LayoutViewModel = (function () {
         function LayoutViewModel() {
             var templateEngine = ko["amdTemplateEngine"];
@@ -105,6 +100,36 @@ define("Layout", ["require", "exports", "knockout"], function (require, exports,
                 this.CurrentModuleName = ko.observable("Login");
             }
         }
+        LayoutViewModel.prototype.Get = function (url) {
+            return __awaiter(this, void 0, void 0, function () {
+                var response;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, axios_1.default.get(url)];
+                        case 1:
+                            response = _a.sent();
+                            if (response.status < 200 && response.status > 200)
+                                throw new Error("Errore di comunicazione con il server");
+                            return [2 /*return*/, response.data];
+                    }
+                });
+            });
+        };
+        LayoutViewModel.prototype.Post = function (url, data) {
+            return __awaiter(this, void 0, void 0, function () {
+                var response;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, axios_1.default.post(url, data)];
+                        case 1:
+                            response = _a.sent();
+                            if (response.status < 200 && response.status > 200)
+                                throw new Error("Errore di comunicazione con il server");
+                            return [2 /*return*/, response.data];
+                    }
+                });
+            });
+        };
         LayoutViewModel.prototype.Navigate = function (module) {
             this.CurrentModuleName(module);
         };
@@ -130,25 +155,47 @@ define("Layout", ["require", "exports", "knockout"], function (require, exports,
     }());
     exports.LayoutViewModel = LayoutViewModel;
 });
-define("Login", ["require", "exports", "knockout", "axios"], function (require, exports, ko, axios_1) {
+define("Results/SlackAuthorizationUrlResult", ["require", "exports"], function (require, exports) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
+    var SlackAuthorizationUrlResult = (function () {
+        function SlackAuthorizationUrlResult() {
+        }
+        return SlackAuthorizationUrlResult;
+    }());
+    exports.SlackAuthorizationUrlResult = SlackAuthorizationUrlResult;
+});
+define("Login", ["require", "exports", "knockout", "axios"], function (require, exports, ko, axios_2) {
+    "use strict";
     var LoginViewModel = (function () {
         function LoginViewModel(layout) {
             this.Status = ko.observable("Accedi");
+            this.SlackAuthorizationUrl = ko.observable(null);
             this.layout = layout;
+            this.FetchSlackAuthorizationUrl();
             //setTimeout(() => { this.Status("Acceduto!"); }, 2000);
         }
+        LoginViewModel.prototype.FetchSlackAuthorizationUrl = function () {
+            return __awaiter(this, void 0, void 0, function () {
+                var result;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.layout.Get("/api/Slack/AuthorizationUrl")];
+                        case 1:
+                            result = _a.sent();
+                            this.SlackAuthorizationUrl(result.slackAuthorizationUrl);
+                            return [2 /*return*/];
+                    }
+                });
+            });
+        };
         LoginViewModel.prototype.Login = function () {
             return __awaiter(this, void 0, void 0, function () {
                 var response;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, axios_1.default.post("/api/Login", {})];
+                        case 0: return [4 /*yield*/, axios_2.default.post("/api/Login", {})];
                         case 1:
                             response = _a.sent();
-                            console.log(response.data, response.statusText, response.status);
-                            alert(response.data.token);
                             this.layout.Navigate("Exams");
                             return [2 /*return*/];
                     }
@@ -158,14 +205,12 @@ define("Login", ["require", "exports", "knockout", "axios"], function (require, 
         return LoginViewModel;
     }());
     function initialize(layout) {
-        console.log(arguments);
         return new LoginViewModel(layout);
     }
     exports.initialize = initialize;
 });
 define("QuestionTypes/MultipleChoice", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     var HelloViewModel = (function () {
         function HelloViewModel(language, framework) {
             this.language = ko.observable(language);
@@ -177,7 +222,6 @@ define("QuestionTypes/MultipleChoice", ["require", "exports", "knockout"], funct
 });
 define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     var HelloViewModel = (function () {
         function HelloViewModel(language, framework) {
             this.language = ko.observable(language);

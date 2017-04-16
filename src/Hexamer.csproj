@@ -33,11 +33,19 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.Data.SQLite" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
-    <PackageReference Include="SimpleXUnit" Version="0.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc1" />
+    <PackageReference Include="SimpleXUnit" Version="0.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc3" />
   </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
+  </ItemGroup>
+  <PropertyGroup>
+    <UserSecretsId>60d2aadf-a99e-4e53-80c0-44448d3d57c3</UserSecretsId>
+  </PropertyGroup>
 </Project>
