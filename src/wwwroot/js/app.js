@@ -68,6 +68,18 @@ define("Exams", ["require", "exports", "knockout"], function (require, exports, 
     }
     exports.initialize = initialize;
 });
+define("Page", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var Page;
+    (function (Page) {
+        Page[Page["Login"] = 0] = "Login";
+        Page[Page["Exams"] = 1] = "Exams";
+        Page[Page["Exam"] = 2] = "Exam";
+    })(Page = exports.Page || (exports.Page = {}));
+});
+define("ILayout", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
 define("User", ["require", "exports"], function (require, exports) {
     "use strict";
     var User = (function () {
@@ -77,29 +89,83 @@ define("User", ["require", "exports"], function (require, exports) {
     }());
     exports.User = User;
 });
-define("ILayout", ["require", "exports"], function (require, exports) {
+define("NavigationContext", ["require", "exports", "Page"], function (require, exports, Page_1) {
     "use strict";
+    var NavigationContext = (function () {
+        function NavigationContext(layout, page, navigationArgs) {
+            this.layout = layout;
+            this.page = page;
+            this.navigationArgs = navigationArgs;
+        }
+        Object.defineProperty(NavigationContext.prototype, "Layout", {
+            get: function () {
+                return this.layout;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(NavigationContext.prototype, "Page", {
+            get: function () {
+                return Page_1.Page[this.page];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(NavigationContext.prototype, "NavigationArgs", {
+            get: function () {
+                return this.navigationArgs;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return NavigationContext;
+    }());
+    exports.NavigationContext = NavigationContext;
 });
-define("Layout", ["require", "exports", "knockout", "axios"], function (require, exports, ko, axios_1) {
+define("Results/UserResult", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var UserResult = (function () {
+        function UserResult() {
+        }
+        return UserResult;
+    }());
+    exports.UserResult = UserResult;
+});
+define("Layout", ["require", "exports", "knockout", "axios", "Page", "NavigationContext"], function (require, exports, ko, axios_1, Page_2, NavigationContext_1) {
     "use strict";
     var LayoutViewModel = (function () {
         function LayoutViewModel() {
             var templateEngine = ko["amdTemplateEngine"];
             templateEngine.defaultPath = "/html";
             templateEngine.defaultSuffix = ".html";
-            this.Strings = this.CreateStrings();
-            //TODO: determinalo in base al cookie
-            var user = null;
-            this.User = ko.observable(user);
-            //TODO: determinalo in base all'url. Se l'utente è null, vai con Login 
-            if (user) {
-                //TODO: determinalo in base all'url. Se l'utente è null, vai con Login 
-                this.CurrentModuleName = ko.observable("Login");
-            }
-            else {
-                this.CurrentModuleName = ko.observable("Login");
-            }
+            this.User = ko.observable(null);
+            this.NavigationContext = ko.observable(null);
+            this.Title = ko.observable("Hexamer");
+            this.GetUser();
         }
+        LayoutViewModel.prototype.SetTitle = function (title) {
+            this.Title(title);
+        };
+        LayoutViewModel.prototype.GetUser = function () {
+            return __awaiter(this, void 0, void 0, function () {
+                var result;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Get("/api/User")];
+                        case 1:
+                            result = _a.sent();
+                            if (!result.IsAuthenticated) return [3 /*break*/, 2];
+                            this.Login(result.User);
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, this.Logout()];
+                        case 3:
+                            _a.sent();
+                            _a.label = 4;
+                        case 4: return [2 /*return*/];
+                    }
+                });
+            });
+        };
         LayoutViewModel.prototype.Get = function (url) {
             return __awaiter(this, void 0, void 0, function () {
                 var response;
@@ -108,8 +174,7 @@ define("Layout", ["require", "exports", "knockout", "axios"], function (require,
                         case 0: return [4 /*yield*/, axios_1.default.get(url)];
                         case 1:
                             response = _a.sent();
-                            if (response.status < 200 && response.status > 200)
-                                throw new Error("Errore di comunicazione con il server");
+                            this.EnsureSuccessStatusCode(response.status);
                             return [2 /*return*/, response.data];
                     }
                 });
@@ -123,33 +188,57 @@ define("Layout", ["require", "exports", "knockout", "axios"], function (require,
                         case 0: return [4 /*yield*/, axios_1.default.post(url, data)];
                         case 1:
                             response = _a.sent();
-                            if (response.status < 200 && response.status > 200)
-                                throw new Error("Errore di comunicazione con il server");
+                            this.EnsureSuccessStatusCode(response.status);
                             return [2 /*return*/, response.data];
                     }
                 });
             });
         };
-        LayoutViewModel.prototype.Navigate = function (module) {
-            this.CurrentModuleName(module);
+        LayoutViewModel.prototype.EnsureSuccessStatusCode = function (statusCode) {
+            if (statusCode == 401) {
+                alert("Per favore rieffettua il login");
+                this.Navigate(Page_2.Page.Login);
+            }
+            else if (statusCode >= 400) {
+                alert("Si è verificato un errore nel server, per favore segnala questo problema");
+            }
         };
-        LayoutViewModel.prototype.SetUserIdentity = function (user) {
-            if (!user)
-                throw new Error("L'utente non è valido");
+        LayoutViewModel.prototype.Navigate = function (page, navigationArgs) {
+            if (navigationArgs === void 0) { navigationArgs = null; }
+            var navigationContext = new NavigationContext_1.NavigationContext(this, page, navigationArgs);
+            this.NavigationContext(navigationContext);
+        };
+        LayoutViewModel.prototype.NavigateAccordingToUrl = function (defaultPage) {
+            var navigationInfo = location.hash.substr(location.hash.indexOf('#') + 1).split('/');
+            var destinationPage = defaultPage;
+            if (navigationInfo[0] in Page_2.Page) {
+                destinationPage = Page_2.Page[navigationInfo[0]];
+            }
+            var navigationArgs = navigationInfo.length > 1 ? navigationInfo[1] : null;
+            this.Navigate(destinationPage, navigationArgs);
+        };
+        LayoutViewModel.prototype.BackToHome = function () {
+            if (confirm("Vuoi davvero tornare alla home?")) {
+                this.Navigate(Page_2.Page.Exam);
+            }
+        };
+        LayoutViewModel.prototype.Login = function (user) {
             this.User(user);
+            this.NavigateAccordingToUrl(Page_2.Page.Exams);
         };
-        LayoutViewModel.prototype.ClearUserIdentity = function () {
-        };
-        LayoutViewModel.prototype.UpdateUserIdentity = function (user) {
-            this.User(null);
-            this.Navigate("Login");
-        };
-        LayoutViewModel.prototype.CreateStrings = function () {
-            return {
-                LoginWithSlack: "Accedi con slack"
-            };
-        };
-        LayoutViewModel.prototype.ChangeLanguage = function (language) {
+        LayoutViewModel.prototype.Logout = function () {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Get("/api/Logout")];
+                        case 1:
+                            _a.sent();
+                            this.User(null);
+                            this.Navigate(Page_2.Page.Login);
+                            return [2 /*return*/];
+                    }
+                });
+            });
         };
         return LayoutViewModel;
     }());
@@ -164,39 +253,23 @@ define("Results/SlackAuthorizationUrlResult", ["require", "exports"], function (
     }());
     exports.SlackAuthorizationUrlResult = SlackAuthorizationUrlResult;
 });
-define("Login", ["require", "exports", "knockout", "axios"], function (require, exports, ko, axios_2) {
+define("Login", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     var LoginViewModel = (function () {
-        function LoginViewModel(layout) {
-            this.Status = ko.observable("Accedi");
+        function LoginViewModel(navigationContext) {
+            this.navigationContext = navigationContext;
             this.SlackAuthorizationUrl = ko.observable(null);
-            this.layout = layout;
-            this.FetchSlackAuthorizationUrl();
-            //setTimeout(() => { this.Status("Acceduto!"); }, 2000);
+            this.GetSlackAuthorizationUrl();
         }
-        LoginViewModel.prototype.FetchSlackAuthorizationUrl = function () {
+        LoginViewModel.prototype.GetSlackAuthorizationUrl = function () {
             return __awaiter(this, void 0, void 0, function () {
                 var result;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, this.layout.Get("/api/Slack/AuthorizationUrl")];
+                        case 0: return [4 /*yield*/, this.navigationContext.Layout.Get("/api/Slack/AuthorizationUrl")];
                         case 1:
                             result = _a.sent();
-                            this.SlackAuthorizationUrl(result.slackAuthorizationUrl);
-                            return [2 /*return*/];
-                    }
-                });
-            });
-        };
-        LoginViewModel.prototype.Login = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                var response;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, axios_2.default.post("/api/Login", {})];
-                        case 1:
-                            response = _a.sent();
-                            this.layout.Navigate("Exams");
+                            this.SlackAuthorizationUrl(result.SlackAuthorizationUrl);
                             return [2 /*return*/];
                     }
                 });
@@ -204,8 +277,8 @@ define("Login", ["require", "exports", "knockout", "axios"], function (require, 
         };
         return LoginViewModel;
     }());
-    function initialize(layout) {
-        return new LoginViewModel(layout);
+    function initialize(navigationContext) {
+        return new LoginViewModel(navigationContext);
     }
     exports.initialize = initialize;
 });

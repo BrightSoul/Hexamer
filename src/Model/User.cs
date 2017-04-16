@@ -1,20 +1,14 @@
-﻿using System.Linq;
-
-namespace Hexamer.Model
+﻿namespace Hexamer.Model
 {
     public class User
     {
-        public string Email
+        public string ImageUrl
         {
             get; set;
         }
-        public string Username
+        public string Name
         {
-            get
-            {
-                return Email.Split('@').First();
-            }
+            get; set;
         }
-        public string FullName { get; set; }
     }
 }

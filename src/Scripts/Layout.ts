@@ -2,71 +2,84 @@
 import axios from 'axios';
 import { ILayout } from 'ILayout';
 import { User } from 'User';
+import { Page } from 'Page';
+import { NavigationContext } from 'NavigationContext';
+import { UserResult } from 'Scripts/Results/UserResult';
 
 export class LayoutViewModel implements ILayout {
 
-    async Get<TResult>(url: string): Promise<TResult> {
-        let response = await axios.get(url);
-        if (response.status < 200 && response.status > 200)
-            throw new Error("Errore di comunicazione con il server");
-        return <TResult> response.data;
-    }
-    async Post<TResult, TData>(url: string, data: TData): Promise<TResult> {
-        let response = await axios.post(url, data);
-        if (response.status < 200 && response.status > 200)
-            throw new Error("Errore di comunicazione con il server");
-        return <TResult> response.data;
-    }
-
-
-    Navigate(module: string) {
-        this.CurrentModuleName(module);
-    }
-    SetUserIdentity(user: User) {
-        if (!user)
-            throw new Error("L'utente non è valido");
-
-        this.User(user);
-    }
-    ClearUserIdentity() {
-        
-    }
-
-    private UpdateUserIdentity(user: User){
-        this.User(null);
-        this.Navigate("Login");
-    }
-
-    public CurrentModuleName: KnockoutObservable<string>;
+    public NavigationContext: KnockoutObservable<NavigationContext>;
     public User: KnockoutObservable<User>;
-    public Strings : any;
+    public Title: KnockoutObservable<string>;
     
     constructor() {
         let templateEngine: any = ko["amdTemplateEngine"];
         templateEngine.defaultPath = "/html";
         templateEngine.defaultSuffix = ".html";
-        this.Strings = this.CreateStrings();
-        //TODO: determinalo in base al cookie
-        let user: User = null;
-        this.User = ko.observable(user);
-        //TODO: determinalo in base all'url. Se l'utente è null, vai con Login 
-        if (user) {
-            //TODO: determinalo in base all'url. Se l'utente è null, vai con Login 
-            this.CurrentModuleName = ko.observable("Login");
+        this.User = ko.observable(null);
+        this.NavigationContext = ko.observable(null);
+        this.Title = ko.observable("Hexamer");
+        this.GetUser();
+    }
+
+    public SetTitle(title: string) {
+        this.Title(title);
+    }
+    private async GetUser() : Promise<void> {
+        let result = await this.Get<UserResult>("/api/User");
+        if (result.IsAuthenticated) {
+            this.Login(result.User);
         } else {
-            this.CurrentModuleName = ko.observable("Login");
+            await this.Logout();
+        }
+    }
+    
+    public async Get<TResult>(url: string): Promise<TResult> {
+        let response = await axios.get(url);
+        this.EnsureSuccessStatusCode(response.status);
+        return <TResult> response.data;
+    }
+
+    public async Post<TResult, TData>(url: string, data: TData): Promise<TResult> {
+        let response = await axios.post(url, data);
+        this.EnsureSuccessStatusCode(response.status);
+        return <TResult> response.data;
+    }
+
+    private EnsureSuccessStatusCode(statusCode: number) {
+        if (statusCode == 401) {
+            alert("Per favore rieffettua il login");
+            this.Navigate(Page.Login);
+        } else if (statusCode >= 400) {
+            alert("Si è verificato un errore nel server, per favore segnala questo problema");
         }
     }
 
-    private CreateStrings() {
-        return {
-            LoginWithSlack: "Accedi con slack"
-        };
+    public Navigate(page: Page, navigationArgs: string = null) : void {
+        var navigationContext = new NavigationContext(this, page, navigationArgs);
+        this.NavigationContext(navigationContext);
     }
-
-
-
-    public ChangeLanguage(language: string): void {
-        
+    private NavigateAccordingToUrl(defaultPage: Page) : void {
+        let navigationInfo: string[] = location.hash.substr(location.hash.indexOf('#')+1).split('/');
+        let destinationPage: Page = defaultPage;
+        if (navigationInfo[0] in Page) {
+            destinationPage = <Page> Page[navigationInfo[0]];
+        }
+        let navigationArgs: string = navigationInfo.length > 1 ? navigationInfo[1] : null;
+        this.Navigate(destinationPage, navigationArgs);
+    }
+    private BackToHome() {
+        if (confirm("Vuoi davvero tornare alla home?")) {
+            this.Navigate(Page.Exam);
+        }
+    }
+    private Login(user: User){
+        this.User(user);
+        this.NavigateAccordingToUrl(Page.Exams);
+    }
+    private async Logout() : Promise<void> {
+        await this.Get("/api/Logout");
+        this.User(null);
+        this.Navigate(Page.Login);
     }
 }

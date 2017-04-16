@@ -9,6 +9,9 @@ using Hexamer.Model;
 using Hexamer.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Newtonsoft.Json.Serialization;
 
 namespace Hexamer
 {
@@ -37,7 +40,13 @@ namespace Hexamer
             services.AddTransient<IExamRepository, ExamRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration));
-            services.AddMvc();
+            services.AddMvc(options => {
+                var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Hexamer API", Version = "v1" });

@@ -7,21 +7,26 @@
     <link href="/css/app.css" rel="stylesheet" />
 </head>
 <body>
-    <p>
-        Layout
-    </p>
-
-
-    <a href="login.html">Login</a>
-    <a href="exams.html">Exams</a>
-    <a href="question.html">Question</a>
-    <div data-bind="module:{name: CurrentModuleName, data: $root}"></div>
+<header>
+    <section class="toolbar" data-bind="if: NavigationContext">
+        <button type="button" class="back-to-home" data-bind="visible: NavigationContext().Page == 'Exam', click: BackToHome"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+        <h3 data-bind="text: Title"></h3>
+        <div class="pull-right" data-bind="if: User">
+            <img class="profile-image" data-bind="attr: { src: User().ImageUrl, alt: User().Name }" width="20" height="20">
+            <h3 data-bind="text: User().Name"></h3>
+            <button data-bind="click: Logout">Esci</button>
+        </div>
+    </section>
+</header>
+<div data-bind="if: NavigationContext()">
+    <div data-bind="module: {name: NavigationContext().Page, data: NavigationContext()}"></div>
+</div>
+    
     <script src="/js/libs.js"></script>
     <script>
-        require(['Layout', 'knockout', 'qs', 'js-cookie', 'text', 'domReady', 'knockout-amd-helpers'], function (module, ko) {
+        require(['Layout', 'knockout', 'text', 'domReady', 'knockout-amd-helpers'], function (module, ko) {
             ko.applyBindings(new module.LayoutViewModel());
         });
     </script>
-
 </body>
 </html>

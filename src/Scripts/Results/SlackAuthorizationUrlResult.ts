@@ -1,3 +1,3 @@
 export class SlackAuthorizationUrlResult {
-    public slackAuthorizationUrl: string;
+    public SlackAuthorizationUrl: string;
 }

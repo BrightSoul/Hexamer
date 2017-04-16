@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Hexamer.Model;
 using Hexamer.Model.Results;
 using Hexamer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Scacchi.Model.Results;
@@ -15,7 +16,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Hexamer.Controllers
 {
-    [Route("api/[controller]")]
+    [AllowAnonymous, Route("api/[controller]")]
     public class SlackController : Controller
     {
         private readonly AppConfig config;
