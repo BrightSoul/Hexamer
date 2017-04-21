@@ -6,22 +6,30 @@
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/app.css" rel="stylesheet" />
 </head>
-<body>
-<header>
-    <section class="toolbar" data-bind="if: NavigationContext">
-        <button type="button" class="back-to-home" data-bind="visible: NavigationContext().Page == 'Exam', click: BackToHome"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
-        <h3 data-bind="text: Title"></h3>
-        <div class="pull-right" data-bind="if: User">
-            <img class="profile-image" data-bind="attr: { src: User().ImageUrl, alt: User().Name }" width="20" height="20">
-            <h3 data-bind="text: User().Name"></h3>
-            <button data-bind="click: Logout">Esci</button>
-        </div>
-    </section>
-</header>
+<body data-bind="attr: { class: NavigationContext() ? 'module-'+NavigationContext().Page.toLowerCase() : '' }">
+
+<nav data-bind="if: User() && NavigationContext(), visible: User() && NavigationContext()" class="navbar navbar-default navbar-fixed-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav" data-bind="visible: NavigationContext().CanGoBackToHome, click: BackToHome">
+          <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+      </ul>
+      <p class="navbar-text" data-bind="text: Title"></p>
+      <ul class="nav navbar-nav navbar-right" data-bind="if: User">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="profile-image" data-bind="attr: { src: User().ImageUrl, alt: User().Name }" width="20" height="20">
+            <span data-bind="text: User().Name"></span> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" data-bind="click: Logout">Logout</a></li>
+          </ul>
+        </li>
+        </ul>
+    </div>
+  </div>
+</nav>
 <div data-bind="if: NavigationContext()">
     <div data-bind="module: {name: NavigationContext().Page, data: NavigationContext()}"></div>
 </div>
-    
     <script src="/js/libs.js"></script>
     <script>
         require(['Layout', 'knockout', 'text', 'domReady', 'knockout-amd-helpers'], function (module, ko) {

@@ -11,7 +11,7 @@ namespace Hexamer.Services
         private readonly string examsDataDirectory;
         public ExamRepository(AppConfig config)
         {
-            examsDataDirectory = config.ExamsDataDirectory;
+            examsDataDirectory = config.ExamsDataDirectory; 
         }
         public IEnumerable<Exam> GetAll()
         {

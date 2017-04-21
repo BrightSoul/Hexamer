@@ -12,7 +12,11 @@ namespace Hexamer.Extensions
 
             var rootDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             return Path.Combine(rootDirectory, path);
-
+        }
+        public static void CreateDirectoryIfNotExists(this string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
         }
     }
 }

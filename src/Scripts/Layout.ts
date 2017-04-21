@@ -1,10 +1,10 @@
 ﻿import * as ko from 'knockout';
 import axios from 'axios';
-import { ILayout } from 'ILayout';
-import { User } from 'User';
-import { Page } from 'Page';
-import { NavigationContext } from 'NavigationContext';
 import { UserResult } from 'Scripts/Results/UserResult';
+import { ILayout } from 'Scripts/Models/ILayout';
+import { User } from 'Scripts/Models/User';
+import { NavigationContext } from 'Scripts/Models/NavigationContext';
+import { Page } from 'Scripts/Models/Page';
 
 export class LayoutViewModel implements ILayout {
 
@@ -15,16 +15,27 @@ export class LayoutViewModel implements ILayout {
     constructor() {
         let templateEngine: any = ko["amdTemplateEngine"];
         templateEngine.defaultPath = "/html";
-        templateEngine.defaultSuffix = ".html";
+        templateEngine.defaultSuffix = ".html?v=" + Math.random();
         this.User = ko.observable(null);
         this.NavigationContext = ko.observable(null);
         this.Title = ko.observable("Hexamer");
+        window.onhashchange = () => { this.ChangePage(); };
         this.GetUser();
+        
     }
 
     public SetTitle(title: string) {
         this.Title(title);
     }
+
+    public GetUsername(): string {
+        let user = this.User();
+        return user ? user.Name : null;
+    }
+    private ChangePage(): void {
+        this.NavigateAccordingToHash(Page.Login);
+    }
+
     private async GetUser() : Promise<void> {
         let result = await this.Get<UserResult>("/api/User");
         if (result.IsAuthenticated) {
@@ -56,26 +67,39 @@ export class LayoutViewModel implements ILayout {
     }
 
     public Navigate(page: Page, navigationArgs: string = null) : void {
-        var navigationContext = new NavigationContext(this, page, navigationArgs);
-        this.NavigationContext(navigationContext);
+        let newHash: string = Page[page] + (navigationArgs ? '/' + navigationArgs : '');
+        if (location.hash.substr(location.hash.indexOf('#')+1) == newHash)
+            this.NavigateAccordingToHash(page);
+        else
+            location.hash = newHash;
     }
-    private NavigateAccordingToUrl(defaultPage: Page) : void {
+    private NavigateAccordingToHash(defaultPage: Page) : void {
         let navigationInfo: string[] = location.hash.substr(location.hash.indexOf('#')+1).split('/');
         let destinationPage: Page = defaultPage;
         if (navigationInfo[0] in Page) {
             destinationPage = <Page> Page[navigationInfo[0]];
         }
         let navigationArgs: string = navigationInfo.length > 1 ? navigationInfo[1] : null;
-        this.Navigate(destinationPage, navigationArgs);
+
+        if (destinationPage == Page.Login && this.User()) {
+            this.Navigate(Page.Exams);
+        } else if (destinationPage != Page.Login && !this.User()) {
+            this.Navigate(Page.Login);
+        } else {
+            var navigationContext = new NavigationContext(this, destinationPage, navigationArgs);
+            this.NavigationContext(navigationContext);
+        }
+
+        
     }
     private BackToHome() {
         if (confirm("Vuoi davvero tornare alla home?")) {
-            this.Navigate(Page.Exam);
+            this.Navigate(Page.Exams);
         }
     }
-    private Login(user: User){
+    private Login(user: User) {
         this.User(user);
-        this.NavigateAccordingToUrl(Page.Exams);
+        this.Navigate(Page.Exams);
     }
     private async Logout() : Promise<void> {
         await this.Get("/api/Logout");

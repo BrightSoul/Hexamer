@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Newtonsoft.Json.Serialization;
+using System.Data.Common;
+using Microsoft.Data.Sqlite;
 
 namespace Hexamer
 {
@@ -39,6 +41,8 @@ namespace Hexamer
             // Add framework services.
             services.AddTransient<IExamRepository, ExamRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAnswerRepository, AnswerRepository>();
+            services.AddSingleton<DbProviderFactory>(SqliteFactory.Instance);
             services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration));
             services.AddMvc(options => {
                 var policy = new AuthorizationPolicyBuilder()

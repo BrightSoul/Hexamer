@@ -15,7 +15,10 @@ namespace Hexamer.Model
             }
             set
             {
+                if (value == null)
+                    return;
                 examsDataDirectory = value.ToAbsolutePath();
+                examsDataDirectory.CreateDirectoryIfNotExists();
             }
         }
         private string userDataDirectory;
@@ -27,7 +30,10 @@ namespace Hexamer.Model
             }
             set
             {
+                if (value == null)
+                    return;
                 userDataDirectory = value.ToAbsolutePath();
+                userDataDirectory.CreateDirectoryIfNotExists();
             }
         }
         public string[] SupportedLogins { get; set; }

@@ -1,16 +1,20 @@
-﻿import * as ko from "knockout";
+﻿import * as ko from 'knockout';
+import { NavigationContext } from 'Scripts/Models/NavigationContext';
+import { Exam } from 'Scripts/Models/Exam';
 
 class ExamsViewModel {
-    public Status: KnockoutObservable<string>
+    public Exams: KnockoutObservableArray<Exam>
 
-    constructor() {
-        this.Status = ko.observable("Rispondi...");
-        setTimeout(() => {
-            this.Status("Risposta corretta!");
-        }, 2000);
+    constructor(private navigationContext: NavigationContext) {
+        this.Exams = ko.observableArray<Exam>();
+        this.GetExams();
+    }
+
+    private async GetExams() : Promise<void> {
+        let exams = await this.navigationContext.Layout.Get<Exam[]>('/api/Exams');
+        this.Exams(exams);
     }
 }
-export function initialize() {
-    console.log(arguments);
-    return new ExamsViewModel();
+export function initialize(navigationContext: NavigationContext) {
+    return new ExamsViewModel(navigationContext);
 }

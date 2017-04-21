@@ -1,7 +1,7 @@
 ﻿import * as ko from 'knockout';
 import axios from 'axios';
 import { SlackAuthorizationUrlResult } from 'Results/SlackAuthorizationUrlResult';
-import { NavigationContext } from 'Scripts/NavigationContext';
+import { NavigationContext } from 'Scripts/Models/NavigationContext';
 class LoginViewModel {
     public SlackAuthorizationUrl: KnockoutObservable<string>
     constructor(private navigationContext: NavigationContext) {

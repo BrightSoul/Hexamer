@@ -14,4 +14,7 @@ export class NavigationContext {
     get NavigationArgs(): string {
         return this.navigationArgs;
     }
+    get CanGoBackToHome(): boolean {
+        return this.page == Page.Questions;
+    }
 }

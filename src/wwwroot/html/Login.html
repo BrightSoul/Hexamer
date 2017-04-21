@@ -1,1 +1,15 @@
-﻿<a data-bind="visible: SlackAuthorizationUrl, attr: {href: SlackAuthorizationUrl}"><img alt="Add to Slack" height="40" width="172" src="/images/sign_in_with_slack.png" srcset="/images/sign_in_with_slack.png 1x, /images/sign_in_with_slack@2x.png 2x" /></a>
+﻿<div class="modal fade in" tabindex="-1" role="dialog" style="display:block">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" data-bind="text: $root.Title"></h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <a data-bind="visible: SlackAuthorizationUrl, attr: {href: SlackAuthorizationUrl}"><img alt="Add to Slack" height="40" width="172" src="/images/sign_in_with_slack.png" srcset="/images/sign_in_with_slack.png 1x, /images/sign_in_with_slack@2x.png 2x" /></a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
