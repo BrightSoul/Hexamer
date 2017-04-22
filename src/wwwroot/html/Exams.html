@@ -1,4 +1,6 @@
-﻿exams
+﻿<section class="content">
+exams
 <ul data-bind="foreach: Exams">
-    <li data-bind="text: Title"></li>
+    <li><span data-bind="text: Title"></span> <button type="button" class="btn btn-start" data-bind="click: $parent.BeginExam">Inizia</button></li>
 </ul>
+</section>

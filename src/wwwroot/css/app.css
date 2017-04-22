@@ -1,5 +1,8 @@
-﻿body {
-    font-family: 'Roboto', sans-serif;
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+body, p, h1, h2, h3, h4, h5, h6, li, a, button {
+    font-family: 'Roboto', sans-serif !important;
+}
+body {
     color: #1c1c1c;
 }
 
@@ -7,10 +10,11 @@
 
 /* css header */
 
-header {
+.module-questions .summary {
     width: 100%;
     position: fixed;
-    top: 0;
+    top: 60px;
+    display: table;
 }
 
 .toolbar {
@@ -76,12 +80,6 @@ h4 {
 
 time {
     color: #4da400;
-}
-
-.exam-summary {
-    width: 100%;
-    display: table;
-    padding: 20px;
 }
 
 input[type=checkbox] + label {
@@ -154,10 +152,17 @@ aside li {
 
 /* css content */
 
-.content {
+.module-questions .content {
     position: fixed;
     top: 120px;
     bottom: 100px;
+    padding: 20px;
+    overflow-y: auto;
+}
+.module-exams .content {
+    position: fixed;
+    top: 60px;
+    bottom: 0;
     padding: 20px;
     overflow-y: auto;
 }

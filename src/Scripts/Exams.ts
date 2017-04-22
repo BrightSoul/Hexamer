@@ -1,6 +1,7 @@
 ﻿import * as ko from 'knockout';
 import { NavigationContext } from 'Scripts/Models/NavigationContext';
 import { Exam } from 'Scripts/Models/Exam';
+import { Page } from "Scripts/Models/Page";
 
 class ExamsViewModel {
     public Exams: KnockoutObservableArray<Exam>
@@ -14,6 +15,11 @@ class ExamsViewModel {
         let exams = await this.navigationContext.Layout.Get<Exam[]>('/api/Exams');
         this.Exams(exams);
     }
+
+    public BeginExam = (exam: Exam) => {
+        this.navigationContext.Layout.Navigate(Page.Questions, `${exam.Id}/1`);
+    }
+
 }
 export function initialize(navigationContext: NavigationContext) {
     return new ExamsViewModel(navigationContext);

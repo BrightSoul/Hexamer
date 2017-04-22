@@ -8,7 +8,7 @@
 </head>
 <body data-bind="attr: { class: NavigationContext() ? 'module-'+NavigationContext().Page.toLowerCase() : '' }">
 
-<nav data-bind="if: User() && NavigationContext(), visible: User() && NavigationContext()" class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<nav data-bind="if: User() && NavigationContext(), visible: User() && NavigationContext()" class="navbar navbar-default navbar-fixed-top navbar-inverse" style="display:none;">
   <div class="container-fluid">
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav" data-bind="visible: NavigationContext().CanGoBackToHome, click: BackToHome">

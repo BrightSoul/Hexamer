@@ -103,11 +103,15 @@ define("Models/Exam", ["require", "exports"], function (require, exports) {
     }());
     exports.Exam = Exam;
 });
-define("Exams", ["require", "exports", "knockout"], function (require, exports, ko) {
+define("Exams", ["require", "exports", "knockout", "Models/Page"], function (require, exports, ko, Page_2) {
     "use strict";
     var ExamsViewModel = (function () {
         function ExamsViewModel(navigationContext) {
+            var _this = this;
             this.navigationContext = navigationContext;
+            this.BeginExam = function (exam) {
+                _this.navigationContext.Layout.Navigate(Page_2.Page.Questions, exam.Id + "/1");
+            };
             this.Exams = ko.observableArray();
             this.GetExams();
         }
@@ -141,7 +145,7 @@ define("Results/UserResult", ["require", "exports"], function (require, exports)
     }());
     exports.UserResult = UserResult;
 });
-define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page"], function (require, exports, ko, axios_1, NavigationContext_1, Page_2) {
+define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page"], function (require, exports, ko, axios_1, NavigationContext_1, Page_3) {
     "use strict";
     var LayoutViewModel = (function () {
         function LayoutViewModel() {
@@ -163,7 +167,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             return user ? user.Name : null;
         };
         LayoutViewModel.prototype.ChangePage = function () {
-            this.NavigateAccordingToHash(Page_2.Page.Login);
+            this.NavigateAccordingToHash(Page_3.Page.Login);
         };
         LayoutViewModel.prototype.GetUser = function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -216,7 +220,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         LayoutViewModel.prototype.EnsureSuccessStatusCode = function (statusCode) {
             if (statusCode == 401) {
                 alert("Per favore rieffettua il login");
-                this.Navigate(Page_2.Page.Login);
+                this.Navigate(Page_3.Page.Login);
             }
             else if (statusCode >= 400) {
                 alert("Si è verificato un errore nel server, per favore segnala questo problema");
@@ -224,7 +228,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         };
         LayoutViewModel.prototype.Navigate = function (page, navigationArgs) {
             if (navigationArgs === void 0) { navigationArgs = null; }
-            var newHash = Page_2.Page[page] + (navigationArgs ? '/' + navigationArgs : '');
+            var newHash = Page_3.Page[page] + (navigationArgs ? '/' + navigationArgs : '');
             if (location.hash.substr(location.hash.indexOf('#') + 1) == newHash)
                 this.NavigateAccordingToHash(page);
             else
@@ -233,15 +237,15 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         LayoutViewModel.prototype.NavigateAccordingToHash = function (defaultPage) {
             var navigationInfo = location.hash.substr(location.hash.indexOf('#') + 1).split('/');
             var destinationPage = defaultPage;
-            if (navigationInfo[0] in Page_2.Page) {
-                destinationPage = Page_2.Page[navigationInfo[0]];
+            if (navigationInfo[0] in Page_3.Page) {
+                destinationPage = Page_3.Page[navigationInfo[0]];
             }
             var navigationArgs = navigationInfo.length > 1 ? navigationInfo[1] : null;
-            if (destinationPage == Page_2.Page.Login && this.User()) {
-                this.Navigate(Page_2.Page.Exams);
+            if (destinationPage == Page_3.Page.Login && this.User()) {
+                this.Navigate(Page_3.Page.Exams);
             }
-            else if (destinationPage != Page_2.Page.Login && !this.User()) {
-                this.Navigate(Page_2.Page.Login);
+            else if (destinationPage != Page_3.Page.Login && !this.User()) {
+                this.Navigate(Page_3.Page.Login);
             }
             else {
                 var navigationContext = new NavigationContext_1.NavigationContext(this, destinationPage, navigationArgs);
@@ -250,12 +254,12 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         };
         LayoutViewModel.prototype.BackToHome = function () {
             if (confirm("Vuoi davvero tornare alla home?")) {
-                this.Navigate(Page_2.Page.Exams);
+                this.Navigate(Page_3.Page.Exams);
             }
         };
         LayoutViewModel.prototype.Login = function (user) {
             this.User(user);
-            this.Navigate(Page_2.Page.Exams);
+            this.Navigate(Page_3.Page.Exams);
         };
         LayoutViewModel.prototype.Logout = function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -265,7 +269,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                         case 1:
                             _a.sent();
                             this.User(null);
-                            this.Navigate(Page_2.Page.Login);
+                            this.Navigate(Page_3.Page.Login);
                             return [2 /*return*/];
                     }
                 });
