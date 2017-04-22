@@ -1,19 +1,18 @@
 ﻿
     <header class="summary">
         <div class="pull-left">
-            <h2>Domanda 6 di 36</h2>
-            <input type="checkbox" class="review-checkbox" id="review" name="review" /><label class="review" for="review">Contrassegna per rivederla dopo</label>
+            <h2 data-bind="if: CurrentQuestion">Domanda <span data-bind="CurrentQuestion().Ordinal"></span> di <span data-bind="QuestionsCount"></span></h2>
+            <input type="checkbox" class="review-checkbox" id="review" name="review" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="review" for="review">Contrassegna per rivederla dopo</label>
         </div>
-        <div class="pull-right">
-            <h2>Tempo residuo <time>1:45:36</time></h2>
-            <h4>Circa 2:30 a domanda</h4>
+        <div class="pull-right" data-bind="if: RemainingTime">
+            <h2><span data-bind="visible: HasExpirationTime">Tempo residuo</span> <time data-bind="text: RemainingTime, css: {'running-out': TimeIsRunningOut}">1:45:36</time></h2>
+            <h4>Circa 0:00 a domanda</h4>
         </div>
     </header>
 
-<section class="question">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut molestie mi. Quisque vitae maximus diam, ut facilisis nisl.</p>
-
-    <h5>Completa il codice selezionando le risposte corrette tra quelle disponibili.</h5>
+<section class="question" data-bind="with: CurrentQuestion">
+    <p data-bind="html: Text"></p>
+    <h5 data-bind="text: CallToAction"></h5>
     <form class="form-inline">
         <pre class="code">public <select id="select1" class="form-control">
         <option value="op1"> </option>

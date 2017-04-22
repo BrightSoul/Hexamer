@@ -10,13 +10,6 @@ body {
 
 /* css header */
 
-.module-questions .summary {
-    width: 100%;
-    position: fixed;
-    top: 60px;
-    display: table;
-}
-
 .toolbar {
     width: 100%;
     background-color: #004457;
@@ -81,6 +74,9 @@ h4 {
 time {
     color: #4da400;
 }
+time.running-out {
+    color: #cc0000;
+}
 
 input[type=checkbox] + label {
     cursor: pointer;
@@ -117,6 +113,7 @@ input[type=checkbox]:checked + label.review::before {
     border-radius: 3px;
 }
 
+
 /* css sidebar */
 aside {
     display: none;
@@ -151,21 +148,6 @@ aside li {
 }
 
 /* css content */
-
-.module-questions .content {
-    position: fixed;
-    top: 120px;
-    bottom: 100px;
-    padding: 20px;
-    overflow-y: auto;
-}
-.module-exams .content {
-    position: fixed;
-    top: 60px;
-    bottom: 0;
-    padding: 20px;
-    overflow-y: auto;
-}
 
 h5 {
     font-weight: 600;
@@ -351,4 +333,48 @@ footer {
 /* Module-specific rules */
 .module-login {
     background-color: #f5f5f5;
+}
+
+
+.module-questions .summary {
+    width: 100%;
+    position: fixed;
+    top: 40px;
+    padding:18px;
+    display: table;
+}
+
+
+.module-questions .question {
+    position: fixed;
+    top: 120px;
+    bottom: 100px;
+    padding: 20px;
+    overflow-y: auto;
+}
+.module-exams .content {
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Bootstrap overrides */
+.navbar-default { min-height:auto; }
+.navbar-text { margin-top:4px; margin-bottom: 0; margin-left:5px; }
+.navbar-nav>li>a { padding-top:2px; padding-bottom:2px; border:0; }
+.margin-top { margin-top:2px; }
+.dropdown-toggle {
+    padding: 2px;
+    padding-right: 15px;
+}
+.navbar-nav>li>a.back-to-home {
+    padding-top: 6px;
+    padding-bottom: 28px;
+    padding-right: 30px;
+    display: inline-block;
+}
+.navbar .container-fluid {
+    padding-left:0;
 }
