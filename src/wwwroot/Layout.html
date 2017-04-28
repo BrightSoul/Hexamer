@@ -15,12 +15,23 @@
           <li><a href="#" class="back-to-home"><span class="glyphicon glyphicon-home"></span></a></li>
       </ul>
       <p class="navbar-text" data-bind="text: Title"></p>
+      
       <ul class="nav navbar-nav navbar-right" data-bind="if: User">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="profile-image" data-bind="attr: { src: User().ImageUrl, alt: User().Name }" width="20" height="20" style="margin-right:5px;">
             <span data-bind="text: User().Name"></span> <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <ul class="user-menu dropdown-menu">
             <li><a href="#" data-bind="click: Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
+        </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" data-bind="if: CurrentLocale">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <img class="locale-image" data-bind="attr: { src: '/Images/Locale/'+CurrentLocale()+'.png', alt: CurrentLocale() }" width="20" height="20" style="margin-right:5px;">
+            <span data-bind="text: CurrentLocale().toUpperCase()"></span> <span class="caret"></span></a>
+          <ul class="locale-menu dropdown-menu" data-bind="foreach: SupportedLocales">
+            <li><a href="#" data-bind="click: $parent.SelectLocale"><img class="locale-image" data-bind="attr: { src: '/images/locale/'+$data+'.png', alt: $data }" width="20" height="20" style="margin-right:5px;"> <span data-bind="text: $data.toUpperCase()"></span></a></li>
           </ul>
         </li>
         </ul>

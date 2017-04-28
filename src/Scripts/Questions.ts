@@ -41,11 +41,11 @@ class QuestionsViewModel {
         question.CallToAction = "Compila qui";
         question.Data = "";
         question.Id = "q1";
-        question.Bookmarked = false;
+        question.IsBookmarked = false;
         question.Type = "MultipleChoice";
         
         this.CurrentQuestion(question);
-        this.IsCurrentQuestionBookmarked(question.Bookmarked);
+        this.IsCurrentQuestionBookmarked(question.IsBookmarked);
         this.QuestionsCount(26);
     }
 

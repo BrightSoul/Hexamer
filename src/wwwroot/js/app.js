@@ -94,6 +94,17 @@ define("Models/NavigationContext", ["require", "exports", "Models/Page"], functi
     }());
     exports.NavigationContext = NavigationContext;
 });
+define("Models/ExamStatus", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var ExamStatus;
+    (function (ExamStatus) {
+        ExamStatus[ExamStatus["Incomplete"] = 0] = "Incomplete";
+        ExamStatus[ExamStatus["NotPassed"] = 1] = "NotPassed";
+        ExamStatus[ExamStatus["Passed"] = 2] = "Passed";
+        ExamStatus[ExamStatus["WellDone"] = 3] = "WellDone";
+        ExamStatus[ExamStatus["Excellent"] = 4] = "Excellent";
+    })(ExamStatus = exports.ExamStatus || (exports.ExamStatus = {}));
+});
 define("Models/Exam", ["require", "exports"], function (require, exports) {
     "use strict";
     var Exam = (function () {
@@ -145,20 +156,62 @@ define("Results/UserResult", ["require", "exports"], function (require, exports)
     }());
     exports.UserResult = UserResult;
 });
-define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page"], function (require, exports, ko, axios_1, NavigationContext_1, Page_3) {
+define("Localization/SupportedLocales", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var SupportedLocales;
+    (function (SupportedLocales) {
+        SupportedLocales[SupportedLocales["It"] = 0] = "It";
+        SupportedLocales[SupportedLocales["En"] = 1] = "En";
+    })(SupportedLocales = exports.SupportedLocales || (exports.SupportedLocales = {}));
+});
+define("Localization/ILocale", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
+define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page", "Localization/SupportedLocales"], function (require, exports, ko, axios_1, NavigationContext_1, Page_3, SupportedLocales_1) {
     "use strict";
     var LayoutViewModel = (function () {
         function LayoutViewModel() {
             var _this = this;
+            this.LoadLocale = function () {
+                var currentLocale = _this.CurrentLocale();
+                if (!currentLocale)
+                    return;
+                requirejs(["Localization/Locale/" + currentLocale], function (localeModule) {
+                    var locale = new localeModule[currentLocale]();
+                    _this.Locale(locale);
+                });
+            };
+            this.SelectLocale = function (locale) {
+                _this.CurrentLocale(locale);
+            };
             var templateEngine = ko["amdTemplateEngine"];
             templateEngine.defaultPath = "/html";
             templateEngine.defaultSuffix = ".html?v=" + Math.random();
             this.User = ko.observable(null);
             this.NavigationContext = ko.observable(null);
             this.Title = ko.observable("Hexamer");
+            this.SupportedLocales = [];
+            this.Locale = ko.observable();
+            this.CurrentLocale = ko.observable(null);
+            this.LocaleLoader = ko.computed(this.LoadLocale);
+            this.InitLocale();
             window.onhashchange = function () { _this.ChangePage(); };
             this.GetUser();
         }
+        LayoutViewModel.prototype.InitLocale = function () {
+            for (var p in SupportedLocales_1.SupportedLocales) {
+                if (isNaN(parseInt(p, 10)))
+                    this.SupportedLocales.push(p);
+            }
+            var navigatorLanguage = navigator.language.toLowerCase();
+            var foundLanguage = this.SupportedLocales.filter(function (l) { return l.toLowerCase() == navigatorLanguage || l.toLowerCase().substr(0, 2) == navigatorLanguage.substr(0, 2); });
+            if (foundLanguage.length > 0) {
+                this.CurrentLocale(foundLanguage[0]);
+            }
+            else {
+                this.CurrentLocale(this.SupportedLocales[0]);
+            }
+        };
         LayoutViewModel.prototype.SetTitle = function (title) {
             this.Title(title);
         };
@@ -372,10 +425,10 @@ define("Questions", ["require", "exports", "knockout", "Models/Exam", "Models/Qu
             question.CallToAction = "Compila qui";
             question.Data = "";
             question.Id = "q1";
-            question.Bookmarked = false;
+            question.IsBookmarked = false;
             question.Type = "MultipleChoice";
             this.CurrentQuestion(question);
-            this.IsCurrentQuestionBookmarked(question.Bookmarked);
+            this.IsCurrentQuestionBookmarked(question.IsBookmarked);
             this.QuestionsCount(26);
         }
         QuestionsViewModel.prototype.UpdateBookmark = function () {
@@ -391,6 +444,35 @@ define("Questions", ["require", "exports", "knockout", "Models/Exam", "Models/Qu
         return new QuestionsViewModel(navigationContext);
     }
     exports.initialize = initialize;
+});
+define("Localization/Locale/En", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var En = (function () {
+        function En() {
+            this.Title = "English";
+        }
+        return En;
+    }());
+    exports.En = En;
+});
+define("Localization/Locale/It", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var It = (function () {
+        function It() {
+            this.Title = "Italiano";
+        }
+        return It;
+    }());
+    exports.It = It;
+});
+define("Models/Answer", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var Answer = (function () {
+        function Answer() {
+        }
+        return Answer;
+    }());
+    exports.Answer = Answer;
 });
 define("QuestionTypes/MultipleChoice", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";

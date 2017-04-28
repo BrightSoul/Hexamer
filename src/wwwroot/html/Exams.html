@@ -1,6 +1,11 @@
 ﻿<section class="content">
-exams
-<ul data-bind="foreach: Exams">
-    <li><span data-bind="text: Title"></span> <button type="button" class="btn btn-start" data-bind="click: $parent.BeginExam">Inizia</button></li>
+exams: <span data-bind="text: $root.Locale().Title"></span>
+<ul class="examlist list-unstyled" data-bind="foreach: Exams">
+    <li>
+        <span data-bind="text: Title"></span>
+        <span class="exam-mark">30<span>
+        <span class="exam-mark-comment">e lode</span>
+        <button type="button" class="btn btn-start" data-bind="click: $parent.BeginExam">Inizia</button>
+        </li>
 </ul>
 </section>

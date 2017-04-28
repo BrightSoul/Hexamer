@@ -5,13 +5,19 @@ import { ILayout } from 'Scripts/Models/ILayout';
 import { User } from 'Scripts/Models/User';
 import { NavigationContext } from 'Scripts/Models/NavigationContext';
 import { Page } from 'Scripts/Models/Page';
+import { SupportedLocales } from 'Scripts/Localization/SupportedLocales';
+import { ILocale } from 'Scripts/Localization/ILocale';
 
 export class LayoutViewModel implements ILayout {
 
     public NavigationContext: KnockoutObservable<NavigationContext>;
     public User: KnockoutObservable<User>;
     public Title: KnockoutObservable<string>;
-    
+    public SupportedLocales: string[];
+    public CurrentLocale: KnockoutObservable<string>;
+    private LocaleLoader: KnockoutComputed<void>;
+    public Locale: KnockoutObservable<ILocale>;
+
     constructor() {
         let templateEngine: any = ko["amdTemplateEngine"];
         templateEngine.defaultPath = "/html";
@@ -19,14 +25,51 @@ export class LayoutViewModel implements ILayout {
         this.User = ko.observable(null);
         this.NavigationContext = ko.observable(null);
         this.Title = ko.observable("Hexamer");
+        this.SupportedLocales = [];
+        this.Locale = ko.observable<ILocale>();
+        this.CurrentLocale = ko.observable(null);
+        this.LocaleLoader = ko.computed(this.LoadLocale);
+        this.InitLocale();
         window.onhashchange = () => { this.ChangePage(); };
         this.GetUser();
         
+        
+    }
+
+    private InitLocale() : void {
+        
+        for (let p in SupportedLocales){
+            if (isNaN(parseInt(p, 10)))
+                this.SupportedLocales.push(p);
+        }
+
+        let navigatorLanguage = navigator.language.toLowerCase();
+        let foundLanguage = this.SupportedLocales.filter(l => l.toLowerCase() == navigatorLanguage || l.toLowerCase().substr(0, 2) == navigatorLanguage.substr(0, 2));
+        if (foundLanguage.length > 0){
+            this.CurrentLocale(foundLanguage[0]);
+        } else {
+            this.CurrentLocale(this.SupportedLocales[0]);
+        }
+        
+    }
+
+    private LoadLocale = () => {
+        let currentLocale = this.CurrentLocale();
+        if (!currentLocale)
+            return;
+        requirejs(["Localization/Locale/" + currentLocale], (localeModule) => {
+                let locale = <ILocale> new localeModule[currentLocale]();
+                this.Locale(locale);
+            });
     }
 
     public SetTitle(title: string) {
         this.Title(title);
     }
+
+    public SelectLocale = (locale: string) => {
+        this.CurrentLocale(locale);
+    };
 
     public GetUsername(): string {
         let user = this.User();

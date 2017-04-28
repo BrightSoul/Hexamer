@@ -1,9 +1,12 @@
 export class Question {
     public Id : string;
+    public ExamId : string;
     public Text: string;
-    public Answer: string;
+    public Ordinal: number;
     public CallToAction: string;
+    public GivenAnswer: string;
     public Data: any;
     public Type: string;
-    public Bookmarked: boolean;
+    public IsBookmarked: boolean;
+    public CanRevealAnswer: boolean;
 }
