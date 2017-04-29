@@ -106,20 +106,14 @@ namespace Hexamer.Model
                 return !Hidden && !ValidTo.HasValue && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
             }
         }
-        public bool CanShowScore
-        {
-            get
-            {
-                return !Hidden && (!ValidTo.HasValue || ValidTo.Value < DateTime.Now) && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
-            }
-        }
-        public bool CanTakeExam
+        public bool CanOpenExam
         {
             get
             {
                 return !Hidden && (!ValidTo.HasValue || ValidTo.Value > DateTime.Now) && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
             }
         }
+
         public List<Question> Questions { get; set; }
         public List<Group> Groups { get; set; }
 

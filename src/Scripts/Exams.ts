@@ -1,7 +1,7 @@
 ﻿import * as ko from 'knockout';
 import { NavigationContext } from 'Scripts/Models/NavigationContext';
 import { Exam } from 'Scripts/Models/Exam';
-import { Page } from "Scripts/Models/Page";
+import { Page } from 'Scripts/Models/Page';
 
 class ExamsViewModel {
     public Exams: KnockoutObservableArray<Exam>
@@ -16,8 +16,12 @@ class ExamsViewModel {
         this.Exams(exams);
     }
 
-    public BeginExam = (exam: Exam) => {
-        this.navigationContext.Layout.Navigate(Page.Questions, `${exam.Id}/1`);
+    public OpenExam = (exam: Exam) : void => {
+        this.navigationContext.Layout.Navigate(Page.Questions, `${exam.Id}/${exam.Questions[0]}`);
+    }
+
+    public ResetExam = (exam: Exam) : void => {
+        alert("reset");
     }
 
 }

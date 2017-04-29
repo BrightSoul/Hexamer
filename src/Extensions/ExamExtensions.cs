@@ -8,12 +8,7 @@ namespace Hexamer.Extensions
     {
         public static IEnumerable<Exam> Visible(this IEnumerable<Exam> exams)
         {
-            return exams.Where(exam => exam.CanTakeExam || exam.CanShowScore);
-        }
-
-        public static IEnumerable<Exam> Takeable(this IEnumerable<Exam> exams)
-        {
-            return exams.Where(exam => exam.CanTakeExam);
+            return exams.Where(exam => exam.CanOpenExam);
         }
     }
 }

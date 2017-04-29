@@ -16,6 +16,7 @@ namespace Hexamer.Services
         public AnswerRepository(AppConfig config, DbProviderFactory factory)
         {
             this.factory = factory;
+            this.config = config;
         }
         public async Task<IEnumerable<Answer>> GetAll(string username, string exam)
         {
@@ -23,7 +24,8 @@ namespace Hexamer.Services
             {
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "SELECT * FROM Answers WHERE Username=@username AND Exam=@exam";
+                    command.CommandText = "SELECT * FROM Answers WHERE Exam=@exam";
+                    command.AddParameter("exam", exam);
                     using (var reader = await command.ExecuteReaderAsync())
                     {
                         List<Answer> answers = new List<Answer>();
@@ -43,7 +45,9 @@ namespace Hexamer.Services
             {
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "SELECT * FROM Answers WHERE Username=@username AND Exam=@exam AND Question=@question";
+                    command.CommandText = "SELECT * FROM Answers WHERE Exam=@exam AND Question=@question";
+                    command.AddParameter("exam", exam);
+                    command.AddParameter("question", question);
                     using (var reader = await command.ExecuteReaderAsync())
                     {
                         if (await reader.ReadAsync())

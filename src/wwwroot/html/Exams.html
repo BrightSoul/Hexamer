@@ -1,24 +1,24 @@
 ﻿<section class="content">
-<ul class="examlist list-unstyled" data-bind="foreach: Exams">
+<ul class="examlist list-unstyled list-inline" data-bind="foreach: Exams">
     <li>
       <figure>
         <img data-bind="attr: {src: '/api/Exams/' + Id + '/Image', alt: Title + ' ' + Subtitle}" />
         <figcaption>
-            <span class="exam-title" data-bind="text: title"></span>
-            <span class="exam-subtitle" data-bind="text: subtitle, visible: subtitle"></span>
+            <span class="exam-title" data-bind="text: Title"></span>
+            <span class="exam-subtitle" data-bind="text: Subtitle, visible: Subtitle"></span>
         </figcaption>
         </figure>
         <header>
-          <p>30 <span data-bind="locale: 'Questions'"></span><span data-bind="visible: NumberOfQuestionsAnswered > 0">, <span data-bind="text: NumberOfQuestionsAnswered"></span> <span data-bind="locale: 'QuestionsAlreadyAnswered'"></span></span></p>
+          <p><span data-bind="text: Questions.length"></span> <span data-bind="locale: 'Questions'"></span><span data-bind="visible: QuestionsAnswered > 0">, <span data-bind="text: QuestionsAnswered"></span> <span data-bind="locale: 'QuestionsAlreadyAnswered'"></span></span></p>
           <p>Disponibile dal 10/17/2017 ore 19:30</p>
         </header>
-        <section class="exam-mark excellent animated">
-          <span class="exam-mark-value">30<span>
-          <span class="exam-mark-comment">qui vedrai il voto</span>
+        <section data-bind="attr: {class: 'exam-mark ' + Rating + ' ' + (IsNewlyCompleted ? 'animated' : '')}">
+          <span class="exam-mark-value" data-bind="text: Score || '--'"><span>
+          <span class="exam-mark-comment" data-bind="locale: 'CumLaude'"></span>
         </section>
         <footer>
-          <button type="button" class="btn btn-link btn-block">Resetta</button>
-          <button type="button" class="btn btn-start btn-block btn-primary btn-lg">Apri</button>
+          <button type="button" class="btn btn-link btn-block" data-bind="visible: CanResetExam, locale: 'ResetExam', click:$parent.ResetExam"></button>
+          <button type="button" class="btn btn-start btn-block btn-primary btn-lg" data-bind="locale: QuestionsAnswered == 0 ? 'BeginExam' : (QuestionsAnswered >= Questions.length ? 'ReviewExam' : 'ResumeExam'), 'BeginExam', click:$parent.OpenExam"></button>
         </footer>
     </li>
 </ul>

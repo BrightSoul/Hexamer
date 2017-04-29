@@ -120,8 +120,11 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
         function ExamsViewModel(navigationContext) {
             var _this = this;
             this.navigationContext = navigationContext;
-            this.BeginExam = function (exam) {
-                _this.navigationContext.Layout.Navigate(Page_2.Page.Questions, exam.Id + "/1");
+            this.OpenExam = function (exam) {
+                _this.navigationContext.Layout.Navigate(Page_2.Page.Questions, exam.Id + "/" + exam.Questions[0]);
+            };
+            this.ResetExam = function (exam) {
+                alert("reset");
             };
             this.Exams = ko.observableArray();
             this.GetExams();
@@ -481,7 +484,7 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.CumLaude = "cum laude";
             this.MarkWillAppearHere = "your mark will be here";
             this.Questions = "questions";
-            this.QuestionsOfWhichAlreadyAnswered = "already answered";
+            this.QuestionsAlreadyAnswered = "already answered";
             this.AvailableFrom = "Available from";
             this.StartingIn = "Starting in";
             this.Next = "Next";
@@ -515,7 +518,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.CumLaude = "e lode";
             this.MarkWillAppearHere = "qui vedrai il voto";
             this.Questions = "domande";
-            this.QuestionsOfWhichAlreadyAnswered = "già risposte";
+            this.QuestionsAlreadyAnswered = "già risposte";
             this.AvailableFrom = "Disponibile dal";
             this.StartingIn = "Inizia tra";
             this.Next = "Prossima";

@@ -518,7 +518,11 @@ footer {
 }
 .examlist .exam-subtitle {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
+}
+.examlist li {
+    padding:0 !important;
+    margin: 10px;
 }
 
 

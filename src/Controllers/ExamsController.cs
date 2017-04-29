@@ -26,15 +26,20 @@ namespace Hexamer.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<ExamResult> Get()
+        public async Task<IEnumerable<ExamResult>> Get()
         {
             var enabledExams = examRepository.GetAll().Visible().ToList();
             //TODO: join with user data from sqlite
-            return enabledExams.Select(exam => ExamResult.FromEntity(exam));
+            var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam));
+            foreach (var examResult in examResults) {
+                var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
+                examResult.SetScore(answers.Count(), answers.Sum(a => a.ScoreAwarded), answers.Max(a => a.Answered));
+            }
+            return examResults;
         }
         
         [HttpGet("{id}/Begin")]
-        public async Task<IActionResult> Begin(string id)
+        public IActionResult Begin(string id)
         {
             //TODO: Verifica che l'utente abbia tutte le domande richieste dall'esame
             var dto = examRepository.GetById(id);
@@ -42,8 +47,6 @@ namespace Hexamer.Controllers
                 return NotFound();
 
             var examResult = ExamResult.FromEntity(dto);
-            var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
-            examResult.SetScore(answers.Count(), answers.Sum(a => a.ScoreAwarded), answers.Max(a => a.Answered));
             return Ok(examResult);
         }
         [HttpGet("{id}/Image")]
