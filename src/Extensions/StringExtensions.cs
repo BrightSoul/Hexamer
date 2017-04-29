@@ -5,13 +5,12 @@ namespace Hexamer.Extensions
 {
     public static class StringExtensions
     {
-        public static string ToAbsolutePath(this string path)
+        public static string ToAbsolutePath(this string path, string rootPath)
         {
             if (Path.IsPathRooted(path))
                 return path;
 
-            var rootDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            return Path.Combine(rootDirectory, path);
+            return Path.Combine(rootPath, path);
         }
         public static void CreateDirectoryIfNotExists(this string path)
         {

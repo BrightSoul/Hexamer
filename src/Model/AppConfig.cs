@@ -5,6 +5,11 @@ namespace Hexamer.Model
 {
     public class AppConfig
     {
+        private readonly string contentRootPath;
+        public AppConfig(string contentRootPath)
+        {
+            this.contentRootPath = contentRootPath;
+        }
         public string Name { get; set; }
 
         private string examsDataDirectory;
@@ -17,7 +22,7 @@ namespace Hexamer.Model
             {
                 if (value == null)
                     return;
-                examsDataDirectory = value.ToAbsolutePath();
+                examsDataDirectory = value.ToAbsolutePath(contentRootPath);
                 examsDataDirectory.CreateDirectoryIfNotExists();
             }
         }
@@ -32,7 +37,7 @@ namespace Hexamer.Model
             {
                 if (value == null)
                     return;
-                userDataDirectory = value.ToAbsolutePath();
+                userDataDirectory = value.ToAbsolutePath(contentRootPath);
                 userDataDirectory.CreateDirectoryIfNotExists();
             }
         }
@@ -44,9 +49,9 @@ namespace Hexamer.Model
         public string SlackTeamId { get; set; }
         public string SlackScope { get; set; }
 
-        public static AppConfig FromConfiguration(IConfigurationRoot configuration)
+        public static AppConfig FromConfiguration(IConfigurationRoot configuration, string contentRootPath)
         {
-            return new AppConfig
+            return new AppConfig(contentRootPath)
             {
                 ExamsDataDirectory = configuration["App:ExamsDataDirectory"],
                 UserDataDirectory = configuration["App:UserDataDirectory"],

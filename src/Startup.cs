@@ -19,8 +19,10 @@ namespace Hexamer
 {
     public class Startup
     {
+        private string contentRootPath;
         public Startup(IHostingEnvironment env)
         {
+            contentRootPath = env.ContentRootPath;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -43,7 +45,7 @@ namespace Hexamer
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAnswerRepository, AnswerRepository>();
             services.AddSingleton<DbProviderFactory>(SqliteFactory.Instance);
-            services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration));
+            services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration, contentRootPath));
             services.AddMvc(options => {
                 var policy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()
@@ -86,8 +88,6 @@ namespace Hexamer
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hexamer API V1");
             });
-
-            Mapper.Initialize(cfg => cfg.CreateMap<QuestionDefaults, Question>());
         }
     }
 }

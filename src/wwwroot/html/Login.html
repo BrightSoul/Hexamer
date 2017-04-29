@@ -1,41 +1,12 @@
-﻿<div class="modal fade in" tabindex="-1" role="dialog" style="display:block">
-  <div class="modal-dialog" role="document">
+﻿  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" data-bind="text: $root.Title"></h4>
+        <h4 class="modal-title" data-bind="locale: 'Welcome'"></h4>
       </div>
-      <div class="modal-body">
-       
-
-<ul class="examlist list-unstyled">
-    <li>
-      <figure>
-        <img src="/images/csharp.jpg" />
-        <figcaption>Programmazione C#</figcaption>
-        </figure>
-        <header>
-          <p>30 domande, di cui 6 già risposte</p>
-          <p>Disponibile dal 10/17/2017 ore 19:30</p>
-        </header>
-        <section class="exam-mark excellent">
-          <span class="exam-mark-value">30<span>
-          <span class="exam-mark-comment">qui vedrai il voto</span>
-        </section>
-        <footer>
-          <button type="button" class="btn btn-link btn-block">Resetta</button>
-          <button type="button" class="btn btn-start btn-block btn-primary btn-lg">Apri</button>
-        </footer>
-    </li>
-</ul>
-
-
-
-
-
+      <div class="modal-body" data-bind="locale: 'WelcomeMessage'">
       </div>
       <div class="modal-footer">
         <a data-bind="visible: SlackAuthorizationUrl, attr: {href: SlackAuthorizationUrl}"><img alt="Add to Slack" height="40" width="172" src="/images/sign_in_with_slack.png" srcset="/images/sign_in_with_slack.png 1x, /images/sign_in_with_slack@2x.png 2x" /></a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

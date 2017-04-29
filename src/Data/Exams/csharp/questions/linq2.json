@@ -1,0 +1,21 @@
+{
+  "Type": "MultipleChoice",
+  "ScoreAwarded": 2.0,
+  "CorrectAnswer": "B2,B5",
+  "Text": {
+	"It": "Altra domanda",
+	"En": "Another question"
+  },
+  "AnswerText": {
+	"It": "Ecco la risposta",
+	"En": "Here's the answer",
+  },
+  "Group": "contoso",
+  "Options": [
+	{ "Id": "B1", "Text": { "It": "Opzione1", "En": "Option1" } },
+	{ "Id": "B2", "Text": { "It": "Opzione2", "En": "Option2" } },
+	{ "Id": "B3", "Text": { "It": "Opzione3", "En": "Option3" } },
+	{ "Id": "B4", "Text": { "It": "Opzione4", "En": "Option4" } },
+	{ "Id": "B5", "Text": { "It": "Opzione5", "En": "Option5" } }
+  ]
+}

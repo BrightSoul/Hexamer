@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hexamer.Model.Results
 {
@@ -9,10 +10,12 @@ namespace Hexamer.Model.Results
         {
             Id = exam.Id;
             Title = exam.Title;
-            NumberOfQuestions = exam.NumberOfQuestions;
             ValidTo = exam.ValidTo;
+            Questions = exam.Questions.Select(q => q.Id).ToList();
+            MinimumScore = exam.MinimumScore;
+            MaximumScore = exam.MaximumScore;
+            Rating = "incomplete";
         }
-
         public static ExamResult FromEntity(Exam exam)
         {
             if (exam == null)
@@ -21,12 +24,45 @@ namespace Hexamer.Model.Results
             return new ExamResult(exam);
         }
 
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public int NumberOfQuestions { get; set; }
-        public int NumberOfQuestionsAnswered { get; set; }
-        public double? Score { get; set; }
-        public DateTime? ValidTo { get; set; }
-        public List<string> Questions { get; set; }
+        public string Id { get; private set; }
+        public string Title { get; private set; }
+        public int NumberOfQuestionsAnswered { get; private set; }
+        public decimal MinimumScore {get; private set;}
+        public decimal MaximumScore {get; private set;}
+        public decimal? Score { get; private set; }
+        public bool? Passed {get; private set; }
+        public string Rating {get; private set; }
+        public DateTime? ValidTo { get; private set; }
+        public List<string> Questions { get; private set; }
+        public bool IsNewlyCompleted { get; private set; }
+        public void SetScore(int numberOrQuestionsAnswered, double? score, DateTime? lastAnswered) {
+            //passed, notpassed, welldone, excellent
+            NumberOfQuestionsAnswered = numberOrQuestionsAnswered;
+            if (numberOrQuestionsAnswered < Questions.Count) {
+                return;
+            }
+
+            if ((DateTime.Now - lastAnswered.Value).TotalSeconds <= 30) {
+                IsNewlyCompleted = true;
+            }
+
+            decimal normalizedScore = Convert.ToDecimal(score);
+            if (normalizedScore - Convert.ToInt32(normalizedScore) >= 0.7m) {
+                normalizedScore = Math.Ceiling(normalizedScore);
+            } else {
+                normalizedScore = Math.Floor(normalizedScore);
+            }
+            Score = normalizedScore;
+            if (Score > MaximumScore) {
+                Rating = "excellent";
+            } else if (Score == MaximumScore) {
+                Rating = "welldone";
+            } else if (Score < MinimumScore) {
+                Rating = "notpassed";
+            } else {
+                Rating = "passed";
+            }
+            Passed = Score >= MinimumScore;
+        }
     }
 }

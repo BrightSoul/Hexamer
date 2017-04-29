@@ -179,6 +179,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                 requirejs(["Localization/Locale/" + currentLocale], function (localeModule) {
                     var locale = new localeModule[currentLocale]();
                     _this.Locale(locale);
+                    _this.Title(_this.Locale().ApplicationName);
                 });
             };
             this.SelectLocale = function (locale) {
@@ -189,9 +190,9 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             templateEngine.defaultSuffix = ".html?v=" + Math.random();
             this.User = ko.observable(null);
             this.NavigationContext = ko.observable(null);
-            this.Title = ko.observable("Hexamer");
             this.SupportedLocales = [];
             this.Locale = ko.observable();
+            this.Title = ko.observable();
             this.CurrentLocale = ko.observable(null);
             this.LocaleLoader = ko.computed(this.LoadLocale);
             this.InitLocale();
@@ -199,6 +200,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             this.GetUser();
         }
         LayoutViewModel.prototype.InitLocale = function () {
+            this.CreateLocaleBinding();
             for (var p in SupportedLocales_1.SupportedLocales) {
                 if (isNaN(parseInt(p, 10)))
                     this.SupportedLocales.push(p);
@@ -211,6 +213,25 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             else {
                 this.CurrentLocale(this.SupportedLocales[0]);
             }
+        };
+        LayoutViewModel.prototype.CreateLocaleBinding = function () {
+            var _this = this;
+            ko.bindingHandlers.locale = {
+                init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    // This will be called when the binding is first applied to an element
+                    // Set up any initial state, event handlers, etc. here
+                    var subscription = function (newLocale) {
+                        if (newLocale == null) {
+                            element.innerText = "";
+                        }
+                        else {
+                            element.innerText = newLocale[valueAccessor()];
+                        }
+                    };
+                    subscription(_this.Locale());
+                    _this.Locale.subscribe(subscription);
+                }
+            };
         };
         LayoutViewModel.prototype.SetTitle = function (title) {
             this.Title(title);
@@ -449,7 +470,31 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
     "use strict";
     var En = (function () {
         function En() {
-            this.Title = "English";
+            this.ApplicationName = "Exams";
+            this.LanguageName = "English";
+            this.Welcome = "Welcome!";
+            this.WelcomeMessage = "In order to start the exam, login by clicking the button below.";
+            this.BeginExam = "Begin";
+            this.ContinueExam = "Resume";
+            this.ReviewExam = "Review";
+            this.ResetExam = "Reset";
+            this.CumLaude = "cum laude";
+            this.MarkWillAppearHere = "your mark will be here";
+            this.Questions = "questions";
+            this.QuestionsOfWhichAlreadyAnswered = "already answered";
+            this.AvailableFrom = "Available from";
+            this.StartingIn = "Starting in";
+            this.Next = "Next";
+            this.Previous = "Previous";
+            this.RevealAnswer = "Reveal answer";
+            this.RemainingTime = "Remaining time";
+            this.TimesUp = "Time's up!";
+            this.BookmarkAnswer = "Review this question later";
+            this.AverageTimePerAnswer = "approximately per question";
+            this.BackToHome = "Back to home";
+            this.BackToHomeConfirmation = "Are you sure you want to go back to the homepage? You'll be able to resume this exam at any time.";
+            this.Logout = "Logout";
+            this.LogoutConfirmation = "Are you sure you want to logout?";
         }
         return En;
     }());
@@ -459,7 +504,31 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
     "use strict";
     var It = (function () {
         function It() {
-            this.Title = "Italiano";
+            this.ApplicationName = "Exams";
+            this.LanguageName = "Italiano";
+            this.Welcome = "Benvenuto!";
+            this.WelcomeMessage = "Per accedere all'esame, effettua il login con Slack premendo il bottone qui sotto.";
+            this.BeginExam = "Inizia";
+            this.ContinueExam = "Continua";
+            this.ReviewExam = "Ricontrolla";
+            this.ResetExam = "Ricomincia";
+            this.CumLaude = "e lode";
+            this.MarkWillAppearHere = "qui vedrai il voto";
+            this.Questions = "domande";
+            this.QuestionsOfWhichAlreadyAnswered = "già risposte";
+            this.AvailableFrom = "Disponibile dal";
+            this.StartingIn = "Inizia tra";
+            this.Next = "Prossima";
+            this.Previous = "Precedente";
+            this.RevealAnswer = "Mostra risposta";
+            this.RemainingTime = "Tempo rimanente";
+            this.TimesUp = "Tempo scaduto!";
+            this.BookmarkAnswer = "Rivedi questa domanda più tardi";
+            this.AverageTimePerAnswer = "circa per domanda";
+            this.BackToHome = "Torna alla home";
+            this.BackToHomeConfirmation = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";
+            this.Logout = "Esci";
+            this.LogoutConfirmation = "Sei sicuro di voler uscire?";
         }
         return It;
     }());

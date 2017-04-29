@@ -1,11 +1,24 @@
 ﻿<section class="content">
-exams: <span data-bind="text: $root.Locale().Title"></span>
 <ul class="examlist list-unstyled" data-bind="foreach: Exams">
     <li>
-        <span data-bind="text: Title"></span>
-        <span class="exam-mark">30<span>
-        <span class="exam-mark-comment">e lode</span>
-        <button type="button" class="btn btn-start" data-bind="click: $parent.BeginExam">Inizia</button>
-        </li>
+      <figure>
+        <img data-bind="attr: {src: '/api/Exams/' + Id + '/Image', alt: Title + ' ' + Subtitle}" />
+        <figcaption>
+            <span class="exam-title" data-bind="text: title"></span>
+            <span class="exam-subtitle" data-bind="text: subtitle, visible: subtitle"></span>
+        </figcaption>
+        </figure>
+        <header>
+          <p>30 <span data-bind="locale: 'Questions'"></span><span data-bind="visible: NumberOfQuestionsAnswered > 0">, <span data-bind="text: NumberOfQuestionsAnswered"></span> <span data-bind="locale: 'QuestionsAlreadyAnswered'"></span></span></p>
+          <p>Disponibile dal 10/17/2017 ore 19:30</p>
+        </header>
+        <section class="exam-mark excellent animated">
+          <span class="exam-mark-value">30<span>
+          <span class="exam-mark-comment">qui vedrai il voto</span>
+        </section>
+        <footer>
+          <button type="button" class="btn btn-link btn-block">Resetta</button>
+          <button type="button" class="btn btn-start btn-block btn-primary btn-lg">Apri</button>
+        </footer>
+    </li>
 </ul>
-</section>

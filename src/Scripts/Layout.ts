@@ -24,33 +24,51 @@ export class LayoutViewModel implements ILayout {
         templateEngine.defaultSuffix = ".html?v=" + Math.random();
         this.User = ko.observable(null);
         this.NavigationContext = ko.observable(null);
-        this.Title = ko.observable("Hexamer");
         this.SupportedLocales = [];
         this.Locale = ko.observable<ILocale>();
+        this.Title = ko.observable<string>();
         this.CurrentLocale = ko.observable(null);
         this.LocaleLoader = ko.computed(this.LoadLocale);
         this.InitLocale();
         window.onhashchange = () => { this.ChangePage(); };
         this.GetUser();
-        
-        
+
+
     }
 
-    private InitLocale() : void {
-        
-        for (let p in SupportedLocales){
+    private InitLocale(): void {
+        this.CreateLocaleBinding();
+        for (let p in SupportedLocales) {
             if (isNaN(parseInt(p, 10)))
                 this.SupportedLocales.push(p);
         }
 
         let navigatorLanguage = navigator.language.toLowerCase();
         let foundLanguage = this.SupportedLocales.filter(l => l.toLowerCase() == navigatorLanguage || l.toLowerCase().substr(0, 2) == navigatorLanguage.substr(0, 2));
-        if (foundLanguage.length > 0){
+        if (foundLanguage.length > 0) {
             this.CurrentLocale(foundLanguage[0]);
         } else {
             this.CurrentLocale(this.SupportedLocales[0]);
         }
-        
+
+    }
+
+    private CreateLocaleBinding(): void {
+        ko.bindingHandlers.locale = {
+            init: (element, valueAccessor, allBindings, viewModel, bindingContext) => {
+                // This will be called when the binding is first applied to an element
+                // Set up any initial state, event handlers, etc. here
+                let subscription = (newLocale : ILocale) : void => {
+                    if (newLocale == null) {
+                        element.innerText = "";
+                    } else {
+                        element.innerText = newLocale[valueAccessor()];
+                    }
+                };
+                subscription(this.Locale());
+                this.Locale.subscribe(subscription);
+            }
+        };
     }
 
     private LoadLocale = () => {
@@ -58,9 +76,10 @@ export class LayoutViewModel implements ILayout {
         if (!currentLocale)
             return;
         requirejs(["Localization/Locale/" + currentLocale], (localeModule) => {
-                let locale = <ILocale> new localeModule[currentLocale]();
-                this.Locale(locale);
-            });
+            let locale = <ILocale>new localeModule[currentLocale]();
+            this.Locale(locale);
+            this.Title(this.Locale().ApplicationName);
+        });
     }
 
     public SetTitle(title: string) {
@@ -79,7 +98,7 @@ export class LayoutViewModel implements ILayout {
         this.NavigateAccordingToHash(Page.Login);
     }
 
-    private async GetUser() : Promise<void> {
+    private async GetUser(): Promise<void> {
         let result = await this.Get<UserResult>("/api/User");
         if (result.IsAuthenticated) {
             this.Login(result.User);
@@ -87,17 +106,17 @@ export class LayoutViewModel implements ILayout {
             await this.Logout();
         }
     }
-    
+
     public async Get<TResult>(url: string): Promise<TResult> {
         let response = await axios.get(url);
         this.EnsureSuccessStatusCode(response.status);
-        return <TResult> response.data;
+        return <TResult>response.data;
     }
 
     public async Post<TResult, TData>(url: string, data: TData): Promise<TResult> {
         let response = await axios.post(url, data);
         this.EnsureSuccessStatusCode(response.status);
-        return <TResult> response.data;
+        return <TResult>response.data;
     }
 
     private EnsureSuccessStatusCode(statusCode: number) {
@@ -109,18 +128,18 @@ export class LayoutViewModel implements ILayout {
         }
     }
 
-    public Navigate(page: Page, navigationArgs: string = null) : void {
+    public Navigate(page: Page, navigationArgs: string = null): void {
         let newHash: string = Page[page] + (navigationArgs ? '/' + navigationArgs : '');
-        if (location.hash.substr(location.hash.indexOf('#')+1) == newHash)
+        if (location.hash.substr(location.hash.indexOf('#') + 1) == newHash)
             this.NavigateAccordingToHash(page);
         else
             location.hash = newHash;
     }
-    private NavigateAccordingToHash(defaultPage: Page) : void {
-        let navigationInfo: string[] = location.hash.substr(location.hash.indexOf('#')+1).split('/');
+    private NavigateAccordingToHash(defaultPage: Page): void {
+        let navigationInfo: string[] = location.hash.substr(location.hash.indexOf('#') + 1).split('/');
         let destinationPage: Page = defaultPage;
         if (navigationInfo[0] in Page) {
-            destinationPage = <Page> Page[navigationInfo[0]];
+            destinationPage = <Page>Page[navigationInfo[0]];
         }
         let navigationArgs: string = navigationInfo.length > 1 ? navigationInfo[1] : null;
 
@@ -133,7 +152,7 @@ export class LayoutViewModel implements ILayout {
             this.NavigationContext(navigationContext);
         }
 
-        
+
     }
     private BackToHome() {
         if (confirm("Vuoi davvero tornare alla home?")) {
@@ -144,7 +163,7 @@ export class LayoutViewModel implements ILayout {
         this.User(user);
         this.Navigate(Page.Exams);
     }
-    private async Logout() : Promise<void> {
+    private async Logout(): Promise<void> {
         await this.Get("/api/Logout");
         this.User(null);
         this.Navigate(Page.Login);

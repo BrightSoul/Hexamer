@@ -5,6 +5,6 @@
         public string Id { get; set; }
         public int Number { get; set; }
         public bool Answered { get; set; }
-        public bool MarkedForReview { get; set; }
+        public bool IsBookmarked { get; set; }
     }
 }

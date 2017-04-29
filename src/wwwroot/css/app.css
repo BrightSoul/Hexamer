@@ -497,6 +497,43 @@ footer {
     right:0;
 }
 
+.examlist li {
+    box-shadow: 0 0 10px #888;
+}
+
+.module-login .modal-dialog {
+    margin-top:100px;
+}
+
+.content {
+    width:100%;
+}
+
+.examlist {
+    margin: auto;
+    display: table;
+}
+.examlist .exam-title {
+    display: block;
+}
+.examlist .exam-subtitle {
+    display: block;
+    font-size: 12px;
+}
+
+
+@keyframes zoomin {
+    from{transform: scale(0); }
+    to {transform: scale(1);}
+}
+
+.exam-mark.animated {
+
+    animation-name: zoomin;
+    animation-duration: 1s;
+}
+
+
 /* Bootstrap overrides */
 .navbar-default { min-height:auto; }
 .navbar-text { margin-top:4px; margin-bottom: 0; margin-left:5px; }
@@ -514,4 +551,21 @@ footer {
 }
 .navbar .container-fluid {
     padding-left:0;
+}
+.modal-header {
+    background-color:#168fb2;
+}
+.modal-header h4 {
+    color: white;
+}
+
+.navbar-nav {
+    margin:0;
+}
+.navbar-right {
+    float: right !important;
+    margin-right: -15px;
+}
+.navbar-text {
+    float: left !important;
 }

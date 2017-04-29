@@ -2,29 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Hexamer</title>
+    <title data-bind="text: Title"></title>
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/app.css" rel="stylesheet" />
 </head>
 <body data-bind="attr: { class: NavigationContext() ? 'module-'+NavigationContext().Page.toLowerCase() : '' }">
 
-<nav data-bind="if: User() && NavigationContext(), visible: User() && NavigationContext()" class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<nav data-bind="if: NavigationContext(), visible: NavigationContext()" class="navbar navbar-default navbar-fixed-top navbar-inverse">
   <div class="container-fluid">
-    <div class="collapse navbar-collapse">
+    <div>
       <ul class="nav navbar-nav" data-bind="visible: NavigationContext().CanGoBackToHome, click: BackToHome">
           <li><a href="#" class="back-to-home"><span class="glyphicon glyphicon-home"></span></a></li>
       </ul>
       <p class="navbar-text" data-bind="text: Title"></p>
-      
-      <ul class="nav navbar-nav navbar-right" data-bind="if: User">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="profile-image" data-bind="attr: { src: User().ImageUrl, alt: User().Name }" width="20" height="20" style="margin-right:5px;">
-            <span data-bind="text: User().Name"></span> <span class="caret"></span></a>
-          <ul class="user-menu dropdown-menu">
-            <li><a href="#" data-bind="click: Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          </ul>
-        </li>
-        </ul>
+
         <ul class="nav navbar-nav navbar-right" data-bind="if: CurrentLocale">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -33,8 +24,19 @@
           <ul class="locale-menu dropdown-menu" data-bind="foreach: SupportedLocales">
             <li><a href="#" data-bind="click: $parent.SelectLocale"><img class="locale-image" data-bind="attr: { src: '/images/locale/'+$data+'.png', alt: $data }" width="20" height="20" style="margin-right:5px;"> <span data-bind="text: $data.toUpperCase()"></span></a></li>
           </ul>
+          </li>
+        </ul>      
+      <ul class="nav navbar-nav navbar-right" data-bind="if: User">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="profile-image" data-bind="attr: { src: User().ImageUrl, alt: User().Name }" width="20" height="20" style="margin-right:5px;">
+            <span data-bind="text: User().Name"></span> <span class="caret"></span></a>
+          <ul class="user-menu dropdown-menu">
+            <li><a href="#" data-bind="click: Logout"><span class="glyphicon glyphicon-log-out"></span> <span data-bind="locale: 'Logout'"></span></a></li>
+          </ul>
         </li>
         </ul>
+
+        
     </div>
   </div>
 </nav>

@@ -15,10 +15,8 @@
     <Content Include="wwwroot\html\Exam.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Exams\exam1\groups\contoso\" />
-    <Folder Include="Data\User\" />
+    <Folder Include="Data\" />
     <Folder Include="Templates\" />
-    <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
   <ItemGroup>
