@@ -13,24 +13,24 @@ namespace Hexamer.Services
         {
             examsDataDirectory = config.ExamsDataDirectory; 
         }
-        public IEnumerable<Exam> GetAll()
+        public IEnumerable<Exam> GetAll(string language)
         {
-            return GetAll(name => true);
+            return GetAll(name => true, language);
         }
 
-        private IEnumerable<Exam> GetAll(Func<string, bool> filter)
+        private IEnumerable<Exam> GetAll(Func<string, bool> filter, string language)
         {
             return Directory
                .EnumerateDirectories(examsDataDirectory)
                .Where(filter)
                .Select(directory => Path.Combine(directory, "exam.json"))
                .Where(examFile => File.Exists(examFile))
-               .Select(examFile => Exam.FromFile(examFile));
+               .Select(examFile => Exam.FromFile(examFile, language));
         }
 
-        public Exam GetById(string id)
+        public Exam GetById(string id, string language)
         {
-            var exams = GetAll(dirName => Path.GetFileName(dirName).Equals(id, StringComparison.Ordinal));
+            var exams = GetAll(dirName => Path.GetFileName(dirName).Equals(id, StringComparison.Ordinal), language);
             return exams.FirstOrDefault();
         }
     }

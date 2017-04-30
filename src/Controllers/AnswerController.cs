@@ -23,7 +23,8 @@ namespace Hexamer.Controllers
         [HttpGet]
         public IEnumerable<ExamResult> Get()
         {
-            var enabledExams = examRepository.GetAll().Visible().ToList();
+            var language = Request.GetLanguage();
+            var enabledExams = examRepository.GetAll(language).Visible().ToList();
             //TODO: join with user data from sqlite
             return enabledExams.Select(exam => ExamResult.FromEntity(exam));
         }
@@ -32,7 +33,8 @@ namespace Hexamer.Controllers
         public IActionResult Start(string id)
         {
             //TODO: Verifica che l'utente abbia tutte le domande richieste dall'esame
-            var dto = examRepository.GetById(id);
+            var language = Request.GetLanguage();
+            var dto = examRepository.GetById(id, language);
             if (dto == null)
                 return NotFound();
 

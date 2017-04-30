@@ -14,7 +14,8 @@ namespace Hexamer.Services
 
         public async Task CreateUserIfNotExists(ClaimsPrincipal claimsPrincipal)
         {
-         //TODO   
+         //TODO
+            await Task.CompletedTask;
         }
     }
 }

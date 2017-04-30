@@ -24,18 +24,26 @@ namespace Hexamer.Model
             var json = File.ReadAllText(fileName);
             var jObject = JsonConvert.DeserializeObject(json) as JObject;
 
+            var supportedLanguages = (jObject["SupportedLanguages"] as JArray).Select(token => token.Value<string>()).ToList();
+            if (!supportedLanguages.Contains(language)) {
+                var normalizedLanguage = (language ?? "").Split('-').First();
+                language = null;
+                foreach (var supportedLanguage in supportedLanguages) {
+                    if (supportedLanguage.Equals(normalizedLanguage, StringComparison.OrdinalIgnoreCase)) {
+                        language = supportedLanguage;
+                    }
+                }
+            }
             if (string.IsNullOrEmpty(language))
             {
                 if (jObject["DefaultLanguage"] != null)
                 {
                     language = jObject["DefaultLanguage"].Value<string>();
-                }
-                else
-                {
-                    language = "En";
+                } else {
+                    language = supportedLanguages.First();
                 }
             }
-            
+
             jObject = FixLanguage(jObject, language, "Title", "Subtitle");
 
             var exam = jObject.ToObject<Exam>();

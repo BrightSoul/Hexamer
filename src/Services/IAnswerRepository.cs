@@ -8,8 +8,10 @@ namespace Hexamer.Services
     {
         Task<IEnumerable<Answer>> GetAll(string username, string exam);
         Task<Answer> GetById(string username, string exam, string question);
-        Task Create(string username, IEnumerable<Answer> answer);
+        Task<Answer> GetByNumber(string username, string exam, int questionNumber);
+        Task<bool> CreateMissingAnswers(string username, Exam exam);
         Task UpdateAnswer(string username, Answer answer);
-        Task UpdateMark(string username, string exam, string question, bool marked);
+        Task UpdateDisplayed(string username, string exam, string question);
+        Task UpdateBookmark(string username, string exam, string question, bool marked);
     }
 }

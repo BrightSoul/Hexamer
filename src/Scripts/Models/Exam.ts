@@ -5,8 +5,10 @@ export class Exam {
     public Title: string;
     public Subtitle: string;
     public Rating: string;
-    public Questions: string[];
-    public QuestionsAnswered: number;
+    public Questions: number;
+    public QuestionsAnswered: number[];
+    public QuestionsBookmarked: number[];
+    public LastQuestionDisplayed: number;
     public BeginsInSeconds?: number;
     public RemainingSeconds?: number;
     public CanOpenExam: boolean;

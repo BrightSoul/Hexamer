@@ -7,6 +7,7 @@ using Hexamer.Extensions;
 using Hexamer.Model;
 using System.IO;
 using System.Threading.Tasks;
+using System;
 
 namespace Hexamer.Controllers
 {
@@ -28,27 +29,54 @@ namespace Hexamer.Controllers
         [HttpGet]
         public async Task<IEnumerable<ExamResult>> Get()
         {
-            var enabledExams = examRepository.GetAll().Visible().ToList();
-            //TODO: join with user data from sqlite
+            string language = Request.GetLanguage();
+            var enabledExams = examRepository.GetAll(language).Visible().ToList();
             var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam));
             foreach (var examResult in examResults) {
                 var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
-                examResult.SetScore(answers.Count(), answers.Sum(a => a.ScoreAwarded), answers.Max(a => a.Answered));
+                examResult.SetScore(answers);
             }
             return examResults;
         }
         
-        [HttpGet("{id}/Begin")]
-        public IActionResult Begin(string id)
+        [HttpGet("{examId}")]
+        public async Task<IActionResult> Detail(string examId)
         {
-            //TODO: Verifica che l'utente abbia tutte le domande richieste dall'esame
-            var dto = examRepository.GetById(id);
-            if (dto == null)
+            string language = Request.GetLanguage();
+            var exam = examRepository.GetById(examId, language);
+            if (exam == null)
                 return NotFound();
 
-            var examResult = ExamResult.FromEntity(dto);
+            if (await answerRepository.CreateMissingAnswers(User.Identity.Name, exam)) {
+                exam = examRepository.GetById(examId, language);
+            }
+            var examResult = ExamResult.FromEntity(exam);
+            var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
+            examResult.SetScore(answers);
             return Ok(examResult);
         }
+        [HttpGet("{examId}/{questionNumber}")]
+        public async Task<IActionResult> QuestionDetail(string examId, int questionNumber)
+        {
+            string language = Request.GetLanguage();
+            var exam = examRepository.GetById(examId, language);
+            if (exam == null)
+                return NotFound();
+            
+            var answer = await answerRepository.GetByNumber(User.Identity.Name, exam.Id, questionNumber);
+            if (answer == null)
+                return NotFound();
+
+            await answerRepository.UpdateDisplayed(User.Identity.Name, answer.Exam, answer.Question);
+
+            var question = exam.Questions.FirstOrDefault(q => q.Id == answer.Question);
+            if (question == null)
+                return NotFound();
+
+            var questionResult = QuestionResult.FromEntity(question, answer);
+            return Ok(questionResult);
+        }
+
         [HttpGet("{id}/Image")]
         public IActionResult Image(string id) {
             var dataDirectory = config.ExamsDataDirectory;

@@ -1,5 +1,5 @@
 ﻿import * as ko from 'knockout';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { UserResult } from 'Scripts/Results/UserResult';
 import { ILayout } from 'Scripts/Models/ILayout';
 import { User } from 'Scripts/Models/User';
@@ -17,6 +17,7 @@ export class LayoutViewModel implements ILayout {
     public CurrentLocale: KnockoutObservable<string>;
     private LocaleLoader: KnockoutComputed<void>;
     public Locale: KnockoutObservable<ILocale>;
+    private CurrentPage: Page;
 
     constructor() {
         let templateEngine: any = ko["amdTemplateEngine"];
@@ -79,6 +80,7 @@ export class LayoutViewModel implements ILayout {
             let locale = <ILocale>new localeModule[currentLocale]();
             this.Locale(locale);
             this.Title(this.Locale().ApplicationName);
+            this.NavigateAccordingToHash(this.CurrentPage);
         });
     }
 
@@ -108,15 +110,21 @@ export class LayoutViewModel implements ILayout {
     }
 
     public async Get<TResult>(url: string): Promise<TResult> {
-        let response = await axios.get(url);
+        let response = await axios.get(url, this.GetAxiosConfig());
         this.EnsureSuccessStatusCode(response.status);
         return <TResult>response.data;
     }
 
     public async Post<TResult, TData>(url: string, data: TData): Promise<TResult> {
-        let response = await axios.post(url, data);
+        let response = await axios.post(url, data, this.GetAxiosConfig());
         this.EnsureSuccessStatusCode(response.status);
         return <TResult>response.data;
+    }
+
+    private GetAxiosConfig() : AxiosRequestConfig {
+        return <AxiosRequestConfig> {
+            headers: { "Accept-Language": this.CurrentLocale() }
+        };
     }
 
     private EnsureSuccessStatusCode(statusCode: number) {
@@ -148,11 +156,10 @@ export class LayoutViewModel implements ILayout {
         } else if (destinationPage != Page.Login && !this.User()) {
             this.Navigate(Page.Login);
         } else {
+            this.CurrentPage = destinationPage;
             var navigationContext = new NavigationContext(this, destinationPage, navigationArgs);
             this.NavigationContext(navigationContext);
         }
-
-
     }
     private BackToHome() {
         if (confirm("Vuoi davvero tornare alla home?")) {

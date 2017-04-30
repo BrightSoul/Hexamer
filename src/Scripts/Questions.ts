@@ -2,6 +2,7 @@
 import { NavigationContext } from 'Scripts/Models/NavigationContext';
 import { Exam } from 'Scripts/Models/Exam';
 import { Question } from 'Scripts/Models/Question';
+import { QuestionIndicator } from 'Scripts/Models/QuestionIndicator';
 
 class QuestionsViewModel {
 
@@ -10,10 +11,13 @@ class QuestionsViewModel {
     public RemainingTime: KnockoutObservable<string>;
     public TimeIsRunningOut: KnockoutObservable<boolean>;
     public HasExpirationTime: KnockoutObservable<boolean>;
-    public CurrentQuestion: KnockoutObservable<Question>;
+    public Question: KnockoutObservable<Question>;
     public IsCurrentQuestionBookmarked: KnockoutObservable<boolean>;
-    public QuestionsCount: KnockoutObservable<number>;
     private BookmarkUpdater: KnockoutComputed<Promise<void>>;
+    public QuestionIndicators: KnockoutObservableArray<QuestionIndicator>;
+
+    private ExamId: string;
+    private QuestionId: string;
 
     constructor(private navigationContext: NavigationContext) {
         this.RemainingTime = ko.observable("");
@@ -21,37 +25,39 @@ class QuestionsViewModel {
         this.HasExpirationTime = ko.observable(false);
         this.IsCurrentQuestionBookmarked = ko.observable(false);
         this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
-        this.QuestionsCount = ko.observable(0);
-        this.CurrentQuestion = ko.observable(null);
-        let exam: Exam = new Exam();
-        exam.Id = "exam1";
-        exam.Title = "Programmazione C#";
-        exam.RemainingSeconds = 3800;
-        this.EndTime = (new Date()).getTime() + exam.RemainingSeconds * 1000;
-        this.navigationContext.Layout.SetTitle(exam.Title);
-        this.Exam = ko.observable(exam);
-        if (exam.RemainingSeconds == null) {
-          this.RemainingTime("Nessuna scadenza");
-        } else {
-          this.HasExpirationTime(true);
-          setInterval(this.UpdateTime, 1000);
-        }
-        let question = new Question();
-        question.Text = "Lorem ipsum";
-        question.CallToAction = "Compila qui";
-        question.Data = "";
-        question.Id = "q1";
-        question.IsBookmarked = false;
-        question.Type = "MultipleChoice";
-        
-        this.CurrentQuestion(question);
-        this.IsCurrentQuestionBookmarked(question.IsBookmarked);
-        this.QuestionsCount(26);
+        this.QuestionIndicators = ko.observableArray([]);
+        this.Question = ko.observable(null);
+        this.Exam = ko.observable(null);
+
+        let args = navigationContext.NavigationArgs.split("/");
+        this.ExamId = args[0];
+        if (args.length > 1)
+            this.QuestionId = args[1];
+
+        this.GetExam(this.ExamId);
     }
 
-    private async UpdateBookmark() : Promise<void> {
-        //TODO: we have a this problem here
-        //let bookmark = this.IsCurrentQuestionBookmarked();
+    private GetExam = async(examId : string) : Promise<void> => {
+        let exam = await this.navigationContext.Layout.Get<Exam>(`/api/Exams/${examId}`);
+        let questionIndicators : QuestionIndicator[] = [];
+        for (let i: number = 1; i<=exam.Questions; i++){
+            let indicator = new QuestionIndicator();
+            indicator.Number = i;
+            if (exam.QuestionsAnswered.indexOf(i) > -1) {
+                indicator.IsAnswered(true); 
+            }
+            if (exam.QuestionsBookmarked.indexOf(i) > -1) {
+                indicator.IsBookmarked(true); 
+            }
+            
+            questionIndicators.push(indicator);
+        }
+        this.QuestionIndicators(questionIndicators);
+        this.Exam(exam);
+    }
+
+    private UpdateBookmark = async () : Promise<void> => {
+        let bookmark = this.IsCurrentQuestionBookmarked();
     }
     private UpdateTime = () => {
         let currentTime = (new Date()).getTime();

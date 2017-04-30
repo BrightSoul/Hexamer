@@ -121,7 +121,7 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
             var _this = this;
             this.navigationContext = navigationContext;
             this.OpenExam = function (exam) {
-                _this.navigationContext.Layout.Navigate(Page_2.Page.Questions, exam.Id + "/" + exam.Questions[0]);
+                _this.navigationContext.Layout.Navigate(Page_2.Page.Questions, exam.Id + "/" + exam.LastQuestionDisplayed);
             };
             this.ResetExam = function (exam) {
                 alert("reset");
@@ -183,6 +183,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                     var locale = new localeModule[currentLocale]();
                     _this.Locale(locale);
                     _this.Title(_this.Locale().ApplicationName);
+                    _this.NavigateAccordingToHash(_this.CurrentPage);
                 });
             };
             this.SelectLocale = function (locale) {
@@ -271,7 +272,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                 var response;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, axios_1.default.get(url)];
+                        case 0: return [4 /*yield*/, axios_1.default.get(url, this.GetAxiosConfig())];
                         case 1:
                             response = _a.sent();
                             this.EnsureSuccessStatusCode(response.status);
@@ -285,7 +286,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                 var response;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, axios_1.default.post(url, data)];
+                        case 0: return [4 /*yield*/, axios_1.default.post(url, data, this.GetAxiosConfig())];
                         case 1:
                             response = _a.sent();
                             this.EnsureSuccessStatusCode(response.status);
@@ -293,6 +294,11 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                     }
                 });
             });
+        };
+        LayoutViewModel.prototype.GetAxiosConfig = function () {
+            return {
+                headers: { "Accept-Language": this.CurrentLocale() }
+            };
         };
         LayoutViewModel.prototype.EnsureSuccessStatusCode = function (statusCode) {
             if (statusCode == 401) {
@@ -325,6 +331,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                 this.Navigate(Page_3.Page.Login);
             }
             else {
+                this.CurrentPage = destinationPage;
                 var navigationContext = new NavigationContext_1.NavigationContext(this, destinationPage, navigationArgs);
                 this.NavigationContext(navigationContext);
             }
@@ -403,12 +410,30 @@ define("Models/Question", ["require", "exports"], function (require, exports) {
     }());
     exports.Question = Question;
 });
-define("Questions", ["require", "exports", "knockout", "Models/Exam", "Models/Question"], function (require, exports, ko, Exam_1, Question_1) {
+define("Questions", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     var QuestionsViewModel = (function () {
         function QuestionsViewModel(navigationContext) {
             var _this = this;
             this.navigationContext = navigationContext;
+            this.GetExam = function (examId) { return __awaiter(_this, void 0, void 0, function () {
+                var exam;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.navigationContext.Layout.Get("/api/Exams/" + examId)];
+                        case 1:
+                            exam = _a.sent();
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
+            this.UpdateBookmark = function () { return __awaiter(_this, void 0, void 0, function () {
+                var bookmark;
+                return __generator(this, function (_a) {
+                    bookmark = this.IsCurrentQuestionBookmarked();
+                    return [2 /*return*/];
+                });
+            }); };
             this.UpdateTime = function () {
                 var currentTime = (new Date()).getTime();
                 var remainingMilliseconds = _this.EndTime - currentTime;
@@ -428,40 +453,14 @@ define("Questions", ["require", "exports", "knockout", "Models/Exam", "Models/Qu
             this.HasExpirationTime = ko.observable(false);
             this.IsCurrentQuestionBookmarked = ko.observable(false);
             this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
-            this.QuestionsCount = ko.observable(0);
-            this.CurrentQuestion = ko.observable(null);
-            var exam = new Exam_1.Exam();
-            exam.Id = "exam1";
-            exam.Title = "Programmazione C#";
-            exam.RemainingSeconds = 3800;
-            this.EndTime = (new Date()).getTime() + exam.RemainingSeconds * 1000;
-            this.navigationContext.Layout.SetTitle(exam.Title);
-            this.Exam = ko.observable(exam);
-            if (exam.RemainingSeconds == null) {
-                this.RemainingTime("Nessuna scadenza");
-            }
-            else {
-                this.HasExpirationTime(true);
-                setInterval(this.UpdateTime, 1000);
-            }
-            var question = new Question_1.Question();
-            question.Text = "Lorem ipsum";
-            question.CallToAction = "Compila qui";
-            question.Data = "";
-            question.Id = "q1";
-            question.IsBookmarked = false;
-            question.Type = "MultipleChoice";
-            this.CurrentQuestion(question);
-            this.IsCurrentQuestionBookmarked(question.IsBookmarked);
-            this.QuestionsCount(26);
+            this.Question = ko.observable(null);
+            this.Exam = ko.observable(null);
+            var args = navigationContext.NavigationArgs.split("/");
+            this.ExamId = args[0];
+            if (args.length > 1)
+                this.QuestionId = args[1];
+            this.GetExam(this.ExamId);
         }
-        QuestionsViewModel.prototype.UpdateBookmark = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    return [2 /*return*/];
-                });
-            });
-        };
         return QuestionsViewModel;
     }());
     function initialize(navigationContext) {

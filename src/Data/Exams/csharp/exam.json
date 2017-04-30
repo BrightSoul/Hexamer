@@ -1,5 +1,6 @@
 ﻿{
   "DefaultLanguage": "It",
+  "SupportedLanguages": [ "It", "En" ],
   "Title": { "It": "Programmazione C#", "En": "C# programming" },
   "Subtitle": { "It": "", "En": "" },
   "MinimumScore": 18.0,
