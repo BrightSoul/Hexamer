@@ -17,6 +17,8 @@ namespace Hexamer.Model.Results
             MinimumScore = exam.MinimumScore;
             MaximumScore = exam.MaximumScore;
             Rating = "incomplete";
+            QuestionsAnswered = new int[0];
+            QuestionsBookmarked = new int[0];
         }
         public static ExamResult FromEntity(Exam exam)
         {
@@ -50,14 +52,13 @@ namespace Hexamer.Model.Results
             }
         }
         public void SetScore(IEnumerable<Answer> answers) {
-            int numberOfQuestionsAnswered = .Count();
             double? score = answers.Sum(a => a.ScoreAwarded);
             DateTime? lastAnswered = answers.Max(a => a.Answered);
             int? lastQuestionDisplayed = answers.OrderByDescending(a => a.Displayed).Select(a => a.Number).FirstOrDefault();
             LastQuestionDisplayed = lastQuestionDisplayed ?? 1;
             QuestionsAnswered = answers.Answered().Select(a => a.Number).ToArray();
             QuestionsBookmarked = answers.Bookmarked().Select(a => a.Number).ToArray();
-            if (numberOfQuestionsAnswered < Questions) {
+            if (QuestionsAnswered.Length < Questions) {
                 return;
             }
 

@@ -1,7 +1,7 @@
 ﻿
     <header class="summary">
         <div class="pull-left">
-            <h2 data-bind="if: CurrentQuestion">Domanda <span data-bind="CurrentQuestion().Ordinal"></span> di <span data-bind="QuestionsCount"></span></h2>
+            <h2 data-bind="if: Question">Domanda <span data-bind="Question().Number"></span> di <span data-bind="Questions"></span></h2>
             <input type="checkbox" class="review-checkbox" id="review" name="review" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="review" for="review">Contrassegna per rivederla dopo</label>
         </div>
         <div class="pull-right" data-bind="if: RemainingTime">
@@ -10,9 +10,9 @@
         </div>
     </header>
 
-<section class="question" data-bind="with: CurrentQuestion">
+<section class="question" data-bind="with: Question">
     <p data-bind="html: Text"></p>
-    <h5 data-bind="text: CallToAction"></h5>
+    <h5 data-bind="locale: 'Questions'"></h5>
     <form class="form-inline">
         <pre class="code">public <select id="select1" class="form-control">
         <option value="op1"> </option>
@@ -36,51 +36,17 @@
 
     </form>
 </section>
-<footer>
+<footer data-bind="if: Exam()">
     <div class="btn-group pagination text-center" role="group">
         <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
-        <button type="button" class="btn btn-default" data-toggle="popover" data-placement="top">6 di 36</button>
+        <button type="button" class="btn btn-default" data-bind="click: ToggleIndicators"><span>6</span> di <span data-bind="text: Exam().Questions"></span></button>
         <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Prossima</button>
+        <div class="popover fade top in" role="tooltip" data-bind="visible: IndicatorsVisible" style="display:none;"><div class="arrow" style="left: 50%;"></div><h3 class="popover-title" style="display: none;"></h3><div class="popover-content">
+        <div class="questions-index" data-bind="foreach: QuestionIndicators">
+            <button class="btn btn-xs" type="button" data-bind="click: $parent.NavigateToQuestion, text: Number, css: {'btn-primary': IsAnswered, 'btn-default': !IsAnswered(), 'bookmarked': IsBookmarked}"></button>
+        </div>
+    </div></div>
     </div>
     <button type="button" class="btn btn-default pull-right">Mostra risposta</button>
-    <div class="popover-source">
-        <div class="questions-index">
-            <button class="btn btn-primary btn-xs" type="button">1</button>
-            <button class="btn btn-primary btn-xs" type="button">2</button>
-            <button class="btn btn-primary btn-xs" type="button">3</button>
-            <button class="btn btn-default btn-xs marked" type="button">4</button>
-            <button class="btn btn-primary btn-xs" type="button">5</button>
-            <button class="btn btn-default btn-xs" type="button">6</button>
-            <button class="btn btn-default btn-xs" type="button">7</button>
-            <button class="btn btn-default btn-xs" type="button">8</button>
-            <button class="btn btn-default btn-xs" type="button">9</button>
-            <button class="btn btn-default btn-xs" type="button">10</button>
-            <button class="btn btn-default btn-xs" type="button">11</button>
-            <button class="btn btn-default btn-xs" type="button">12</button>
-            <button class="btn btn-default btn-xs" type="button">13</button>
-            <button class="btn btn-default btn-xs" type="button">14</button>
-            <button class="btn btn-default btn-xs" type="button">15</button>
-            <button class="btn btn-default btn-xs" type="button">16</button>
-            <button class="btn btn-default btn-xs" type="button">17</button>
-            <button class="btn btn-default btn-xs" type="button">18</button>
-            <button class="btn btn-default btn-xs" type="button">19</button>
-            <button class="btn btn-default btn-xs" type="button">20</button>
-            <button class="btn btn-default btn-xs" type="button">21</button>
-            <button class="btn btn-default btn-xs" type="button">22</button>
-            <button class="btn btn-default btn-xs" type="button">23</button>
-            <button class="btn btn-default btn-xs" type="button">24</button>
-            <button class="btn btn-default btn-xs" type="button">25</button>
-            <button class="btn btn-default btn-xs" type="button">26</button>
-            <button class="btn btn-default btn-xs" type="button">27</button>
-            <button class="btn btn-default btn-xs" type="button">28</button>
-            <button class="btn btn-default btn-xs" type="button">29</button>
-            <button class="btn btn-default btn-xs" type="button">30</button>
-            <button class="btn btn-default btn-xs" type="button">31</button>
-            <button class="btn btn-default btn-xs" type="button">32</button>
-            <button class="btn btn-default btn-xs" type="button">33</button>
-            <button class="btn btn-default btn-xs" type="button">34</button>
-            <button class="btn btn-default btn-xs" type="button">35</button>
-            <button class="btn btn-default btn-xs" type="button">36</button>
-        </div>
-    </div>
+    
 </footer>

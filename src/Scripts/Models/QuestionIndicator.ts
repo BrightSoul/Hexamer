@@ -1,3 +1,4 @@
+import * as ko from 'knockout';
 export class QuestionIndicator {
     public Number: number;
     public IsAnswered: KnockoutObservable<boolean>;

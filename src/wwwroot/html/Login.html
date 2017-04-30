@@ -1,4 +1,4 @@
-﻿  <div class="modal-dialog" role="document">
+﻿  <div class="modal-dialog" role="document" data-bind="visible: SlackAuthorizationUrl">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" data-bind="locale: 'Welcome'"></h4>
@@ -6,7 +6,7 @@
       <div class="modal-body" data-bind="locale: 'WelcomeMessage'">
       </div>
       <div class="modal-footer">
-        <a data-bind="visible: SlackAuthorizationUrl, attr: {href: SlackAuthorizationUrl}"><img alt="Add to Slack" height="40" width="172" src="/images/sign_in_with_slack.png" srcset="/images/sign_in_with_slack.png 1x, /images/sign_in_with_slack@2x.png 2x" /></a>
+        <a data-bind="attr: {href: SlackAuthorizationUrl}"><img alt="Add to Slack" height="40" width="172" src="/images/sign_in_with_slack.png" srcset="/images/sign_in_with_slack.png 1x, /images/sign_in_with_slack@2x.png 2x" /></a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

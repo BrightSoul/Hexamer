@@ -17,6 +17,7 @@ export class LayoutViewModel implements ILayout {
     public CurrentLocale: KnockoutObservable<string>;
     private LocaleLoader: KnockoutComputed<void>;
     public Locale: KnockoutObservable<ILocale>;
+    public IsBusy: KnockoutObservable<boolean>;
     private CurrentPage: Page;
 
     constructor() {
@@ -24,6 +25,7 @@ export class LayoutViewModel implements ILayout {
         templateEngine.defaultPath = "/html";
         templateEngine.defaultSuffix = ".html?v=" + Math.random();
         this.User = ko.observable(null);
+        this.IsBusy = ko.observable(null);
         this.NavigationContext = ko.observable(null);
         this.SupportedLocales = [];
         this.Locale = ko.observable<ILocale>();

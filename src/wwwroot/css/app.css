@@ -175,6 +175,15 @@ p {
     vertical-align: middle;
     display: table;
 }
+.ui-block {
+    position:fixed;
+    z-index:9999;
+    background-color: rgba(255, 255, 255, 0.4);
+    left:0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
 
 /* css checkbox contenuto */
 
@@ -291,7 +300,7 @@ footer {
         position: relative;
     }
 
-        .questions-index button.marked::after {
+        .questions-index button.bookmarked::after {
             content: "\e013";
             color: white;
             font-family: 'Glyphicons Halflings';
@@ -571,4 +580,16 @@ footer {
 }
 .navbar-text {
     float: left !important;
+}
+
+.module-questions .popover-content {
+    width: 320px;
+    max-width: 500px !important;
+}
+
+.module-questions .popover {
+    top: -200px;
+    left: -80px;
+    max-width: 315px;
+    display:block;
 }
