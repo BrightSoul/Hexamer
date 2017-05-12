@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Hexamer.Model.Results;
 using Hexamer.Services;
 using Hexamer.Extensions;
+using System.Threading.Tasks;
+using Hexamer.Model.Requests;
 
 namespace Hexamer.Controllers
 {
@@ -29,16 +31,11 @@ namespace Hexamer.Controllers
             return enabledExams.Select(exam => ExamResult.FromEntity(exam));
         }
         
-        [HttpGet("{id}/start")]
-        public IActionResult Start(string id)
-        {
-            //TODO: Verifica che l'utente abbia tutte le domande richieste dall'esame
-            var language = Request.GetLanguage();
-            var dto = examRepository.GetById(id, language);
-            if (dto == null)
-                return NotFound();
 
-            return Ok(ExamResult.FromEntity(dto));
+        [HttpPost("{examId}/{questionNumber}/Bookmark")]
+        public async Task<IActionResult> Bookmark(string examId, int questionNumber, [FromBody] BookmarkRequest request) {
+            await answerRepository.UpdateBookmark(User.Identity.Name, examId, questionNumber, request.Bookmarked );
+            return Ok();
         }
     }
 }

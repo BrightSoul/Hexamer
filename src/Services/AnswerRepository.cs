@@ -81,15 +81,15 @@ namespace Hexamer.Services
             }
         }
 
-        public async Task UpdateDisplayed(string username, string exam, string question)
+        public async Task UpdateDisplayed(string username, string examId, int questionNumber)
         {
             using (var conn = await GetDbConnectionForUser(username))
             {
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "UPDATE Answers SET Displayed=@displayed WHERE Exam=@exam AND Question=@question";
-                    cmd.AddParameter("exam", exam);
-                    cmd.AddParameter("question", question);
+                    cmd.CommandText = "UPDATE Answers SET Displayed=@displayed WHERE Exam=@exam AND Number=@number";
+                    cmd.AddParameter("exam", examId);
+                    cmd.AddParameter("number", questionNumber);
                     cmd.AddParameter("displayed", DateTime.Now);
                     await cmd.ExecuteNonQueryAsync();
                 }
@@ -113,16 +113,16 @@ namespace Hexamer.Services
             }
         }
 
-        public async Task UpdateBookmark(string username, string exam, string question, bool isBookmarked)
+        public async Task UpdateBookmark(string username, string examId, int questionNumber, bool bookmarked)
         {
             using (var conn = await GetDbConnectionForUser(username))
             {
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "UPDATE Answers SET IsBookmarked=@isBookmarked WHERE Exam=@exam AND Question=@question";
-                    cmd.AddParameter("exam", exam);
-                    cmd.AddParameter("question", question);
-                    cmd.AddParameter("isBoomarked", isBookmarked);
+                    cmd.CommandText = "UPDATE Answers SET IsBookmarked=@isBookmarked WHERE Exam=@exam AND Number=@number";
+                    cmd.AddParameter("exam", examId);
+                    cmd.AddParameter("number", questionNumber);
+                    cmd.AddParameter("isBookmarked", bookmarked);
                     await cmd.ExecuteNonQueryAsync();
                 }
             }

@@ -80,6 +80,7 @@ class QuestionsViewModel {
 
     private UpdateBookmark = async (): Promise<void> => {
         let bookmark = this.IsCurrentQuestionBookmarked();
+        console.log(bookmark);
     }
     private UpdateTime = () => {
         let currentTime = (new Date()).getTime();

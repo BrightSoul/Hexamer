@@ -67,7 +67,7 @@ namespace Hexamer.Controllers
             if (answer == null)
                 return NotFound();
 
-            await answerRepository.UpdateDisplayed(User.Identity.Name, answer.Exam, answer.Question);
+            await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
 
             var question = exam.Questions.FirstOrDefault(q => q.Id == answer.Question);
             if (question == null)

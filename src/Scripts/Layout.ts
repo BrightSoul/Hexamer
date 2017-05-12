@@ -33,7 +33,6 @@ export class LayoutViewModel implements ILayout {
         this.CurrentLocale = ko.observable(null);
         this.LocaleLoader = ko.computed(this.LoadLocale);
         this.InitLocale();
-        window.onhashchange = () => { this.ChangePage(); };
         this.GetUser();
 
 
@@ -82,7 +81,8 @@ export class LayoutViewModel implements ILayout {
             let locale = <ILocale>new localeModule[currentLocale]();
             this.Locale(locale);
             this.Title(this.Locale().ApplicationName);
-            this.NavigateAccordingToHash(this.CurrentPage);
+            if (this.User())
+                this.NavigateAccordingToHash(this.CurrentPage);
         });
     }
 
@@ -98,12 +98,10 @@ export class LayoutViewModel implements ILayout {
         let user = this.User();
         return user ? user.Name : null;
     }
-    private ChangePage(): void {
-        this.NavigateAccordingToHash(Page.Login);
-    }
 
     private async GetUser(): Promise<void> {
         let result = await this.Get<UserResult>("/api/User");
+        window.onhashchange = () => { this.NavigateAccordingToHash(Page.Login); };
         if (result.IsAuthenticated) {
             this.Login(result.User);
         } else {
@@ -170,7 +168,7 @@ export class LayoutViewModel implements ILayout {
     }
     private Login(user: User) {
         this.User(user);
-        this.Navigate(Page.Exams);
+        this.NavigateAccordingToHash(Page.Exams);
     }
     private async Logout(): Promise<void> {
         await this.Get("/api/Logout");

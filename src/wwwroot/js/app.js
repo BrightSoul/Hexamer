@@ -183,7 +183,8 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                     var locale = new localeModule[currentLocale]();
                     _this.Locale(locale);
                     _this.Title(_this.Locale().ApplicationName);
-                    _this.NavigateAccordingToHash(_this.CurrentPage);
+                    if (_this.User())
+                        _this.NavigateAccordingToHash(_this.CurrentPage);
                 });
             };
             this.SelectLocale = function (locale) {
@@ -201,7 +202,6 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             this.CurrentLocale = ko.observable(null);
             this.LocaleLoader = ko.computed(this.LoadLocale);
             this.InitLocale();
-            window.onhashchange = function () { _this.ChangePage(); };
             this.GetUser();
         }
         LayoutViewModel.prototype.InitLocale = function () {
@@ -245,17 +245,16 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             var user = this.User();
             return user ? user.Name : null;
         };
-        LayoutViewModel.prototype.ChangePage = function () {
-            this.NavigateAccordingToHash(Page_3.Page.Login);
-        };
         LayoutViewModel.prototype.GetUser = function () {
             return __awaiter(this, void 0, void 0, function () {
+                var _this = this;
                 var result;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, this.Get("/api/User")];
                         case 1:
                             result = _a.sent();
+                            window.onhashchange = function () { _this.NavigateAccordingToHash(Page_3.Page.Login); };
                             if (!result.IsAuthenticated) return [3 /*break*/, 2];
                             this.Login(result.User);
                             return [3 /*break*/, 4];
@@ -344,7 +343,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         };
         LayoutViewModel.prototype.Login = function (user) {
             this.User(user);
-            this.Navigate(Page_3.Page.Exams);
+            this.NavigateAccordingToHash(Page_3.Page.Exams);
         };
         LayoutViewModel.prototype.Logout = function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -436,7 +435,6 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                 if (_this.Question() && _this.Question().Number == indicator.Number)
                     return;
                 _this.navigationContext.Layout.IsBusy(true);
-                console.log(_this.ExamId + "/" + indicator.Number);
                 _this.navigationContext.Layout.Navigate(Page_4.Page.Questions, _this.ExamId + "/" + indicator.Number);
             };
             this.GetExam = function (examId, questionNumber) { return __awaiter(_this, void 0, void 0, function () {
@@ -475,6 +473,7 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                 var bookmark;
                 return __generator(this, function (_a) {
                     bookmark = this.IsCurrentQuestionBookmarked();
+                    console.log(bookmark);
                     return [2 /*return*/];
                 });
             }); };

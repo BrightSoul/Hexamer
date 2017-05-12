@@ -11,7 +11,7 @@ namespace Hexamer.Services
         Task<Answer> GetByNumber(string username, string exam, int questionNumber);
         Task<bool> CreateMissingAnswers(string username, Exam exam);
         Task UpdateAnswer(string username, Answer answer);
-        Task UpdateDisplayed(string username, string exam, string question);
-        Task UpdateBookmark(string username, string exam, string question, bool marked);
+        Task UpdateDisplayed(string username, string examId, int questionNumber);
+        Task UpdateBookmark(string username, string examId, int questionNumber, bool bookmarked);
     }
 }
