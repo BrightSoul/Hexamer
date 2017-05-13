@@ -114,6 +114,7 @@ class QuestionsViewModel {
         }
         this.QuestionIndicators(questionIndicators);
         this.Exam(exam);
+        this.navigationContext.Layout.SetTitle(exam.Title + " " + exam.Subtitle);
 
         let question = await this.navigationContext.Layout.Get<Question>(`/api/Exams/${examId}/${questionNumber}`);
         this.IsCurrentQuestionBookmarked(question.IsBookmarked);

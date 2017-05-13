@@ -638,9 +638,15 @@ footer {
     border-color: #002a36;
 }
 .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
-    background-color: #002a36;
+    background-color: #003341;
 }
 
 hr {
     border-color:#ccc;
+}
+.navbar-nav, .navbar-nav>li {
+    float:left;
+}
+@media (max-width: 640px) {
+    #username {display:none;}
 }

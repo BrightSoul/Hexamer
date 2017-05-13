@@ -524,6 +524,7 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             }
                             this.QuestionIndicators(questionIndicators);
                             this.Exam(exam);
+                            this.navigationContext.Layout.SetTitle(exam.Title + " " + exam.Subtitle);
                             return [4 /*yield*/, this.navigationContext.Layout.Get("/api/Exams/" + examId + "/" + questionNumber)];
                         case 2:
                             question = _a.sent();
