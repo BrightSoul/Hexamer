@@ -81,7 +81,7 @@ namespace Hexamer.Services
             }
         }
 
-        public async Task UpdateDisplayed(string username, string examId, int questionNumber)
+        public async Task<bool> UpdateDisplayed(string username, string examId, int questionNumber)
         {
             using (var conn = await GetDbConnectionForUser(username))
             {
@@ -91,29 +91,31 @@ namespace Hexamer.Services
                     cmd.AddParameter("exam", examId);
                     cmd.AddParameter("number", questionNumber);
                     cmd.AddParameter("displayed", DateTime.Now);
-                    await cmd.ExecuteNonQueryAsync();
+                    var rowsAffected = await cmd.ExecuteNonQueryAsync();
+                    return rowsAffected == 1;
                 }
             }
         }
-        public async Task UpdateAnswer(string username, Answer answer)
+        public async Task<bool> UpdateAnswer(string username, string examId, int questionNumber, string answerProvided, double scoreAwarded, bool isCorrectAnswer)
         {
             using (var conn = await GetDbConnectionForUser(username))
             {
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "UPDATE Answers SET AnswerProvided=@answedProvided, ScoreAwarded=@scoreAwarded, IsCorrectAnswer=@isCorrectAnswer, IsBookmarked=@isBookmarked, Answered=@answered WHERE Exam=@exam AND Question=@question";
-                    cmd.AddParameter("answerProvided", answer.AnswerProvided);
-                    cmd.AddParameter("scoreAwarded", answer.ScoreAwarded);
-                    cmd.AddParameter("isCorrectAnswer", answer.IsCorrectAnswer);
+                    cmd.CommandText = "UPDATE Answers SET AnswerProvided=@answerProvided, ScoreAwarded=@scoreAwarded, IsCorrectAnswer=@isCorrectAnswer, Answered=@answered WHERE Exam=@examId AND Number=@questionNumber";
+                    cmd.AddParameter("answerProvided", answerProvided);
+                    cmd.AddParameter("scoreAwarded", scoreAwarded);
+                    cmd.AddParameter("isCorrectAnswer", isCorrectAnswer);
                     cmd.AddParameter("answered", DateTime.Now);
-                    cmd.AddParameter("exam", answer.Exam);
-                    cmd.AddParameter("question", answer.Question);
-                    await cmd.ExecuteNonQueryAsync();
+                    cmd.AddParameter("examId", examId);
+                    cmd.AddParameter("questionNumber", questionNumber);
+                    var rowsAffected = await cmd.ExecuteNonQueryAsync();
+                    return rowsAffected == 1;
                 }
             }
         }
 
-        public async Task UpdateBookmark(string username, string examId, int questionNumber, bool bookmarked)
+        public async Task<bool> UpdateBookmark(string username, string examId, int questionNumber, bool bookmarked)
         {
             using (var conn = await GetDbConnectionForUser(username))
             {
@@ -123,7 +125,8 @@ namespace Hexamer.Services
                     cmd.AddParameter("exam", examId);
                     cmd.AddParameter("number", questionNumber);
                     cmd.AddParameter("isBookmarked", bookmarked);
-                    await cmd.ExecuteNonQueryAsync();
+                    var rowsAffected = await cmd.ExecuteNonQueryAsync();
+                    return rowsAffected == 1;
                 }
             }
         }

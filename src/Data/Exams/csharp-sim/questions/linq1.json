@@ -1,7 +1,7 @@
 {
   "Type": "MultipleChoice",
   "ScoreAwarded": 2.0,
-  "CorrectAnswer": "A1,A2,A4",
+  "CorrectAnswer": "E,D",
   "Text": {
 	"It": "Come stai?",
 	"En": "How are you?"
@@ -10,13 +10,13 @@
 	"It": "allora è così perché...",
 	"En": "It's like this because...",
   },
-  "Group": "contoso",
+  "Group": "01",
   "Options": [
-	{ "Id": "A1", "Text": { "It": "Opzione1", "En": "Option1" } },
-	{ "Id": "A2", "Text": { "It": "Opzione2", "En": "Option2" } },
-	{ "Id": "A3", "Text": { "It": "Opzione3", "En": "Option3" } },
-	{ "Id": "A4", "Text": { "It": "Opzione4", "En": "Option4" } },
-	{ "Id": "A5", "Text": { "It": "Opzione5", "En": "Option5" } },
-	{ "Id": "A6", "Text": { "It": "Opzione6", "En": "Option6" } }
+	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "OptionA" } },
+	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "OptionB" } },
+	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "OptionC" } },
+	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "OptionD" } },
+	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "OptionE" } },
+	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "OptionF" } }
   ]
 }

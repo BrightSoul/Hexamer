@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hexamer.Model.QuestionTypes
 {
-    public class MultipleChoice : Question
+    public class CodeCompletion : Question
     {
         public override double CalculateScore(string answerProvided, out bool isCorrectAnswer)
         {
@@ -32,25 +33,30 @@ namespace Hexamer.Model.QuestionTypes
         }
 
 
-        public MultipleChoiceOption[] Options {
+        public CodeCompletionBlock[] Blocks {
             get; set;
         }
 
-        private int Choose {
-            get{
-                return CorrectAnswer.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Length;
-            }
-        }
 
         public override object GetQuestionData(string randomizationSeed) {
+            var randomizedBlocks = new CodeCompletionBlock[Blocks.Length];
+            for (var i = 0; i < Blocks.Length; i++) {
+                randomizedBlocks[i] = new CodeCompletionBlock {
+                    Id = Blocks[i].Id,
+                    Options = SortList(Blocks[i].Options, randomizationSeed).ToArray()
+                };
+            }
             return new {
-                Choose = Choose,
-                Options = SortList(Options, randomizationSeed)
+                Blocks = randomizedBlocks
             };
         }
     }
 
-    public class MultipleChoiceOption {
+    public class CodeCompletionBlock {
+        public string Id {get;set;}
+        public CodeCompletionOption[] Options {get;set;}
+    }
+    public class CodeCompletionOption {
         public string Id {get;set;}
         public string Text {get;set;}
     }

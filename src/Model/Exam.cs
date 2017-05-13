@@ -66,8 +66,9 @@ namespace Hexamer.Model
             ).ToList();
             foreach (var question in questions) {
                 var jObject = FixTypes(question.Content);
-                jObject = FixLanguage(jObject, language, "Text", "AnswerText", "Options.Text");
-                var q = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(jObject), new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects }) as Question;
+                jObject = FixLanguage(jObject, language, "Text", "AnswerText", "Options[*].Text");
+                var serialized = JsonConvert.SerializeObject(jObject);
+                var q = JsonConvert.DeserializeObject(serialized, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects }) as Question;
                 q.Id = question.Id;
                 questionList.Add(q);
             }
@@ -84,7 +85,7 @@ namespace Hexamer.Model
             var typeName = currentType == null ? defaultType : currentType.Value<string>();
 
             var fullTypeName = $"Hexamer.Model.QuestionTypes.{typeName}, Hexamer";
-            fullTypeName = "Hexamer.Model.QuestionTypes.MultipleChoice, Hexamer";
+            //fullTypeName = "Hexamer.Model.QuestionTypes.MultipleChoice, Hexamer";
             jObject["$type"] = fullTypeName;
             foreach (var property in oldObject.OfType<JProperty>())
             {

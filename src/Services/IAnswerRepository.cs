@@ -10,8 +10,8 @@ namespace Hexamer.Services
         Task<Answer> GetById(string username, string exam, string question);
         Task<Answer> GetByNumber(string username, string exam, int questionNumber);
         Task<bool> CreateMissingAnswers(string username, Exam exam);
-        Task UpdateAnswer(string username, Answer answer);
-        Task UpdateDisplayed(string username, string examId, int questionNumber);
-        Task UpdateBookmark(string username, string examId, int questionNumber, bool bookmarked);
+        Task<bool> UpdateAnswer(string username, string examId, int questionNumber, string answerProvided, double scoreAwarded, bool isCorrectAnswer);
+        Task<bool> UpdateDisplayed(string username, string examId, int questionNumber);
+        Task<bool> UpdateBookmark(string username, string examId, int questionNumber, bool bookmarked);
     }
 }

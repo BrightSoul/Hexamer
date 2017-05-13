@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace Hexamer.Model
 {
@@ -11,6 +14,28 @@ namespace Hexamer.Model
         public string Type { get; set; }
         public string AnswerText { get; set; }
         public string CorrectAnswer { get; set; }
-        public abstract double CalculateScore(string providedAnswer);
+        public abstract object GetQuestionData(string randomizationSeed);
+        public abstract double CalculateScore(string answerProvided, out bool isCorrect);
+
+        protected IList<T> SortList<T>(IEnumerable<T> items, string randomizationSeed) {
+            if (items == null)
+                return new List<T>();
+            
+            var list = items.ToList();
+
+            if (string.IsNullOrEmpty(randomizationSeed))
+                return list;
+            
+            while (randomizationSeed.Length < list.Count) {
+                randomizationSeed += randomizationSeed;
+            }
+            
+            int index = 0;
+            return list.OrderBy(l => {
+                byte value = (byte) randomizationSeed[Math.Min(index, randomizationSeed.Length-1)];
+                index++;
+                return value;
+            }).ToList();
+        }
     }
 }

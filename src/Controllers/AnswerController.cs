@@ -22,20 +22,54 @@ namespace Hexamer.Controllers
         }
 
         // GET api/values
-        [HttpGet]
-        public IEnumerable<ExamResult> Get()
+        [HttpGet("{examId}/{questionNumber}")]
+        public async Task<IActionResult> Get(string examId, int questionNumber)
         {
-            var language = Request.GetLanguage();
-            var enabledExams = examRepository.GetAll(language).Visible().ToList();
-            //TODO: join with user data from sqlite
-            return enabledExams.Select(exam => ExamResult.FromEntity(exam));
+            var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
+            if (answer == null)
+                return NotFound("Answer");
+            
+            var exam = examRepository.GetById(examId, Request.GetLanguage());
+            if (exam == null)
+                return NotFound("Exam");
+
+            var question = exam.Questions.SingleOrDefault(q => q.Id == answer.Question);
+            if (question == null)
+                return NotFound("Question");
+
+            var result = AnswerResult.FromEntities(exam, question, answer, User.Identity);
+            await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
+            return Ok(result);
+        }
+
+        [HttpPost("{examId}/{questionNumber}")]
+        public async Task<IActionResult> Post(string examId, int questionNumber, [FromBody] AnswerRequest request) {
+
+            var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
+            if (answer == null)
+                return NotFound("Answer");
+            
+            var exam = examRepository.GetById(examId, Request.GetLanguage());
+            if (exam == null)
+                return NotFound("Exam");
+
+            var question = exam.Questions.SingleOrDefault(q => q.Id == answer.Question);
+            if (question == null)
+                return NotFound("Question");
+
+            var score = question.CalculateScore(request.AnswerProvided, out bool isCorrectAnswer);
+            var result = await answerRepository.UpdateAnswer(User.Identity.Name, examId, questionNumber, request.AnswerProvided, score, isCorrectAnswer);
+            return Ok();
         }
         
 
         [HttpPost("{examId}/{questionNumber}/Bookmark")]
         public async Task<IActionResult> Bookmark(string examId, int questionNumber, [FromBody] BookmarkRequest request) {
-            await answerRepository.UpdateBookmark(User.Identity.Name, examId, questionNumber, request.Bookmarked );
-            return Ok();
+            var result = await answerRepository.UpdateBookmark(User.Identity.Name, examId, questionNumber, request.IsBookmarked );
+            if (result) 
+                return Ok();
+            else
+                return NotFound();
         }
     }
 }
