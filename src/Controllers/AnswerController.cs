@@ -36,8 +36,8 @@ namespace Hexamer.Controllers
             if (question == null)
                 return NotFound("Question");
 
-            var score = question.CalculateScore(request.AnswerProvided, out bool isCorrectAnswer);
-            var result = await answerRepository.UpdateAnswer(User.Identity.Name, examId, questionNumber, request.AnswerProvided, score, isCorrectAnswer);
+            var score = question.CalculateScore(request.AnswerProvided, out bool isCorrectAnswer, out bool isCompleteAnswer);
+            var result = await answerRepository.UpdateAnswer(User.Identity.Name, examId, questionNumber, request.AnswerProvided, score, isCorrectAnswer, isCompleteAnswer);
             return Ok();
         }
         

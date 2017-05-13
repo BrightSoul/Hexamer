@@ -6,9 +6,10 @@ namespace Hexamer.Model.QuestionTypes
 {
     public class CodeCompletion : Question
     {
-        public override double CalculateScore(string answerProvided, out bool isCorrectAnswer)
+        public override double CalculateScore(string answerProvided, out bool isCorrectAnswer, out bool isCompleteAnswer)
         {
             isCorrectAnswer = false;
+            isCompleteAnswer = false;
             if (string.IsNullOrEmpty(answerProvided))
                 return 0;
             
@@ -29,6 +30,7 @@ namespace Hexamer.Model.QuestionTypes
                 }
             }
             isCorrectAnswer = score == ScoreAwarded;
+            isCompleteAnswer = provided.Count == correct.Count;
             return Math.Max(0, score);
         }
 

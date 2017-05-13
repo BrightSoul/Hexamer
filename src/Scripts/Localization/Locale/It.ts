@@ -26,6 +26,7 @@ export class It implements ILocale {
     Choose: string = "Scegli";
     Answers: string = "risposte";
     Answer: string = "risposta";
+    CompleteCode: string = "Completa il codice selezionando le voci corrette";
     Explanation: string = "Spiegazione";
     BookmarkAnswer: string = "Ricontrolla questa domanda più tardi";
     AverageTimePerAnswer: string = "circa per domanda";

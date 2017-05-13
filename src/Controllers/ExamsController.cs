@@ -27,7 +27,7 @@ namespace Hexamer.Controllers
 
         // GET api/values
         [HttpGet]
-        public async Task<IEnumerable<ExamResult>> Get()
+        public async Task<IEnumerable<ExamResult>> GetAll()
         {
             string language = Request.GetLanguage();
             var enabledExams = examRepository.GetAll(language).Visible().ToList();

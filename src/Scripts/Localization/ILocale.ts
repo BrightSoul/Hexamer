@@ -17,6 +17,7 @@ export interface ILocale {
     QuestionsAlreadyAnswered: string;
     AvailableFrom: string;
     StartingIn: string;
+    CompleteCode: string;
 
     Next: string;
     Previous: string;

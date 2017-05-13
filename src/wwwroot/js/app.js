@@ -628,6 +628,7 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.Choose = "Choose";
             this.Answers = "answers";
             this.Answer = "answer";
+            this.CompleteCode = "Complete the code by selecting the correct options";
             this.Explanation = "Explanation";
             this.TimesUp = "Time's up!";
             this.BookmarkAnswer = "Review this question later";
@@ -671,6 +672,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.Choose = "Scegli";
             this.Answers = "risposte";
             this.Answer = "risposta";
+            this.CompleteCode = "Completa il codice selezionando le voci corrette";
             this.Explanation = "Spiegazione";
             this.BookmarkAnswer = "Ricontrolla questa domanda più tardi";
             this.AverageTimePerAnswer = "circa per domanda";
@@ -736,7 +738,7 @@ define("QuestionTypes/CodeCompletion", ["require", "exports", "knockout"], funct
                 _loop_1(i);
             }
             this.CodeText = codeText;
-            this.IsCompleteAnswer = ko.observable(false);
+            this.IsCompleteAnswer = ko.observable(answerProvided.length == question.QuestionData.Blocks.length);
         }
         return CodeCompletionViewModel;
     }());

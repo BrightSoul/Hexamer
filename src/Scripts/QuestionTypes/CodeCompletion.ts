@@ -24,7 +24,7 @@ class CodeCompletionViewModel {
         }
 
         this.CodeText = codeText;
-        this.IsCompleteAnswer = ko.observable(false);
+        this.IsCompleteAnswer = ko.observable(answerProvided.length == question.QuestionData.Blocks.length);
 
     }
     private UpdateTooltips = (newValue: boolean) => {

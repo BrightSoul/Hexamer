@@ -96,16 +96,17 @@ namespace Hexamer.Services
                 }
             }
         }
-        public async Task<bool> UpdateAnswer(string username, string examId, int questionNumber, string answerProvided, double scoreAwarded, bool isCorrectAnswer)
+        public async Task<bool> UpdateAnswer(string username, string examId, int questionNumber, string answerProvided, double scoreAwarded, bool isCorrectAnswer, bool isCompleteAnswer)
         {
             using (var conn = await GetDbConnectionForUser(username))
             {
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "UPDATE Answers SET AnswerProvided=@answerProvided, ScoreAwarded=@scoreAwarded, IsCorrectAnswer=@isCorrectAnswer, Answered=@answered WHERE Exam=@examId AND Number=@questionNumber";
+                    cmd.CommandText = "UPDATE Answers SET AnswerProvided=@answerProvided, ScoreAwarded=@scoreAwarded, IsCorrectAnswer=@isCorrectAnswer, IsCompleteAnswer=@isCompleteAnswer, Answered=@answered WHERE Exam=@examId AND Number=@questionNumber";
                     cmd.AddParameter("answerProvided", answerProvided);
                     cmd.AddParameter("scoreAwarded", scoreAwarded);
                     cmd.AddParameter("isCorrectAnswer", isCorrectAnswer);
+                    cmd.AddParameter("isCompleteAnswer", isCompleteAnswer);
                     cmd.AddParameter("answered", DateTime.Now);
                     cmd.AddParameter("examId", examId);
                     cmd.AddParameter("questionNumber", questionNumber);
@@ -169,12 +170,13 @@ namespace Hexamer.Services
                             {
                                 number++;
                                 answer.Number = number;
-                                cmd.CommandText = "INSERT INTO Answers (Exam, Question, Number, Created, IsCorrectAnswer, IsBookmarked) VALUES (@exam, @question, @number, @created, @isCorrectAnswer, @isBookmarked)";
+                                cmd.CommandText = "INSERT INTO Answers (Exam, Question, Number, Created, IsCorrectAnswer, IsCompleteAnswer, IsBookmarked) VALUES (@exam, @question, @number, @created, @isCorrectAnswer, @isCompleteAnswer, @isBookmarked)";
                                 cmd.AddParameter("exam", answer.Exam); 
                                 cmd.AddParameter("question", answer.Question);
                                 cmd.AddParameter("number", answer.Number);
                                 cmd.AddParameter("created", answer.Created);
                                 cmd.AddParameter("isCorrectAnswer", false);
+                                cmd.AddParameter("isCompleteAnswer", false);
                                 cmd.AddParameter("isBookmarked", false);
                                 await cmd.ExecuteNonQueryAsync();
                             }
@@ -206,7 +208,7 @@ namespace Hexamer.Services
         {
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "CREATE TABLE IF NOT EXISTS Answers (Exam VARCHAR(255) NOT NULL, Question VARCHAR(255) NOT NULL, Number INT NOT NULL, AnswerProvided TEXT NULL, ScoreAwarded DOUBLE NULL, IsCorrectAnswer BOOLEAN NOT NULL, IsBookmarked BOOLEAN NOT NULL, Answered DATETIME, Displayed DATETIME, Created DATETIME NOT NULL, CONSTRAINT UniqueQuestionNumber UNIQUE (Exam, Number), PRIMARY KEY (Exam, Question))";
+                command.CommandText = "CREATE TABLE IF NOT EXISTS Answers (Exam VARCHAR(255) NOT NULL, Question VARCHAR(255) NOT NULL, Number INT NOT NULL, AnswerProvided TEXT NULL, ScoreAwarded DOUBLE NULL, IsCorrectAnswer BOOLEAN NOT NULL, IsCompleteAnswer BOOLEAN NOT NULL, IsBookmarked BOOLEAN NOT NULL, Answered DATETIME, Displayed DATETIME, Created DATETIME NOT NULL, CONSTRAINT UniqueQuestionNumber UNIQUE (Exam, Number), PRIMARY KEY (Exam, Question))";
                 await command.ExecuteNonQueryAsync();
             }
         }
@@ -221,6 +223,7 @@ namespace Hexamer.Services
                 AnswerProvided = dataReader["AnswerProvided"] == null || dataReader["AnswerProvided"] == DBNull.Value ? null : (string) dataReader["AnswerProvided"],
                 ScoreAwarded = dataReader["ScoreAwarded"] == null || dataReader["ScoreAwarded"] == DBNull.Value ? (double?) null : (double) dataReader["ScoreAwarded"],
                 IsCorrectAnswer = Convert.ToBoolean(dataReader["IsCorrectAnswer"]),
+                IsCompleteAnswer = Convert.ToBoolean(dataReader["IsCompleteAnswer"]),
                 IsBookmarked = Convert.ToBoolean(dataReader["IsBookmarked"]),
                 Answered = dataReader["Answered"] == null || dataReader["Answered"] == DBNull.Value ? (DateTime?) null : DateTime.Parse(dataReader["Answered"].ToString()),
                 Created = DateTime.Parse(dataReader["Created"].ToString())

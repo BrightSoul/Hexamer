@@ -15,7 +15,7 @@ namespace Hexamer.Model
         public string AnswerText { get; set; }
         public string CorrectAnswer { get; set; }
         public abstract object GetQuestionData(string randomizationSeed);
-        public abstract double CalculateScore(string answerProvided, out bool isCorrect);
+        public abstract double CalculateScore(string answerProvided, out bool isCorrectAnswer, out bool isCompleteAnswer);
 
         protected IList<T> SortList<T>(IEnumerable<T> items, string randomizationSeed) {
             if (items == null)

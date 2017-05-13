@@ -15,6 +15,7 @@ namespace Hexamer.Model
         public bool IsBookmarked { get; set; }
         public double? ScoreAwarded { get; set; }
         public bool IsCorrectAnswer { get; set; }
+        public bool IsCompleteAnswer { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Displayed { get; set; }
         public DateTime? Answered { get; set; }
