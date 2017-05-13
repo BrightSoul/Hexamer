@@ -1,11 +1,11 @@
 ﻿
     <header class="summary">
         <div class="pull-left">
-            <h2 data-bind="if: Question">Domanda <span data-bind="Question().Number"></span> di <span data-bind="Questions"></span></h2>
-            <input type="checkbox" class="review-checkbox" id="review" name="review" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="review" for="review">Contrassegna per rivederla dopo</label>
+            <h2 data-bind="if: Question"><span data-bind="locale: 'Question'"></span> <span data-bind="text: Question().Number"></span> <span data-bind="locale: 'Of'"></span> <span data-bind="text: Exam().Questions"></span></h2>
+            <input type="checkbox" class="bookmark-checkbox" id="bookmark" name="bookmark" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="bookmark" for="bookmark" data-bind="locale: 'BookmarkAnswer'"></label>
         </div>
         <div class="pull-right" data-bind="if: RemainingTime">
-            <h2><span data-bind="visible: HasExpirationTime">Tempo residuo</span> <time data-bind="text: RemainingTime, css: {'running-out': TimeIsRunningOut}">1:45:36</time></h2>
+            <h2><span data-bind="visible: HasExpirationTime, locale: 'RemainingTime'"></span> <time data-bind="text: RemainingTime, css: {'running-out': TimeIsRunningOut}"></time></h2>
             <h4>Circa 0:00 a domanda</h4>
         </div>
     </header>
@@ -35,18 +35,21 @@
           </pre>
 
     </form>
+    <div data-bind="if: $parent.AnswerRevealed">
+        <hr />
+        <p data-bind="html: AnswerText"">
+    </div>
 </section>
 <footer data-bind="if: Exam()">
     <div class="btn-group pagination text-center" role="group">
-        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
-        <button type="button" class="btn btn-default" data-bind="click: ToggleIndicators"><span>6</span> di <span data-bind="text: Exam().Questions"></span></button>
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Prossima</button>
+        <button type="button" class="btn btn-default" data-bind="click: PreviousQuestion"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span>&nbsp;</span></button>
+        <button type="button" class="btn btn-default" data-bind="click: ToggleIndicators"><span data-bind="text: Question() ? Question().Number : ''"></span> <span data-bind="locale: 'Of'"></span> <span data-bind="text: Exam().Questions"></span></button>
+        <button type="button" class="btn" data-bind="click: NextQuestion, css: {'btn-success': IsLastQuestion(), 'btn-primary': !IsLastQuestion()}"><span class="glyphicon" data-bind="css: {'glyphicon-flag': IsLastQuestion(), 'glyphicon-menu-right': !IsLastQuestion()}" aria-hidden="true"></span> <span data-bind="locale: IsLastQuestion() ? 'Finish' : 'Next'"></span></button>
         <div class="popover fade top in" role="tooltip" data-bind="visible: IndicatorsVisible" style="display:none;"><div class="arrow" style="left: 50%;"></div><h3 class="popover-title" style="display: none;"></h3><div class="popover-content">
         <div class="questions-index" data-bind="foreach: QuestionIndicators">
-            <button class="btn btn-xs" type="button" data-bind="click: $parent.NavigateToQuestion, text: Number, css: {'btn-primary': IsAnswered, 'btn-default': !IsAnswered(), 'bookmarked': IsBookmarked}"></button>
+            <button class="btn btn-xs" type="button" data-bind="click: $parent.NavigateToQuestion, text: Number, css: {'btn-primary': IsAnswered, 'btn-default': !IsAnswered(), 'bookmarked': IsBookmarked, 'current': $parent.Question() && Number == $parent.Question().Number}"></button>
         </div>
     </div></div>
     </div>
-    <button type="button" class="btn btn-default pull-right">Mostra risposta</button>
-    
+    <button data-bind="visible: Question() && Question().CanShowAnswer, locale: AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer', click: ToggleAnswer" type="button" class="btn btn-default pull-right"></button>
 </footer>

@@ -3,7 +3,8 @@ import { NavigationContext } from 'Scripts/Models/NavigationContext';
 import { Exam } from 'Scripts/Models/Exam';
 import { Question } from 'Scripts/Models/Question';
 import { QuestionIndicator } from 'Scripts/Models/QuestionIndicator';
-import { Page } from "Scripts/Models/Page";
+import { Page } from 'Scripts/Models/Page';
+import { BookmarkRequest } from 'Scripts/Requests/BookmarkRequest';
 
 class QuestionsViewModel {
 
@@ -17,6 +18,8 @@ class QuestionsViewModel {
     private BookmarkUpdater: KnockoutComputed<Promise<void>>;
     public QuestionIndicators: KnockoutObservableArray<QuestionIndicator>;
     public IndicatorsVisible: KnockoutObservable<boolean>;
+    public AnswerRevealed: KnockoutObservable<boolean>;
+    public IsLastQuestion: KnockoutComputed<boolean>;
 
     private ExamId: string;
     private QuestionNumber: number;
@@ -26,11 +29,13 @@ class QuestionsViewModel {
         this.TimeIsRunningOut = ko.observable(false);
         this.HasExpirationTime = ko.observable(false);
         this.IndicatorsVisible = ko.observable(false);
+        this.AnswerRevealed = ko.observable(false);
         this.IsCurrentQuestionBookmarked = ko.observable(false);
-        this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
         this.QuestionIndicators = ko.observableArray([]);
         this.Question = ko.observable(null);
         this.Exam = ko.observable(null);
+        this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
+        this.IsLastQuestion = ko.computed(this.UpdateIsLastQuestion);
 
         let args = navigationContext.NavigationArgs.split("/");
         this.ExamId = args[0];
@@ -46,19 +51,48 @@ class QuestionsViewModel {
         this.IndicatorsVisible(!this.IndicatorsVisible());
     }
 
+    public ToggleAnswer = () : void => {
+        this.AnswerRevealed(!this.AnswerRevealed());
+    }
+
     public NavigateToQuestion = (indicator: QuestionIndicator): void => {
+        this.NavigateToQuestionNumber(indicator.Number);
+    }
+
+    private NavigateToQuestionNumber = (number: number): void => {
         this.IndicatorsVisible(false);
-        if (this.Question() && this.Question().Number == indicator.Number)
+        let exam = this.Exam();
+        let question = this.Question();
+        if (!exam || !question)
+            return;
+        if (question.Number == number)
             return;
         this.navigationContext.Layout.IsBusy(true);
-        this.navigationContext.Layout.Navigate(Page.Questions, `${this.ExamId}/${indicator.Number}`);
+        if (number <= 0 || number > exam.Questions)
+            this.navigationContext.Layout.Navigate(Page.Exams);
+        else
+            this.navigationContext.Layout.Navigate(Page.Questions, `${this.ExamId}/${number}`);
+    };
+
+    public NextQuestion = () : void => {
+        let question = this.Question();
+        if (!question)
+            return;
+        this.NavigateToQuestionNumber(question.Number+1);
+    }
+
+    public PreviousQuestion = () : void => {
+        let question = this.Question();
+        if (!question)
+            return;
+        this.NavigateToQuestionNumber(question.Number-1);
     }
 
     private GetExam = async (examId: string, questionNumber: number): Promise<void> => {
         this.navigationContext.Layout.IsBusy(true);
         let exam = await this.navigationContext.Layout.Get<Exam>(`/api/Exams/${examId}`);
         let questionIndicators: QuestionIndicator[] = [];
-        for (let i: number = 1; i <= exam.Questions * 18; i++) {
+        for (let i: number = 1; i <= exam.Questions; i++) {
             let indicator = new QuestionIndicator();
             indicator.Number = i;
             if (exam.QuestionsAnswered.indexOf(i) > -1) {
@@ -74,13 +108,26 @@ class QuestionsViewModel {
         this.Exam(exam);
 
         let question = await this.navigationContext.Layout.Get<Question>(`/api/Exams/${examId}/${questionNumber}`);
+        this.IsCurrentQuestionBookmarked(question.IsBookmarked);
         this.Question(question);
         this.navigationContext.Layout.IsBusy(false);
     }
 
     private UpdateBookmark = async (): Promise<void> => {
-        let bookmark = this.IsCurrentQuestionBookmarked();
-        console.log(bookmark);
+        let question = this.Question();
+        if (question == null)
+            return;
+        let request = new BookmarkRequest();
+        request.IsBookmarked = this.IsCurrentQuestionBookmarked();
+        if (request.IsBookmarked == question.IsBookmarked)
+            return;
+        question.IsBookmarked = request.IsBookmarked;
+        await this.navigationContext.Layout.Post<void, BookmarkRequest>(`/api/Answer/${this.Question().ExamId}/${question.Number}/Bookmark`, request);
+        this.QuestionIndicators()[question.Number-1].IsBookmarked(request.IsBookmarked);
+    }
+
+    private UpdateIsLastQuestion = (): boolean => {
+        return this.Question() && this.Exam() && this.Question().Number == this.Exam().Questions;
     }
     private UpdateTime = () => {
         let currentTime = (new Date()).getTime();

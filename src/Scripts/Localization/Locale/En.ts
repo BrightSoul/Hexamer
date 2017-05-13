@@ -10,13 +10,17 @@ export class En implements ILocale {
     ResetExam: string = "Reset";
     CumLaude: string = "cum laude";
     MarkWillAppearHere: string = "your mark will be here";
+    Question: string = "Question";
+    Of: string = "of";
     Questions: string = "questions";
     QuestionsAlreadyAnswered: string = "already answered";
     AvailableFrom: string = "Available from";
     StartingIn: string = "Starting in";
     Next: string = "Next";
     Previous: string = "Previous";
+    Finish: string = "Finish";
     RevealAnswer: string = "Reveal answer";
+    HideAnswer: string = "Hide answer";
     RemainingTime: string = "Remaining time";
     TimesUp: string = "Time's up!";
     BookmarkAnswer: string = "Review this question later";

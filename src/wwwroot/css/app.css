@@ -84,36 +84,43 @@ input[type=checkbox] + label {
     cursor: pointer;
 }
 
-label.review {
+label.bookmark {
     height: 15px;
     display: inline-block;
     color: #818181;
     text-align: right;
     font-size: 14px;
     font-weight: 300;
+    margin-left:3px;
 }
 
-    label.review::before {
+    label.bookmark::before {
         display: inline-block;
         content: ' ';
         width: 15px;
         height: 15px;
         border-radius: 3px;
-        border: 1px solid #168fb2;
+        border: 1px solid #31b0d5;
         background-color: white;
-        margin-right: 10px;
+        margin-right: 5px;
         vertical-align: middle;
     }
 
-input[type=checkbox]:checked + label.review::before {
-    background-color: #168fb2;
+input[type=checkbox]:checked + label.bookmark::before {
+    background-color: #31b0d5;
     content: "\e013";
     color: white;
     font-family: 'Glyphicons Halflings';
-    font-size: 10px;
+    font-size: 9px;
     text-align: center;
     border-radius: 3px;
+    padding-top: 1px;
 }
+
+input[type=checkbox]:checked + label.bookmark {
+    color: #1c1c1c;
+}
+
 
 
 /* css sidebar */
@@ -196,7 +203,7 @@ label {
     display: inline-block;
 }
 
-    label:before {
+    label::before {
         display: inline-block;
         content: ' ';
         width: 30px;
@@ -204,7 +211,8 @@ label {
         border-radius: 3px;
         border: 1px solid #168fb2;
         background-color: white;
-        margin-right: 10px;
+        margin-right: 5px;
+        margin-bottom: 3px;
         vertical-align: middle;
     }
 
@@ -299,6 +307,10 @@ footer {
         margin-left: 0px !important;
         position: relative;
     }
+    .questions-index button.current {
+            font-weight: bold;
+            border: 2px solid #31b0d5;
+    }
 
         .questions-index button.bookmarked::after {
             content: "\e013";
@@ -307,12 +319,13 @@ footer {
             position: absolute;
             bottom: -2px;
             right: -4px;
-            font-size: 9px;
+            font-size: 7px;
             padding-top: 1px;
-            background-color: #4da400;
-            border-radius: 50%;
-            width: 15px;
-            height: 15px;
+            background-color: #31b0d5;
+            border-radius: 3px;
+            width: 13px;
+            height: 13px;
+            border:1px solid white;
         }
 
 .glyphicon-star {
@@ -358,7 +371,7 @@ footer {
 
 .module-questions .question {
     position: fixed;
-    top: 120px;
+    top: 105px;
     bottom: 100px;
     padding: 20px;
     overflow-y: auto;
@@ -545,6 +558,11 @@ footer {
     animation-duration: 1s;
 }
 
+.btn-group.pagination span[data-bind] {
+    position:relative;
+    top:1px;
+}
+
 
 /* Bootstrap overrides */
 .navbar-default { min-height:auto; }
@@ -592,4 +610,16 @@ footer {
     left: -80px;
     max-width: 315px;
     display:block;
+}
+
+.btn {
+    border-radius: 0 !important;
+}
+
+.navbar-inverse {
+    background-color:#004457;
+    border-color: #002a36;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    background-color: #002a36;
 }

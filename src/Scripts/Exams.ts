@@ -9,12 +9,14 @@ class ExamsViewModel {
 
     constructor(private navigationContext: NavigationContext) {
         this.Exams = ko.observableArray<Exam>();
-       this.GetExams();
+        this.navigationContext.Layout.IsBusy(true);
+        this.GetExams();
     }
 
     private async GetExams() : Promise<void> {
         let exams = await this.navigationContext.Layout.Get<Exam[]>('/api/Exams');
         this.Exams(exams);
+        this.navigationContext.Layout.IsBusy(false);
     }
 
     public OpenExam = (exam: Exam) : void => {

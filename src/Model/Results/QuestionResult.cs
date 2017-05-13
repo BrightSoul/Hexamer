@@ -1,27 +1,44 @@
-﻿namespace Hexamer.Model.Results
+﻿using System.Security.Principal;
+namespace Hexamer.Model.Results
 {
     public class QuestionResult
     {
-        private QuestionResult(Question question, Answer answer)
+        public string ExamId { get; set; }
+        public int Number { get; set; }
+        public string Type {get; set;}
+        public string Text {get; set;}
+        public string AnswerProvided { get; set;}
+        public string AnswerText { get; set; }
+        public string CorrectAnswer { get; set; }
+        public bool IsBookmarked { get; set; }
+        public object QuestionData { get; set; }
+        public bool CanShowAnswer {get;set;}
+        public static object FromEntities(Exam exam, Question question, Answer answer, IIdentity user)
         {
-            this.Id = question.Id;
-            this.Text = question.Text;
-            if (answer != null) {
-                this.Number = answer.Number;
-                this.Answered = answer.Answered.HasValue;
-                this.IsBookmarked = answer.IsBookmarked;
-                this.AnswerProvided = answer.AnswerProvided;
-            }
+            return new QuestionResult {
+                ExamId = exam.Id,
+                Number = answer.Number,
+                Type = question.Type,
+                Text = question.Text,
+                CanShowAnswer = exam.CanShowAnswer,
+                IsBookmarked = answer.IsBookmarked,
+                AnswerProvided = answer.AnswerProvided,
+                AnswerText = exam.CanShowAnswer ? question.AnswerText : null,
+                CorrectAnswer = exam.CanShowAnswer ? question.CorrectAnswer : null,
+                QuestionData = question.GetQuestionData(GetRandomizationSeed(answer.Number, user.Name))
+            };
         }
-        public string Id { get; set; }
-        public string Text { get; private set; }
-        public int Number { get; private set; }
-        public string AnswerProvided {get; private set;}
-        public bool Answered { get; private set; }
-        public bool IsBookmarked { get; private set; }
 
-        public static QuestionResult FromEntity(Question question, Answer answer) {
-            return new QuestionResult(question, answer);
+        private static string GetRandomizationSeed(int number, string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return string.Empty;
+            
+            number = number % name.Length;
+            if (number == 0)
+                return name;
+
+            return name.Substring(number) + name.Substring(0, number);
         }
     }
 }

@@ -127,6 +127,7 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
                 alert("reset");
             };
             this.Exams = ko.observableArray();
+            this.navigationContext.Layout.IsBusy(true);
             this.GetExams();
         }
         ExamsViewModel.prototype.GetExams = function () {
@@ -138,6 +139,7 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
                         case 1:
                             exams = _a.sent();
                             this.Exams(exams);
+                            this.navigationContext.Layout.IsBusy(false);
                             return [2 /*return*/];
                     }
                 });
@@ -235,6 +237,9 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                     };
                     subscription(_this.Locale());
                     _this.Locale.subscribe(subscription);
+                },
+                update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    element.innerText = _this.Locale()[valueAccessor()];
                 }
             };
         };
@@ -323,7 +328,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             if (navigationInfo[0] in Page_3.Page) {
                 destinationPage = Page_3.Page[navigationInfo[0]];
             }
-            var navigationArgs = navigationInfo.length > 1 ? navigationInfo[1] : null;
+            var navigationArgs = navigationInfo.length > 1 ? navigationInfo.slice(1).join('/') : null;
             if (destinationPage == Page_3.Page.Login && this.User()) {
                 this.Navigate(Page_3.Page.Exams);
             }
@@ -421,7 +426,16 @@ define("Models/QuestionIndicator", ["require", "exports", "knockout"], function 
     }());
     exports.QuestionIndicator = QuestionIndicator;
 });
-define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page"], function (require, exports, ko, QuestionIndicator_1, Page_4) {
+define("Requests/BookmarkRequest", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var BookmarkRequest = (function () {
+        function BookmarkRequest() {
+        }
+        return BookmarkRequest;
+    }());
+    exports.BookmarkRequest = BookmarkRequest;
+});
+define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page", "Requests/BookmarkRequest"], function (require, exports, ko, QuestionIndicator_1, Page_4, BookmarkRequest_1) {
     "use strict";
     var QuestionsViewModel = (function () {
         function QuestionsViewModel(navigationContext) {
@@ -430,12 +444,37 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
             this.ToggleIndicators = function () {
                 _this.IndicatorsVisible(!_this.IndicatorsVisible());
             };
+            this.ToggleAnswer = function () {
+                _this.AnswerRevealed(!_this.AnswerRevealed());
+            };
             this.NavigateToQuestion = function (indicator) {
+                _this.NavigateToQuestionNumber(indicator.Number);
+            };
+            this.NavigateToQuestionNumber = function (number) {
                 _this.IndicatorsVisible(false);
-                if (_this.Question() && _this.Question().Number == indicator.Number)
+                var exam = _this.Exam();
+                var question = _this.Question();
+                if (!exam || !question)
+                    return;
+                if (question.Number == number)
                     return;
                 _this.navigationContext.Layout.IsBusy(true);
-                _this.navigationContext.Layout.Navigate(Page_4.Page.Questions, _this.ExamId + "/" + indicator.Number);
+                if (number <= 0 || number > exam.Questions)
+                    _this.navigationContext.Layout.Navigate(Page_4.Page.Exams);
+                else
+                    _this.navigationContext.Layout.Navigate(Page_4.Page.Questions, _this.ExamId + "/" + number);
+            };
+            this.NextQuestion = function () {
+                var question = _this.Question();
+                if (!question)
+                    return;
+                _this.NavigateToQuestionNumber(question.Number + 1);
+            };
+            this.PreviousQuestion = function () {
+                var question = _this.Question();
+                if (!question)
+                    return;
+                _this.NavigateToQuestionNumber(question.Number - 1);
             };
             this.GetExam = function (examId, questionNumber) { return __awaiter(_this, void 0, void 0, function () {
                 var exam, questionIndicators, i, indicator, question;
@@ -447,7 +486,7 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                         case 1:
                             exam = _a.sent();
                             questionIndicators = [];
-                            for (i = 1; i <= exam.Questions * 18; i++) {
+                            for (i = 1; i <= exam.Questions; i++) {
                                 indicator = new QuestionIndicator_1.QuestionIndicator();
                                 indicator.Number = i;
                                 if (exam.QuestionsAnswered.indexOf(i) > -1) {
@@ -463,6 +502,7 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             return [4 /*yield*/, this.navigationContext.Layout.Get("/api/Exams/" + examId + "/" + questionNumber)];
                         case 2:
                             question = _a.sent();
+                            this.IsCurrentQuestionBookmarked(question.IsBookmarked);
                             this.Question(question);
                             this.navigationContext.Layout.IsBusy(false);
                             return [2 /*return*/];
@@ -470,13 +510,29 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                 });
             }); };
             this.UpdateBookmark = function () { return __awaiter(_this, void 0, void 0, function () {
-                var bookmark;
+                var question, request;
                 return __generator(this, function (_a) {
-                    bookmark = this.IsCurrentQuestionBookmarked();
-                    console.log(bookmark);
-                    return [2 /*return*/];
+                    switch (_a.label) {
+                        case 0:
+                            question = this.Question();
+                            if (question == null)
+                                return [2 /*return*/];
+                            request = new BookmarkRequest_1.BookmarkRequest();
+                            request.IsBookmarked = this.IsCurrentQuestionBookmarked();
+                            if (request.IsBookmarked == question.IsBookmarked)
+                                return [2 /*return*/];
+                            question.IsBookmarked = request.IsBookmarked;
+                            return [4 /*yield*/, this.navigationContext.Layout.Post("/api/Answer/" + this.Question().ExamId + "/" + question.Number + "/Bookmark", request)];
+                        case 1:
+                            _a.sent();
+                            this.QuestionIndicators()[question.Number - 1].IsBookmarked(request.IsBookmarked);
+                            return [2 /*return*/];
+                    }
                 });
             }); };
+            this.UpdateIsLastQuestion = function () {
+                return _this.Question() && _this.Exam() && _this.Question().Number == _this.Exam().Questions;
+            };
             this.UpdateTime = function () {
                 var currentTime = (new Date()).getTime();
                 var remainingMilliseconds = _this.EndTime - currentTime;
@@ -495,11 +551,13 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
             this.TimeIsRunningOut = ko.observable(false);
             this.HasExpirationTime = ko.observable(false);
             this.IndicatorsVisible = ko.observable(false);
+            this.AnswerRevealed = ko.observable(false);
             this.IsCurrentQuestionBookmarked = ko.observable(false);
-            this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
             this.QuestionIndicators = ko.observableArray([]);
             this.Question = ko.observable(null);
             this.Exam = ko.observable(null);
+            this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
+            this.IsLastQuestion = ko.computed(this.UpdateIsLastQuestion);
             var args = navigationContext.NavigationArgs.split("/");
             this.ExamId = args[0];
             if (args.length > 1 && !isNaN(parseInt(args[1], 10)))
@@ -529,13 +587,17 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.ResetExam = "Reset";
             this.CumLaude = "cum laude";
             this.MarkWillAppearHere = "your mark will be here";
+            this.Question = "Question";
+            this.Of = "of";
             this.Questions = "questions";
             this.QuestionsAlreadyAnswered = "already answered";
             this.AvailableFrom = "Available from";
             this.StartingIn = "Starting in";
             this.Next = "Next";
             this.Previous = "Previous";
+            this.Finish = "Finish";
             this.RevealAnswer = "Reveal answer";
+            this.HideAnswer = "Hide answer";
             this.RemainingTime = "Remaining time";
             this.TimesUp = "Time's up!";
             this.BookmarkAnswer = "Review this question later";
@@ -563,13 +625,17 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.ResetExam = "Ricomincia";
             this.CumLaude = "e lode";
             this.MarkWillAppearHere = "qui vedrai il voto";
+            this.Question = "Domanda";
+            this.Of = "di";
             this.Questions = "domande";
             this.QuestionsAlreadyAnswered = "già risposte";
             this.AvailableFrom = "Disponibile dal";
             this.StartingIn = "Inizia tra";
             this.Next = "Prossima";
             this.Previous = "Precedente";
+            this.Finish = "Concludi";
             this.RevealAnswer = "Mostra risposta";
+            this.HideAnswer = "Nascondi risposta";
             this.RemainingTime = "Tempo rimanente";
             this.TimesUp = "Tempo scaduto!";
             this.BookmarkAnswer = "Rivedi questa domanda più tardi";

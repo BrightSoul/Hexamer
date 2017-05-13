@@ -69,6 +69,9 @@ export class LayoutViewModel implements ILayout {
                 };
                 subscription(this.Locale());
                 this.Locale.subscribe(subscription);
+            },
+            update: (element, valueAccessor, allBindings, viewModel, bindingContext) => {
+                element.innerText = this.Locale()[valueAccessor()];
             }
         };
     }
@@ -149,7 +152,7 @@ export class LayoutViewModel implements ILayout {
         if (navigationInfo[0] in Page) {
             destinationPage = <Page>Page[navigationInfo[0]];
         }
-        let navigationArgs: string = navigationInfo.length > 1 ? navigationInfo[1] : null;
+        let navigationArgs: string = navigationInfo.length > 1 ? navigationInfo.slice(1).join('/') : null;
 
         if (destinationPage == Page.Login && this.User()) {
             this.Navigate(Page.Exams);

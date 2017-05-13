@@ -11,6 +11,8 @@ export interface ILocale {
     CumLaude: string;
     MarkWillAppearHere: string;
 
+    Question: string;
+    Of: string;
     Questions: string;
     QuestionsAlreadyAnswered: string;
     AvailableFrom: string;
@@ -18,7 +20,9 @@ export interface ILocale {
 
     Next: string;
     Previous: string;
+    Finish: string;
     RevealAnswer: string;
+    HideAnswer: string;
     RemainingTime: string;
     TimesUp: string;
     BookmarkAnswer: string;

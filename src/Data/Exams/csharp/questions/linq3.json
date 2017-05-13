@@ -3,14 +3,18 @@
   "ScoreAwarded": 2.0,
   "CorrectAnswer": "A1,B2,C3",
   "Text": {
-	"It": "public pippo {A} on {B} on {C}",
-	"En": "public pip {A} on {B} on {C}"
+	"It": "Questo è il problema del codice",
+	"En": "This is the code problem"
   },
   "AnswerText": {
 	"It": "Ecco la risposta",
 	"En": "Here's the answer",
   },
   "Group": "1",
+  "CodeText": { 
+	"It": "public pippo {A} on {B} on {C}",
+	"En": "public pip {A} on {B} on {C}"
+  },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "IEnumerable" }, { "Id": "2", "Text": "IList" }, { "Id": "3", "Text": "ICollection" } ] },
 	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Task" }, { "Id": "2", "Text": "void" }, { "Id": "3", "Text": "async" } ] },

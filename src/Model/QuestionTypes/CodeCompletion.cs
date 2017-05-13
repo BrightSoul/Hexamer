@@ -33,10 +33,10 @@ namespace Hexamer.Model.QuestionTypes
         }
 
 
+        public string CodeText { get; set;}
         public CodeCompletionBlock[] Blocks {
             get; set;
         }
-
 
         public override object GetQuestionData(string randomizationSeed) {
             var randomizedBlocks = new CodeCompletionBlock[Blocks.Length];

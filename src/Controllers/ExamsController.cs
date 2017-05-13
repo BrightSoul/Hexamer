@@ -58,23 +58,21 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}/{questionNumber}")]
         public async Task<IActionResult> QuestionDetail(string examId, int questionNumber)
         {
-            string language = Request.GetLanguage();
-            var exam = examRepository.GetById(examId, language);
-            if (exam == null)
-                return NotFound();
-            
-            var answer = await answerRepository.GetByNumber(User.Identity.Name, exam.Id, questionNumber);
+            var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
             if (answer == null)
-                return NotFound();
+                return NotFound("Answer");
+            
+            var exam = examRepository.GetById(examId, Request.GetLanguage());
+            if (exam == null)
+                return NotFound("Exam");
 
-            await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
-
-            var question = exam.Questions.FirstOrDefault(q => q.Id == answer.Question);
+            var question = exam.Questions.SingleOrDefault(q => q.Id == answer.Question);
             if (question == null)
-                return NotFound();
+                return NotFound("Question");
 
-            var questionResult = QuestionResult.FromEntity(question, answer);
-            return Ok(questionResult);
+            var result = QuestionResult.FromEntities(exam, question, answer, User.Identity);
+            await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
+            return Ok(result);
         }
 
         [HttpGet("{id}/Image")]

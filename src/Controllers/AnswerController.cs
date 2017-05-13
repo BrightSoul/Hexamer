@@ -21,27 +21,6 @@ namespace Hexamer.Controllers
             this.answerRepository = answerRepository;
         }
 
-        // GET api/values
-        [HttpGet("{examId}/{questionNumber}")]
-        public async Task<IActionResult> Get(string examId, int questionNumber)
-        {
-            var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
-            if (answer == null)
-                return NotFound("Answer");
-            
-            var exam = examRepository.GetById(examId, Request.GetLanguage());
-            if (exam == null)
-                return NotFound("Exam");
-
-            var question = exam.Questions.SingleOrDefault(q => q.Id == answer.Question);
-            if (question == null)
-                return NotFound("Question");
-
-            var result = AnswerResult.FromEntities(exam, question, answer, User.Identity);
-            await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
-            return Ok(result);
-        }
-
         [HttpPost("{examId}/{questionNumber}")]
         public async Task<IActionResult> Post(string examId, int questionNumber, [FromBody] AnswerRequest request) {
 
