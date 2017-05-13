@@ -650,3 +650,7 @@ hr {
 @media (max-width: 640px) {
     #username {display:none;}
 }
+.form-control {
+    width: auto;
+    display: inline;
+}
