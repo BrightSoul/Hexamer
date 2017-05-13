@@ -5,6 +5,7 @@ import { Question } from 'Scripts/Models/Question';
 import { QuestionIndicator } from 'Scripts/Models/QuestionIndicator';
 import { Page } from 'Scripts/Models/Page';
 import { BookmarkRequest } from 'Scripts/Requests/BookmarkRequest';
+import { AnswerRequest } from 'Scripts/Requests/AnswerRequest';
 
 class QuestionsViewModel {
 
@@ -59,7 +60,7 @@ class QuestionsViewModel {
         this.NavigateToQuestionNumber(indicator.Number);
     }
 
-    private NavigateToQuestionNumber = (number: number): void => {
+    private NavigateToQuestionNumber = async (number: number): Promise<void> => {
         this.IndicatorsVisible(false);
         let exam = this.Exam();
         let question = this.Question();
@@ -68,6 +69,13 @@ class QuestionsViewModel {
         if (question.Number == number)
             return;
         this.navigationContext.Layout.IsBusy(true);
+
+        if (this.Question().IsDirty) {
+            let request = new AnswerRequest();
+            request.AnswerProvided = this.Question().AnswerProvided;
+            await this.navigationContext.Layout.Post<void, AnswerRequest>(`/api/Answer/${this.ExamId}/${this.Question().Number}`, request);
+        }
+
         if (number <= 0 || number > exam.Questions)
             this.navigationContext.Layout.Navigate(Page.Exams);
         else

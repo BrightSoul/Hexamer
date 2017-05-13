@@ -22,6 +22,10 @@ export class En implements ILocale {
     RevealAnswer: string = "Reveal answer";
     HideAnswer: string = "Hide answer";
     RemainingTime: string = "Remaining time";
+    Choose: string = "Choose";
+    Answers: string = "answers";
+    Answer: string = "answer";
+    Explanation: string = "Explanation";
     TimesUp: string = "Time's up!";
     BookmarkAnswer: string = "Review this question later";
     AverageTimePerAnswer: string = "approximately per question";

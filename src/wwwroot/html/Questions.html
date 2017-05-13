@@ -12,32 +12,11 @@
 
 <section class="question" data-bind="with: Question">
     <p data-bind="html: Text"></p>
-    <h5 data-bind="locale: 'Questions'"></h5>
-    <form class="form-inline">
-        <pre class="code">public <select id="select1" class="form-control">
-        <option value="op1"> </option>
-        <option value="op1">static</option>
-        <option value="op2">virtual</option>
-        <option value="op3">async</option>
-          </select>  <select id="select2" class="form-control">
-        <option value="op1"> </option>
-        <option value="op1">void</option>
-        <option value="op2">Prodotto</option>
-        <option value="op3">Task&lt;Prodotto&gt;</option>
-          </select> CreaProdotto () {
- return <select id="select3" class="form-control">
-        <option value="op1"> </option>
-        <option value="op1">Prodotto</option>
-        <option value="op2">new Prodotto()</option>
-        <option value="op3">Prodotto()</option>
-          </select> ;
-}
-          </pre>
-
-    </form>
+    <div data-bind="module: {name: 'QuestionTypes/' + Type, data: $data}"></div>
     <div data-bind="if: $parent.AnswerRevealed">
         <hr />
-        <p data-bind="html: AnswerText"">
+        <h5 data-bind="locale: 'Explanation'"></h5>
+        <p data-bind="html: AnswerText">
     </div>
 </section>
 <footer data-bind="if: Exam()">
@@ -51,5 +30,5 @@
         </div>
     </div></div>
     </div>
-    <button data-bind="visible: Question() && Question().CanShowAnswer, locale: AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer', click: ToggleAnswer" type="button" class="btn btn-default pull-right"></button>
+    <button data-bind="visible: Question() && Question().CanShowAnswer, locale: AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer', click: ToggleAnswer" type="button" class="btn btn-default pull-left reveal-answer"></button>
 </footer>

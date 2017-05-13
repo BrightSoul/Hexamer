@@ -23,6 +23,10 @@ export class It implements ILocale {
     HideAnswer: string = "Nascondi risposta";
     RemainingTime: string = "Tempo rimanente";
     TimesUp: string = "Tempo scaduto!";
+    Choose: string = "Scegli";
+    Answers: string = "risposte";
+    Answer: string = "risposta";
+    Explanation: string = "Spiegazione";
     BookmarkAnswer: string = "Ricontrolla questa domanda più tardi";
     AverageTimePerAnswer: string = "circa per domanda";
     BackToHome: string = "Torna alla home";

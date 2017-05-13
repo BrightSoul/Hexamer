@@ -410,6 +410,7 @@ define("Models/Question", ["require", "exports"], function (require, exports) {
     "use strict";
     var Question = (function () {
         function Question() {
+            this.IsDirty = false;
         }
         return Question;
     }());
@@ -435,7 +436,16 @@ define("Requests/BookmarkRequest", ["require", "exports"], function (require, ex
     }());
     exports.BookmarkRequest = BookmarkRequest;
 });
-define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page", "Requests/BookmarkRequest"], function (require, exports, ko, QuestionIndicator_1, Page_4, BookmarkRequest_1) {
+define("Requests/AnswerRequest", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var AnswerRequest = (function () {
+        function AnswerRequest() {
+        }
+        return AnswerRequest;
+    }());
+    exports.AnswerRequest = AnswerRequest;
+});
+define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page", "Requests/BookmarkRequest", "Requests/AnswerRequest"], function (require, exports, ko, QuestionIndicator_1, Page_4, BookmarkRequest_1, AnswerRequest_1) {
     "use strict";
     var QuestionsViewModel = (function () {
         function QuestionsViewModel(navigationContext) {
@@ -450,20 +460,35 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
             this.NavigateToQuestion = function (indicator) {
                 _this.NavigateToQuestionNumber(indicator.Number);
             };
-            this.NavigateToQuestionNumber = function (number) {
-                _this.IndicatorsVisible(false);
-                var exam = _this.Exam();
-                var question = _this.Question();
-                if (!exam || !question)
-                    return;
-                if (question.Number == number)
-                    return;
-                _this.navigationContext.Layout.IsBusy(true);
-                if (number <= 0 || number > exam.Questions)
-                    _this.navigationContext.Layout.Navigate(Page_4.Page.Exams);
-                else
-                    _this.navigationContext.Layout.Navigate(Page_4.Page.Questions, _this.ExamId + "/" + number);
-            };
+            this.NavigateToQuestionNumber = function (number) { return __awaiter(_this, void 0, void 0, function () {
+                var exam, question, request;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            this.IndicatorsVisible(false);
+                            exam = this.Exam();
+                            question = this.Question();
+                            if (!exam || !question)
+                                return [2 /*return*/];
+                            if (question.Number == number)
+                                return [2 /*return*/];
+                            this.navigationContext.Layout.IsBusy(true);
+                            if (!this.Question().IsDirty) return [3 /*break*/, 2];
+                            request = new AnswerRequest_1.AnswerRequest();
+                            request.AnswerProvided = this.Question().AnswerProvided;
+                            return [4 /*yield*/, this.navigationContext.Layout.Post("/api/Answer/" + this.ExamId + "/" + this.Question().Number, request)];
+                        case 1:
+                            _a.sent();
+                            _a.label = 2;
+                        case 2:
+                            if (number <= 0 || number > exam.Questions)
+                                this.navigationContext.Layout.Navigate(Page_4.Page.Exams);
+                            else
+                                this.navigationContext.Layout.Navigate(Page_4.Page.Questions, this.ExamId + "/" + number);
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
             this.NextQuestion = function () {
                 var question = _this.Question();
                 if (!question)
@@ -599,6 +624,10 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.RevealAnswer = "Reveal answer";
             this.HideAnswer = "Hide answer";
             this.RemainingTime = "Remaining time";
+            this.Choose = "Choose";
+            this.Answers = "answers";
+            this.Answer = "answer";
+            this.Explanation = "Explanation";
             this.TimesUp = "Time's up!";
             this.BookmarkAnswer = "Review this question later";
             this.AverageTimePerAnswer = "approximately per question";
@@ -638,7 +667,11 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.HideAnswer = "Nascondi risposta";
             this.RemainingTime = "Tempo rimanente";
             this.TimesUp = "Tempo scaduto!";
-            this.BookmarkAnswer = "Rivedi questa domanda più tardi";
+            this.Choose = "Scegli";
+            this.Answers = "risposte";
+            this.Answer = "risposta";
+            this.Explanation = "Spiegazione";
+            this.BookmarkAnswer = "Ricontrolla questa domanda più tardi";
             this.AverageTimePerAnswer = "circa per domanda";
             this.BackToHome = "Torna alla home";
             this.BackToHomeConfirmation = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";
@@ -658,25 +691,70 @@ define("Models/Answer", ["require", "exports"], function (require, exports) {
     }());
     exports.Answer = Answer;
 });
+define("QuestionTypes/CodeCompletion", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var CodeCompletionViewModel = (function () {
+        function CodeCompletionViewModel(question) {
+        }
+        return CodeCompletionViewModel;
+    }());
+    function initialize(question) {
+        return new CodeCompletionViewModel(question);
+    }
+    exports.initialize = initialize;
+});
 define("QuestionTypes/MultipleChoice", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
-    var HelloViewModel = (function () {
-        function HelloViewModel(language, framework) {
-            this.language = ko.observable(language);
-            this.framework = ko.observable(framework);
+    var MultipleChoiceViewModel = (function () {
+        function MultipleChoiceViewModel(question) {
+            var _this = this;
+            this.UpdateAnswer = function () {
+                console.log("modified");
+                var optionsChecked = 0;
+                var options = [];
+                for (var i = 0; i < _this.Question.QuestionData.Options.length; i++) {
+                    var option = _this.Question.QuestionData.Options[i];
+                    if (option.IsChecked && option.IsChecked()) {
+                        optionsChecked++;
+                        options.push(option.Id);
+                    }
+                }
+                _this.IsCompleteAnswer(optionsChecked == _this.Question.QuestionData.Choose);
+                _this.IsInvalidAnswer(optionsChecked > _this.Question.QuestionData.Choose);
+                _this.Question.AnswerProvided = options.join(',');
+                _this.Question.IsDirty = true;
+            };
+            this.Question = question;
+            var optionsChecked = 0;
+            var checkedOptions = (question.AnswerProvided || "").toLowerCase().split(',');
+            var correctOptions = question.CorrectAnswer.toLowerCase().split(',');
+            for (var i = 0; i < question.QuestionData.Options.length; i++) {
+                var option = question.QuestionData.Options[i];
+                var isChecked = checkedOptions.indexOf(option.Id.toLowerCase()) > -1;
+                optionsChecked += isChecked ? 1 : 0;
+                option.IsChecked = ko.observable(isChecked);
+                option.IsChecked.subscribe(this.UpdateAnswer);
+                option.IsCorrect = correctOptions.indexOf(option.Id.toLowerCase()) > -1;
+            }
+            this.IsCompleteAnswer = ko.observable(optionsChecked == question.QuestionData.Choose);
+            this.IsInvalidAnswer = ko.observable(optionsChecked > question.QuestionData.Choose);
         }
-        return HelloViewModel;
+        return MultipleChoiceViewModel;
     }());
-    exports.HelloViewModel = HelloViewModel;
+    function initialize(question) {
+        return new MultipleChoiceViewModel(question);
+    }
+    exports.initialize = initialize;
 });
-define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (require, exports, ko) {
+define("QuestionTypes/Reorder", ["require", "exports"], function (require, exports) {
     "use strict";
-    var HelloViewModel = (function () {
-        function HelloViewModel(language, framework) {
-            this.language = ko.observable(language);
-            this.framework = ko.observable(framework);
+    var ReorderViewModel = (function () {
+        function ReorderViewModel(question) {
         }
-        return HelloViewModel;
+        return ReorderViewModel;
     }());
-    exports.HelloViewModel = HelloViewModel;
+    function initialize(question) {
+        return new ReorderViewModel(question);
+    }
+    exports.initialize = initialize;
 });

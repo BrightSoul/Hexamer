@@ -28,6 +28,11 @@ export interface ILocale {
     BookmarkAnswer: string;
     AverageTimePerAnswer: string;
 
+    Choose: string;
+    Answer: string;
+    Answers: string;
+    Explanation: string;
+
     BackToHome: string;
     BackToHomeConfirmation: string;
     Logout: string;
