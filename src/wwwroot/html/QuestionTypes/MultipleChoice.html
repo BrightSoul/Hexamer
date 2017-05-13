@@ -2,6 +2,6 @@
 <ul class="list-unstyled multiple-choice-answers" data-bind="foreach: Question.QuestionData.Options">
     <li>
       <input class="list-group-item" type="checkbox" data-bind="checked: IsChecked, attr: {id: 'mcOption'+Id, name: 'mcOption'+Id}" />
-      <label data-bind="attr: {for: 'mcOption'+Id}, html: Text, css: {correct: $parents[2].AnswerRevealed() && IsCorrect}"></label>
+      <label data-bind="attr: {for: 'mcOption'+Id}, html: Text, css: {correct: $parent.Question.AnswerRevealed() && IsCorrect}"></label>
     </li>
 </ul>

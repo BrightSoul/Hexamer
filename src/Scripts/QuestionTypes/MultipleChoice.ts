@@ -24,7 +24,6 @@ class MultipleChoiceViewModel {
         this.IsInvalidAnswer = ko.observable(optionsChecked > question.QuestionData.Choose);
     }
     private UpdateAnswer = () => {
-        console.log("modified");
         let optionsChecked : number = 0;
         let options : string[] = [];
         for (let i: number = 0; i < this.Question.QuestionData.Options.length; i++) {

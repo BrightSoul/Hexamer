@@ -410,7 +410,6 @@ define("Models/Question", ["require", "exports"], function (require, exports) {
     "use strict";
     var Question = (function () {
         function Question() {
-            this.IsDirty = false;
         }
         return Question;
     }());
@@ -455,7 +454,7 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                 _this.IndicatorsVisible(!_this.IndicatorsVisible());
             };
             this.ToggleAnswer = function () {
-                _this.AnswerRevealed(!_this.AnswerRevealed());
+                _this.Question().AnswerRevealed(!_this.Question().AnswerRevealed());
             };
             this.NavigateToQuestion = function (indicator) {
                 _this.NavigateToQuestionNumber(indicator.Number);
@@ -528,6 +527,8 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             return [4 /*yield*/, this.navigationContext.Layout.Get("/api/Exams/" + examId + "/" + questionNumber)];
                         case 2:
                             question = _a.sent();
+                            question.IsDirty = false;
+                            question.AnswerRevealed = ko.observable(false);
                             this.IsCurrentQuestionBookmarked(question.IsBookmarked);
                             this.Question(question);
                             this.navigationContext.Layout.IsBusy(false);
@@ -577,7 +578,6 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
             this.TimeIsRunningOut = ko.observable(false);
             this.HasExpirationTime = ko.observable(false);
             this.IndicatorsVisible = ko.observable(false);
-            this.AnswerRevealed = ko.observable(false);
             this.IsCurrentQuestionBookmarked = ko.observable(false);
             this.QuestionIndicators = ko.observableArray([]);
             this.Question = ko.observable(null);
@@ -692,10 +692,51 @@ define("Models/Answer", ["require", "exports"], function (require, exports) {
     }());
     exports.Answer = Answer;
 });
-define("QuestionTypes/CodeCompletion", ["require", "exports"], function (require, exports) {
+define("QuestionTypes/CodeCompletion", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     var CodeCompletionViewModel = (function () {
         function CodeCompletionViewModel(question) {
+            var _this = this;
+            this.UpdateTooltips = function (newValue) {
+                window["jQuery"]('.code [data-toggle="tooltip"]').tooltip(newValue ? 'show' : 'hide');
+            };
+            this.UpdateAnswer = function (vm, event) {
+                var answer = [];
+                var children = event.target.parentElement.children;
+                for (var i = 0; i < children.length; i++) {
+                    if (children[i].tagName.toLowerCase() != "select")
+                        continue;
+                    var select = children[i];
+                    var blockId = select.name.replace("block", "");
+                    var optionId = select.value;
+                    var selection = optionId != "" ? blockId + optionId : "";
+                    if (selection) {
+                        answer.push(selection);
+                    }
+                }
+                _this.IsCompleteAnswer(answer.length == _this.Question.QuestionData.Blocks.length);
+                _this.Question.AnswerProvided = answer.join(',');
+                _this.Question.IsDirty = true;
+            };
+            this.Question = question;
+            var optionsChecked = 0;
+            var answerProvided = (question.AnswerProvided || "").toLowerCase().split(',');
+            var correctOptions = question.CorrectAnswer.toLowerCase().split(',');
+            var codeText = question.QuestionData.CodeText;
+            question.AnswerRevealed.subscribe(this.UpdateTooltips);
+            var _loop_1 = function (i) {
+                var block = question.QuestionData.Blocks[i];
+                var options = block.Options.map(function (option) { return '<option value="' + option.Id + '"' + (answerProvided.indexOf((block.Id + option.Id).toLowerCase()) > -1 ? ' selected="selected"' : '') + '>' + option.Text + '</option>'; });
+                var correctOption = block.Options.filter(function (option) { return correctOptions.indexOf((block.Id + option.Id).toLowerCase()) > -1; });
+                var dropDownList = '<select class="form-control" name="block' + block.Id + '" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="manual" data-title="' + (correctOption.length > 0 ? correctOption[0].Text : '').split('"').join('&quot;') + '"><option></option>' + options.join('') + '</select>';
+                codeText = codeText.replace('{' + block.Id + '}', dropDownList);
+            };
+            //Do some replacements
+            for (var i = 0; i < question.QuestionData.Blocks.length; i++) {
+                _loop_1(i);
+            }
+            this.CodeText = codeText;
+            this.IsCompleteAnswer = ko.observable(false);
         }
         return CodeCompletionViewModel;
     }());
@@ -710,7 +751,6 @@ define("QuestionTypes/MultipleChoice", ["require", "exports", "knockout"], funct
         function MultipleChoiceViewModel(question) {
             var _this = this;
             this.UpdateAnswer = function () {
-                console.log("modified");
                 var optionsChecked = 0;
                 var options = [];
                 for (var i = 0; i < _this.Question.QuestionData.Options.length; i++) {

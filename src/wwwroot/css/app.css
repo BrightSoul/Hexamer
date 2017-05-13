@@ -654,3 +654,9 @@ hr {
     width: auto;
     display: inline;
 }
+.code .tooltip-inner {
+    background-color:darkorange;
+}
+.code .tooltip.top .tooltip-arrow {
+    border-top-color: darkorange;
+}

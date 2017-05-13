@@ -13,7 +13,7 @@
 <section class="question" data-bind="with: Question">
     <p data-bind="html: Text"></p>
     <div data-bind="module: {name: 'QuestionTypes/' + Type, data: $data}"></div>
-    <div data-bind="if: $parent.AnswerRevealed">
+    <div data-bind="if: AnswerRevealed">
         <hr />
         <h5 data-bind="locale: 'Explanation'"></h5>
         <p data-bind="html: AnswerText">
@@ -30,5 +30,5 @@
         </div>
     </div></div>
     </div>
-    <button data-bind="visible: Question() && Question().CanShowAnswer, locale: AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer', click: ToggleAnswer" type="button" class="btn btn-default pull-left reveal-answer"></button>
+    <button data-bind="visible: Question() && Question().CanShowAnswer, locale: Question() && Question().AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer', click: ToggleAnswer" type="button" class="btn btn-default pull-left reveal-answer"></button>
 </footer>

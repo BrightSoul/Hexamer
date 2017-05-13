@@ -19,7 +19,6 @@ class QuestionsViewModel {
     private BookmarkUpdater: KnockoutComputed<Promise<void>>;
     public QuestionIndicators: KnockoutObservableArray<QuestionIndicator>;
     public IndicatorsVisible: KnockoutObservable<boolean>;
-    public AnswerRevealed: KnockoutObservable<boolean>;
     public IsLastQuestion: KnockoutComputed<boolean>;
 
     private ExamId: string;
@@ -30,7 +29,6 @@ class QuestionsViewModel {
         this.TimeIsRunningOut = ko.observable(false);
         this.HasExpirationTime = ko.observable(false);
         this.IndicatorsVisible = ko.observable(false);
-        this.AnswerRevealed = ko.observable(false);
         this.IsCurrentQuestionBookmarked = ko.observable(false);
         this.QuestionIndicators = ko.observableArray([]);
         this.Question = ko.observable(null);
@@ -53,7 +51,7 @@ class QuestionsViewModel {
     }
 
     public ToggleAnswer = () : void => {
-        this.AnswerRevealed(!this.AnswerRevealed());
+        this.Question().AnswerRevealed(!this.Question().AnswerRevealed());
     }
 
     public NavigateToQuestion = (indicator: QuestionIndicator): void => {
@@ -117,6 +115,8 @@ class QuestionsViewModel {
         this.navigationContext.Layout.SetTitle(exam.Title + " " + exam.Subtitle);
 
         let question = await this.navigationContext.Layout.Get<Question>(`/api/Exams/${examId}/${questionNumber}`);
+        question.IsDirty = false;
+        question.AnswerRevealed = ko.observable(false);
         this.IsCurrentQuestionBookmarked(question.IsBookmarked);
         this.Question(question);
         this.navigationContext.Layout.IsBusy(false);

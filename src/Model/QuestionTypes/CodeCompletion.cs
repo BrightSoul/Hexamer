@@ -47,6 +47,7 @@ namespace Hexamer.Model.QuestionTypes
                 };
             }
             return new {
+                CodeText = CodeText,
                 Blocks = randomizedBlocks
             };
         }

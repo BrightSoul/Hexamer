@@ -1,8 +1,5 @@
+import * as ko from 'knockout';
 export class Question {
-
-    public constructor() {
-        this.IsDirty = false;
-    }
 
     public ExamId: string;
     public Number: number;
@@ -15,4 +12,5 @@ export class Question {
     public QuestionData: any;
     public CanShowAnswer: boolean;
     public IsDirty: boolean;
+    public AnswerRevealed: KnockoutObservable<boolean>;
 }

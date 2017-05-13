@@ -1,4 +1,4 @@
 ﻿<h5 data-bind="css: {'text-success': IsCompleteAnswer}"><span data-bind="locale: 'Choose'"></span></h5>
 <form class="form-inline">
-    <pre class="code" data-bind="text: CodeText"></pre>
+    <pre class="code" data-bind="html: CodeText, event: { change: UpdateAnswer }"></pre>
 </form>
