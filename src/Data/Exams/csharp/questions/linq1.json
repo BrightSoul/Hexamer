@@ -1,13 +1,14 @@
-{
+ï»¿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 2.0,
   "CorrectAnswer": "A,F",
   "Text": {
-	"It": "Come stai?",
+	"It": "# This is an tag\nCome stai? ()\n**This text will be bold** _This will also be bold_\n[link to Google!](http://google.com) ![GitHub Logo](cog.jpg)
+",
 	"En": "How are you?"
   },
   "AnswerText": {
-	"It": "allora è così perché...",
+	"It": "allora Ã¨ cosÃ¬ perchÃ©...",
 	"En": "It's like this because...",
   },
   "Group": "1",

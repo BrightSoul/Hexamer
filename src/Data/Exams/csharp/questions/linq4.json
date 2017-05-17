@@ -1,0 +1,15 @@
+{
+  "Type": "ClickImage",
+  "ScoreAwarded": 2.0,
+  "CorrectAnswer": "0,43,50,50",
+  "Text": {
+	"It": "Questo è il problema dell'immagine",
+	"En": "This is the image problem"
+  },
+  "AnswerText": {
+	"It": "Ecco la risposta",
+	"En": "Here's the answer",
+  },
+  "Group": "1",
+  "Image": "vscode.png"
+}

@@ -629,6 +629,8 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.Answers = "answers";
             this.Answer = "answer";
             this.CompleteCode = "Complete the code by selecting the correct options";
+            this.ClickImage = "Click the image on the correct spot";
+            this.Reorder = "Drag the options on the container on the right in the correct order";
             this.Explanation = "Explanation";
             this.TimesUp = "Time's up!";
             this.BookmarkAnswer = "Review this question later";
@@ -673,6 +675,8 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.Answers = "risposte";
             this.Answer = "risposta";
             this.CompleteCode = "Completa il codice selezionando le voci corrette";
+            this.ClickImage = "Clicca sull'immagine nel punto corretto";
+            this.Reorder = "Trascina i blocchi nel contenitore a destra nell'ordine corretto";
             this.Explanation = "Spiegazione";
             this.BookmarkAnswer = "Ricontrolla questa domanda più tardi";
             this.AverageTimePerAnswer = "circa per domanda";
@@ -693,6 +697,50 @@ define("Models/Answer", ["require", "exports"], function (require, exports) {
         return Answer;
     }());
     exports.Answer = Answer;
+});
+define("QuestionTypes/ClickImage", ["require", "exports", "knockout"], function (require, exports, ko) {
+    "use strict";
+    var ClickImageViewModel = (function () {
+        function ClickImageViewModel(question) {
+            var _this = this;
+            this.UpdateAnswer = function (vm, event) {
+                _this.IsCompleteAnswer(true);
+                _this.Answer({ Left: event.offsetX, Top: event.offsetY });
+                _this.Question.AnswerProvided = Math.round(event.offsetX) + "," + Math.round(event.offsetY);
+                _this.Question.IsDirty = true;
+            };
+            this.ClearAnswer = function () {
+                _this.IsCompleteAnswer(false);
+                _this.Question.AnswerProvided = "";
+                _this.Question.IsDirty = true;
+            };
+            this.Question = question;
+            var answerProvided = [];
+            if (question.AnswerProvided) {
+                answerProvided = question.AnswerProvided.split(',');
+                this.Answer = ko.observable({ Left: answerProvided[0], Top: answerProvided[1] });
+            }
+            else {
+                this.Answer = ko.observable(null);
+            }
+            this.Image = "/api/Exams/" + question.ExamId + "/Image?path=" + encodeURIComponent(question.QuestionData.Image);
+            this.IsCompleteAnswer = ko.observable(answerProvided.length == 2);
+            if (question.CorrectAnswer) {
+                var correctCoordinates = question.CorrectAnswer.split(',');
+                this.Area = {
+                    Left: correctCoordinates[0],
+                    Top: correctCoordinates[1],
+                    Width: correctCoordinates[2],
+                    Height: correctCoordinates[3]
+                };
+            }
+        }
+        return ClickImageViewModel;
+    }());
+    function initialize(question) {
+        return new ClickImageViewModel(question);
+    }
+    exports.initialize = initialize;
 });
 define("QuestionTypes/CodeCompletion", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
@@ -789,10 +837,22 @@ define("QuestionTypes/MultipleChoice", ["require", "exports", "knockout"], funct
     }
     exports.initialize = initialize;
 });
-define("QuestionTypes/Reorder", ["require", "exports"], function (require, exports) {
+define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     var ReorderViewModel = (function () {
         function ReorderViewModel(question) {
+            var _this = this;
+            this.UpdateTooltips = function (newValue) {
+                window["jQuery"]('.drag-content [data-toggle="tooltip"]').tooltip(newValue ? 'show' : 'hide');
+            };
+            this.UpdateAnswer = function (vm, event) {
+                _this.IsCompleteAnswer(false);
+                _this.Question.AnswerProvided = "";
+                _this.Question.IsDirty = true;
+            };
+            this.Question = question;
+            question.AnswerRevealed.subscribe(this.UpdateTooltips);
+            this.IsCompleteAnswer = ko.observable(false);
         }
         return ReorderViewModel;
     }());

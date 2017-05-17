@@ -1,0 +1,10 @@
+﻿<h5 data-bind="css: {'text-success': IsCompleteAnswer}"><span data-bind="locale: 'ClickImage'"></span></h5>
+<div class="clickimage-container">
+    <img class="clickimage-image" data-bind="attr: {src: Image}, click: UpdateAnswer"/>
+    <!-- ko if: Area && Question.AnswerRevealed -->
+    <div class="clickimage-answer" data-bind="style: {left: Area.Left +'px', top: Area.Top+'px', width: Area.Width+'px', height: Area.Height+'px'}"></div>
+    <!-- /ko -->
+    <!-- ko if: Answer() -->
+    <div class="clickimage-indicator" data-bind="style: {left: Answer().Left+'px', top:Answer().Top+'px'}"></div>
+    <!-- /ko -->
+</div>

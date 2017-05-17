@@ -18,6 +18,8 @@ export interface ILocale {
     AvailableFrom: string;
     StartingIn: string;
     CompleteCode: string;
+    ClickImage: string;
+    Reorder: string;
 
     Next: string;
     Previous: string;

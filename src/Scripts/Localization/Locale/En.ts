@@ -26,6 +26,8 @@ export class En implements ILocale {
     Answers: string = "answers";
     Answer: string = "answer";
     CompleteCode: string = "Complete the code by selecting the correct options";
+    ClickImage: string = "Click the image on the correct spot";
+    Reorder: string = "Drag the options on the container on the right in the correct order";
     Explanation: string = "Explanation";
     TimesUp: string = "Time's up!";
     BookmarkAnswer: string = "Review this question later";

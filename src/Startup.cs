@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Newtonsoft.Json.Serialization;
 using System.Data.Common;
 using Microsoft.Data.Sqlite;
+using CommonMark;
 
 namespace Hexamer
 {
@@ -33,6 +34,7 @@ namespace Hexamer
                 builder.AddUserSecrets<Startup>();
             }
             Configuration = builder.Build();
+            CommonMarkSettings.Default.OutputDelegate = (doc, output, settings) => new CustomHtmlFormatter(output, settings).WriteDocument(doc);
         }
 
         public IConfigurationRoot Configuration { get; }

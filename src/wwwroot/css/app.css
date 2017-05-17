@@ -242,7 +242,7 @@ input[type=checkbox]:checked + label::before {
     vertical-align: middle;
 }
 
-/* css contenuto drag&drop */
+/* reorder */
 
 .drag-content {
     width: 60%;
@@ -274,7 +274,7 @@ h6 {
 .drag-target {
 }
 
-/* css contenuto domanda codice */
+/* codecompletion */
 
 .code {
     font-size: 14px;
@@ -282,6 +282,31 @@ h6 {
     margin: auto;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+/* clickimage */
+.clickimage-container {
+    position: relative;
+    border:1px solid black;
+    display: inline-block;
+    clear:both;
+}
+.clickimage-answer {
+    pointer-events: none;
+    position: absolute;
+    background-color: rgba(255, 198, 0, 0.5);
+}
+.clickimage-indicator {
+    pointer-events: none;
+    background-image: url('/images/pointer.png');
+    background-repeat: no-repeat;
+    transform: translate(-9px, -2px);
+    width:27px;
+    height:34px;
+    position:absolute;
+}
+.clickimage-image {
+    cursor: pointer;
 }
 
 /* css footer */
@@ -654,9 +679,12 @@ hr {
     width: auto;
     display: inline;
 }
-.code .tooltip-inner {
+.tooltip-inner {
     background-color:darkorange;
 }
-.code .tooltip.top .tooltip-arrow {
+.tooltip.top .tooltip-arrow {
     border-top-color: darkorange;
+}
+.tooltip.left .tooltip-arrow {
+    border-left-color: darkorange;
 }

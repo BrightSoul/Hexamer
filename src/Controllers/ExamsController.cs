@@ -55,6 +55,41 @@ namespace Hexamer.Controllers
             examResult.SetScore(answers);
             return Ok(examResult);
         }
+
+        [HttpGet("{examId}/Image")]
+        public IActionResult Image(string examId, string path)
+        {
+            string language = Request.GetLanguage();
+            var exam = examRepository.GetById(examId, language);
+            if (exam == null || !exam.CanOpenExam)
+                return NotFound();
+
+            string contentPath = null;
+            if (string.IsNullOrEmpty(path)) {
+                contentPath = Path.Combine(config.ExamsDataDirectory, exam.Id, "exam.jpg");
+                if (!System.IO.File.Exists(contentPath))
+                    contentPath = Path.Combine(config.ExamsDataDirectory, "default-exam-image.jpg");
+            } else {
+                contentPath = Path.Combine(config.ExamsDataDirectory, exam.Id, "content", Path.GetFileName(path));
+            }
+             
+            if (!System.IO.File.Exists(contentPath))
+                return NotFound();
+            var extension = Path.GetExtension(contentPath).Trim('.').ToLowerInvariant();
+            Stream contentStream = System.IO.File.OpenRead(contentPath);
+            switch (extension) {
+                case "gif":
+                    return File(contentStream, "image/gif");
+                case "jpg":
+                case "jpeg":
+                    return File(contentStream, "image/jpeg");
+                case "png":
+                    return File(contentStream, "image/png");
+                default:
+                    return NotFound();
+            }
+        }
+
         [HttpGet("{examId}/{questionNumber}")]
         public async Task<IActionResult> QuestionDetail(string examId, int questionNumber)
         {
@@ -73,15 +108,6 @@ namespace Hexamer.Controllers
             var result = QuestionResult.FromEntities(exam, question, answer, User.Identity);
             await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
             return Ok(result);
-        }
-
-        [HttpGet("{id}/Image")]
-        public IActionResult Image(string id) {
-            var dataDirectory = config.ExamsDataDirectory;
-            var examImage = Path.Combine(dataDirectory, id, "exam.jpg");
-            if (!System.IO.File.Exists(examImage))
-                examImage = Path.Combine(dataDirectory, "default-exam-image.jpg");
-            return File(System.IO.File.OpenRead(examImage), "image/jpeg");
         }
     }
 }
