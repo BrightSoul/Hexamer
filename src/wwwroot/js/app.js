@@ -846,18 +846,66 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 window["jQuery"]('.drag-content [data-toggle="tooltip"]').tooltip(newValue ? 'show' : 'hide');
             };
             this.ChooseOption = function (option) {
+                console.log(_this.dropIndex);
                 _this.AvailableOptions.remove(option);
-                _this.ChosenOptions.push(option);
+                if (isNaN(_this.dropIndex) || _this.dropIndex >= _this.ChosenOptions.length) {
+                    _this.ChosenOptions.push(option);
+                }
+                else {
+                    _this.ChosenOptions.splice(_this.dropIndex, 0, option);
+                }
                 _this.UpdateAnswer();
+                _this.dropIndex = Number.NaN;
             };
             this.RemoveOption = function (option) {
                 _this.ChosenOptions.remove(option);
-                _this.AvailableOptions.push(option);
+                if (isNaN(_this.dropIndex) || _this.dropIndex >= _this.AvailableOptions.length) {
+                    _this.AvailableOptions.push(option);
+                }
+                else {
+                    _this.AvailableOptions.splice(_this.dropIndex, 0, option);
+                }
                 _this.UpdateAnswer();
+                _this.dropIndex = Number.NaN;
             };
             this.StartDrag = function (vm, event) {
                 event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
+                event.originalEvent.currentTarget.classList.add("dragging");
                 return true;
+            };
+            this.SetPlaceholder = function (vm, event) {
+                if (event.preventDefault)
+                    event.preventDefault();
+                event.currentTarget.classList.add('dragging');
+                event.originalEvent.dataTransfer.dropEffect = 'move';
+                var div = event.currentTarget.lastElementChild;
+                var elements = div.getElementsByTagName("div");
+                var y = Math.round((event.offsetY - 60) / 50);
+                y = Math.max(Math.min(y, elements.length), 0);
+                _this.dropIndex = y;
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove("start");
+                    elements[i].classList.remove("above");
+                    elements[i].classList.remove("end");
+                    elements[i].classList.remove("below");
+                    if (i == y) {
+                        elements[i].classList.add(i == 0 ? "start" : "above");
+                    }
+                    else if (i == y - 1) {
+                        elements[i].classList.add(y == elements.length ? "end" : "below");
+                    }
+                }
+                return false;
+            };
+            this.EndDrag = function (vm, event) {
+                event.currentTarget.classList.remove("dragging");
+                event.currentTarget.classList.remove("start");
+                event.currentTarget.classList.remove("above");
+                event.currentTarget.classList.remove("end");
+                event.currentTarget.classList.remove("below");
+            };
+            this.EnterDrag = function (vm, event) {
+                event.currentTarget.classList.add('dragging');
             };
             this.ChooseOptionByDragging = function (vm, event) {
                 var optionId = event.originalEvent.dataTransfer.getData("text");

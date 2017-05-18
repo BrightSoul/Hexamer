@@ -54,19 +54,69 @@ class ReorderViewModel {
     };
 
     public ChooseOption = (option) => {
+        console.log(this.dropIndex);
         this.AvailableOptions.remove(option);
-        this.ChosenOptions.push(option);
+        if (isNaN(this.dropIndex) || this.dropIndex >= this.ChosenOptions.length) { 
+            this.ChosenOptions.push(option);
+        } else {
+            this.ChosenOptions.splice(this.dropIndex, 0, option);
+        }
+        
         this.UpdateAnswer();
+        this.dropIndex = Number.NaN;
     };
     public RemoveOption = (option) => {
         this.ChosenOptions.remove(option);
-        this.AvailableOptions.push(option);
+        if (isNaN(this.dropIndex) || this.dropIndex >= this.AvailableOptions.length) {
+            this.AvailableOptions.push(option);
+        } else {
+            this.AvailableOptions.splice(this.dropIndex, 0, option);
+        }
         this.UpdateAnswer();
+        this.dropIndex = Number.NaN;
     };
 
     public StartDrag = (vm, event) => {
         event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
+        event.originalEvent.currentTarget.classList.add("dragging");
         return true;
+    };
+
+    
+    private dropIndex: number;
+    public SetPlaceholder = (vm, event) => {
+        if (event.preventDefault)
+            event.preventDefault();
+        event.currentTarget.classList.add('dragging'); 
+        event.originalEvent.dataTransfer.dropEffect = 'move'
+        let div = <HTMLDivElement> event.currentTarget.lastElementChild;
+        let elements = div.getElementsByTagName("div");
+        let y = Math.round((event.offsetY-60) /50);
+        y = Math.max(Math.min(y, elements.length), 0);
+        this.dropIndex = y;
+        for (let i = 0; i<elements.length; i++){
+            elements[i].classList.remove("start");
+            elements[i].classList.remove("above");
+            elements[i].classList.remove("end");
+            elements[i].classList.remove("below");
+            if (i == y) {
+                elements[i].classList.add(i == 0 ? "start" : "above");
+            } else if (i == y-1) {
+                elements[i].classList.add(y == elements.length ? "end" : "below");
+            }
+        }
+        return false;
+    };
+    public EndDrag = (vm, event) => {
+        event.currentTarget.classList.remove("dragging");
+        event.currentTarget.classList.remove("start");
+        event.currentTarget.classList.remove("above");
+        event.currentTarget.classList.remove("end");
+        event.currentTarget.classList.remove("below");
+    };
+
+    public EnterDrag = (vm, event) => {
+        event.currentTarget.classList.add('dragging');
     };
 
     public ChooseOptionByDragging = (vm,event) => {

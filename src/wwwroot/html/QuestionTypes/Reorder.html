@@ -1,21 +1,23 @@
 ﻿<div class="row drag-content">
 
   <div class="col-md-6">
-    <div class="drag-source drag-box well" data-bind="event: {drop: RemoveOptionByDragging}" ondragenter="this.classList.add('dragging')" ondragleave="this.classList.remove('dragging')" ondragover="if (event.preventDefault) event.preventDefault(); this.classList.add('dragging'); event.dataTransfer.dropEffect = 'move'; return false;" ondragend="this.classList.remove('dragging')">
+    <div class="drag-source drag-box well" data-bind="event: {drop: RemoveOptionByDragging, dragover: SetPlaceholder, dragend: EndDrag, dragleave: EndDrag, dragEnter: EnterDrag}">
       <h5>Scelte disponibili</h5>
       <div class="drag-parent" data-bind="foreach: AvailableOptions">
-        <button type="button" draggable="true" data-bind="event: {dragstart: $parent.StartDrag}, text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.ChooseOption" data-placement="left" data-trigger="manual" class="btn btn-default btn-lg btn-block"></button>
-      </div>
-    </div>
+        <div class="drag-wrapper">
+        <button type="button" draggable="true" data-bind="event: {dragstart: $parent.StartDrag, dragend: $parent.EndDrag}, text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.ChooseOption" data-placement="left" data-trigger="manual" class="btn btn-default btn-lg btn-block"></button>
+        </div>
+      </div></div>
   </div>
 
   <div class="col-md-6">
-    <div class="drag-target drag-box well" data-bind="event: {drop: ChooseOptionByDragging }" ondragenter="this.classList.add('dragging')" ondragleave="this.classList.remove('dragging')" ondragover="if (event.preventDefault) event.preventDefault(); this.classList.add('dragging'); event.dataTransfer.dropEffect = 'move'; return false;" ondragend="this.classList.remove('dragging')">
+    <div class="drag-target drag-box well" data-bind="event: {drop: ChooseOptionByDragging, dragover: SetPlaceholder, dragend: EndDrag, dragleave: EndDrag, dragEnter: EnterDrag }">
       <h5 data-bind="css: {'text-danger': IsInvalidAnswer, 'text-success': IsCompleteAnswer}"><span class="glyphicon glyphicon-alert" data-bind="visible: IsInvalidAnswer" style="margin-right:5px"></span>Risposta <span data-bind="text: Question.QuestionData.Choose"></span> voci</h5>
       <div class="drag-parent" data-bind="foreach: ChosenOptions">
-        <button type="button" draggable="true" data-bind="event: {dragstart: $parent.StartDrag}, text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.RemoveOption" data-placement="left" data-trigger="manual" class="btn btn-primary btn-lg btn-block"></button>
-      </div>
-    </div>
+        <div class="drag-wrapper">
+        <button type="button" draggable="true" data-bind="event: {dragstart: $parent.StartDrag, dragend: $parent.EndDrag}, text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.RemoveOption" data-placement="left" data-trigger="manual" class="btn btn-primary btn-lg btn-block"></button>
+        </div>
+      </div></div>
   </div>
 
 </div>
