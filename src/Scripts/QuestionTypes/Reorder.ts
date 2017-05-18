@@ -54,9 +54,8 @@ class ReorderViewModel {
     };
 
     public ChooseOption = (option) => {
-        console.log(this.dropIndex);
         this.AvailableOptions.remove(option);
-        if (isNaN(this.dropIndex) || this.dropIndex >= this.ChosenOptions.length) { 
+        if (isNaN(this.dropIndex) || (this.dropIndex >= this.ChosenOptions().length)) { 
             this.ChosenOptions.push(option);
         } else {
             this.ChosenOptions.splice(this.dropIndex, 0, option);
@@ -67,7 +66,7 @@ class ReorderViewModel {
     };
     public RemoveOption = (option) => {
         this.ChosenOptions.remove(option);
-        if (isNaN(this.dropIndex) || this.dropIndex >= this.AvailableOptions.length) {
+        if (isNaN(this.dropIndex) || (this.dropIndex >= this.AvailableOptions().length)) {
             this.AvailableOptions.push(option);
         } else {
             this.AvailableOptions.splice(this.dropIndex, 0, option);

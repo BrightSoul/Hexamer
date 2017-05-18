@@ -846,9 +846,8 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 window["jQuery"]('.drag-content [data-toggle="tooltip"]').tooltip(newValue ? 'show' : 'hide');
             };
             this.ChooseOption = function (option) {
-                console.log(_this.dropIndex);
                 _this.AvailableOptions.remove(option);
-                if (isNaN(_this.dropIndex) || _this.dropIndex >= _this.ChosenOptions.length) {
+                if (isNaN(_this.dropIndex) || (_this.dropIndex >= _this.ChosenOptions().length)) {
                     _this.ChosenOptions.push(option);
                 }
                 else {
@@ -859,7 +858,7 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
             };
             this.RemoveOption = function (option) {
                 _this.ChosenOptions.remove(option);
-                if (isNaN(_this.dropIndex) || _this.dropIndex >= _this.AvailableOptions.length) {
+                if (isNaN(_this.dropIndex) || (_this.dropIndex >= _this.AvailableOptions().length)) {
                     _this.AvailableOptions.push(option);
                 }
                 else {
