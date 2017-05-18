@@ -271,7 +271,12 @@ h6 {
 .drag-source {
 }
 
-.drag-target {
+.drag-box.dragging {
+    border: 1px dashed #31b0d5;
+
+}
+.drag-box.dragging * {
+    pointer-events: none;
 }
 
 /* codecompletion */

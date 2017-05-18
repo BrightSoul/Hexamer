@@ -64,6 +64,38 @@ class ReorderViewModel {
         this.UpdateAnswer();
     };
 
+    public StartDrag = (vm, event) => {
+        event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
+        return true;
+    };
+
+    public ChooseOptionByDragging = (vm,event) => {
+        let optionId = event.originalEvent.dataTransfer.getData("text");
+        let option = this.AvailableOptions().filter(opt => opt.Id == optionId);
+        if (option.length == 0)  {
+            console.log("Option not found!");
+            return;
+        } 
+        this.ChooseOption(option[0]);
+        if (event.stopPropagation) event.stopPropagation();
+        event.target.classList.remove('dragging');
+        return false;
+    };
+
+
+    public RemoveOptionByDragging = (vm,event) => {
+        let optionId = event.originalEvent.dataTransfer.getData("text");
+        let option = this.ChosenOptions().filter(opt => opt.Id == optionId);
+        if (option.length == 0)  {
+            console.log("Option not found!");
+            return;
+        } 
+        this.RemoveOption(option[0]);
+        if (event.stopPropagation) event.stopPropagation();
+        event.target.classList.remove('dragging');
+        return false;
+    };
+
     private UpdateAnswer = () => {
         let chosenOptions = this.ChosenOptions();
         this.Question.AnswerProvided = chosenOptions.map(opt => opt.Id).join(',');

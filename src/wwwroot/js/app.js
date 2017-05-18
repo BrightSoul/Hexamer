@@ -855,6 +855,36 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 _this.AvailableOptions.push(option);
                 _this.UpdateAnswer();
             };
+            this.StartDrag = function (vm, event) {
+                event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
+                return true;
+            };
+            this.ChooseOptionByDragging = function (vm, event) {
+                var optionId = event.originalEvent.dataTransfer.getData("text");
+                var option = _this.AvailableOptions().filter(function (opt) { return opt.Id == optionId; });
+                if (option.length == 0) {
+                    console.log("Option not found!");
+                    return;
+                }
+                _this.ChooseOption(option[0]);
+                if (event.stopPropagation)
+                    event.stopPropagation();
+                event.target.classList.remove('dragging');
+                return false;
+            };
+            this.RemoveOptionByDragging = function (vm, event) {
+                var optionId = event.originalEvent.dataTransfer.getData("text");
+                var option = _this.ChosenOptions().filter(function (opt) { return opt.Id == optionId; });
+                if (option.length == 0) {
+                    console.log("Option not found!");
+                    return;
+                }
+                _this.RemoveOption(option[0]);
+                if (event.stopPropagation)
+                    event.stopPropagation();
+                event.target.classList.remove('dragging');
+                return false;
+            };
             this.UpdateAnswer = function () {
                 var chosenOptions = _this.ChosenOptions();
                 _this.Question.AnswerProvided = chosenOptions.map(function (opt) { return opt.Id; }).join(',');
