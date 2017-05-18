@@ -817,15 +817,15 @@ define("QuestionTypes/MultipleChoice", ["require", "exports", "knockout"], funct
             };
             this.Question = question;
             var optionsChecked = 0;
-            var checkedOptions = (question.AnswerProvided || "").toLowerCase().split(',');
-            var correctOptions = question.CorrectAnswer.toLowerCase().split(',');
+            var chosenIds = (question.AnswerProvided || "").toLowerCase().split(',').filter(function (a) { return a; });
+            var correctIds = (question.CorrectAnswer || "").toLowerCase().split(',').filter(function (a) { return a; });
             for (var i = 0; i < question.QuestionData.Options.length; i++) {
                 var option = question.QuestionData.Options[i];
-                var isChecked = checkedOptions.indexOf(option.Id.toLowerCase()) > -1;
+                var isChecked = chosenIds.indexOf(option.Id.toLowerCase()) > -1;
                 optionsChecked += isChecked ? 1 : 0;
                 option.IsChecked = ko.observable(isChecked);
                 option.IsChecked.subscribe(this.UpdateAnswer);
-                option.IsCorrect = correctOptions.indexOf(option.Id.toLowerCase()) > -1;
+                option.IsCorrect = correctIds.indexOf(option.Id.toLowerCase()) > -1;
             }
             this.IsCompleteAnswer = ko.observable(optionsChecked == question.QuestionData.Choose);
             this.IsInvalidAnswer = ko.observable(optionsChecked > question.QuestionData.Choose);
@@ -845,14 +845,62 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
             this.UpdateTooltips = function (newValue) {
                 window["jQuery"]('.drag-content [data-toggle="tooltip"]').tooltip(newValue ? 'show' : 'hide');
             };
-            this.UpdateAnswer = function (vm, event) {
-                _this.IsCompleteAnswer(false);
-                _this.Question.AnswerProvided = "";
+            this.ChooseOption = function (option) {
+                _this.AvailableOptions.remove(option);
+                _this.ChosenOptions.push(option);
+                _this.UpdateAnswer();
+            };
+            this.RemoveOption = function (option) {
+                _this.ChosenOptions.remove(option);
+                _this.AvailableOptions.push(option);
+                _this.UpdateAnswer();
+            };
+            this.UpdateAnswer = function () {
+                var chosenOptions = _this.ChosenOptions();
+                _this.Question.AnswerProvided = chosenOptions.map(function (opt) { return opt.Id; }).join(',');
                 _this.Question.IsDirty = true;
+                _this.IsCompleteAnswer(_this.Question.QuestionData.Choose == chosenOptions.length);
+                _this.IsInvalidAnswer(_this.Question.QuestionData.Choose < chosenOptions.length);
             };
             this.Question = question;
             question.AnswerRevealed.subscribe(this.UpdateTooltips);
-            this.IsCompleteAnswer = ko.observable(false);
+            var availableOptions = [];
+            var chosenOptions = [];
+            var chosenIds = (question.AnswerProvided || "").toLowerCase().split(',').filter(function (a) { return a; });
+            var correctIds = (question.CorrectAnswer || "").toLowerCase().split(',').filter(function (a) { return a; });
+            var _loop_2 = function (i) {
+                var id = correctIds[i];
+                var options = question.QuestionData.Options.filter(function (q) { return q.Id.toLowerCase() == id; });
+                for (var j = 0; j < options.length; j++) {
+                    options[j].Ordinal = i + 1;
+                }
+            };
+            for (var i = 0; i < correctIds.length; i++) {
+                _loop_2(i);
+            }
+            var _loop_3 = function (i) {
+                var options = question.QuestionData.Options.filter(function (q) { return q.Id.toLowerCase() == chosenIds[i]; });
+                if (options.length == 0) {
+                    console.log("Missing an option!");
+                }
+                else {
+                    chosenOptions.push(options[0]);
+                }
+            };
+            for (var i = 0; i < chosenIds.length; i++) {
+                _loop_3(i);
+            }
+            for (var i = 0; i < question.QuestionData.Options.length; i++) {
+                var option = question.QuestionData.Options[i];
+                var isChosen = chosenIds.indexOf(option.Id.toLowerCase()) > -1;
+                if (!isChosen) {
+                    availableOptions.push(option);
+                }
+            }
+            this.AvailableOptions = ko.observableArray(availableOptions);
+            this.ChosenOptions = ko.observableArray(chosenOptions);
+            this.IsCompleteAnswer = ko.observable(question.QuestionData.Choose == chosenIds.length);
+            this.IsInvalidAnswer = ko.observable(question.QuestionData.Choose < chosenIds.length);
         }
         return ReorderViewModel;
     }());

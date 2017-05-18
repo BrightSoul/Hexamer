@@ -1,22 +1,21 @@
 ﻿<div class="row drag-content">
-          
-            <div class="col-md-6">
-              <div class="drag-source drag-box well">
-                <h6>Scelte disponibili</h6>
-                <button type="button" data-toggle="tooltip" data-placement="left" data-title="1" data-trigger="manual" class="btn btn-default btn-lg btn-block">Push</button>
-                <button type="button" class="btn btn-default btn-lg btn-block">Commit</button>
-                <button type="button" class="btn btn-default btn-lg btn-block">Return</button>
-                <button type="button" class="btn btn-default btn-lg btn-block">Pull request</button>
-                <button type="button" class="btn btn-default btn-lg btn-block">Yield</button>
-                <button type="button" class="btn btn-default btn-lg btn-block">Clone</button>
-                <button type="button" class="btn btn-default btn-lg btn-block">Fork</button>
-              </div>
-            </div>
-           
-            <div class="col-md-6">
-              <div class="drag-target drag-box well">
-              <h6>Risposta</h6>
-              </div>
-            </div>
 
-         </div>
+  <div class="col-md-6">
+    <div class="drag-source drag-box well">
+      <h5>Scelte disponibili</h5>
+      <div data-bind="foreach: AvailableOptions">
+        <button type="button" data-bind="text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.ChooseOption" data-placement="left" data-trigger="manual" class="btn btn-default btn-lg btn-block"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="drag-target drag-box well">
+      <h5 data-bind="css: {'text-danger': IsInvalidAnswer, 'text-success': IsCompleteAnswer}"><span class="glyphicon glyphicon-alert" data-bind="visible: IsInvalidAnswer" style="margin-right:5px"></span>Risposta <span data-bind="text: Question.QuestionData.Choose"></span> voci</h5>
+      <div data-bind="foreach: ChosenOptions">
+        <button type="button" data-bind="text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.RemoveOption" data-placement="left" data-trigger="manual" class="btn btn-primary btn-lg btn-block"></button>
+      </div>
+    </div>
+  </div>
+
+</div>

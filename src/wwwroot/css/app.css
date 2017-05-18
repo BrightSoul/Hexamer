@@ -264,8 +264,8 @@ h6 {
     font-size: 16px;
 }
 
-.drag-box button {
-    margin: 6px;
+.drag-box h5 {
+    margin-top: 0;
 }
 
 .drag-source {

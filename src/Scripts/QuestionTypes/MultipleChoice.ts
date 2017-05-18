@@ -9,16 +9,16 @@ class MultipleChoiceViewModel {
     constructor(question: Question) {
         this.Question = question;
         let optionsChecked : number = 0;
-        let checkedOptions = (question.AnswerProvided || "").toLowerCase().split(',');
-        let correctOptions = question.CorrectAnswer.toLowerCase().split(',');
+        let chosenIds = (question.AnswerProvided || "").toLowerCase().split(',').filter(a => a);
+        let correctIds = (question.CorrectAnswer || "").toLowerCase().split(',').filter(a => a);
 
         for (let i: number = 0; i < question.QuestionData.Options.length; i++) {
             let option = question.QuestionData.Options[i];
-            let isChecked : boolean = checkedOptions.indexOf(option.Id.toLowerCase()) > -1;
+            let isChecked : boolean = chosenIds.indexOf(option.Id.toLowerCase()) > -1;
             optionsChecked += isChecked ? 1 : 0;
             option.IsChecked = ko.observable(isChecked);
             option.IsChecked.subscribe(this.UpdateAnswer);
-            option.IsCorrect = correctOptions.indexOf(option.Id.toLowerCase()) > -1;
+            option.IsCorrect = correctIds.indexOf(option.Id.toLowerCase()) > -1;
         }
         this.IsCompleteAnswer = ko.observable(optionsChecked == question.QuestionData.Choose);
         this.IsInvalidAnswer = ko.observable(optionsChecked > question.QuestionData.Choose);
