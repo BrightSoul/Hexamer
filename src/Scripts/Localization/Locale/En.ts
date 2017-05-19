@@ -22,9 +22,12 @@ export class En implements ILocale {
     RevealAnswer: string = "Reveal answer";
     HideAnswer: string = "Hide answer";
     RemainingTime: string = "Remaining time";
+    AvailableOptions: string = "Available options";
+    DragOptions: string = "Drag here";
     Choose: string = "Choose";
     Answers: string = "answers";
     Answer: string = "answer";
+    Options: string = "options";
     CompleteCode: string = "Complete the code by selecting the correct options";
     ClickImage: string = "Click the image on the correct spot";
     Reorder: string = "Drag the options on the container on the right in the correct order";

@@ -63,3 +63,4 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', ['dotnet', 'libs', 'modules', 'app', 'styles', 'fonts']);
+gulp.task('default', ['build']);

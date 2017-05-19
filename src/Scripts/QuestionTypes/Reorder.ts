@@ -76,6 +76,7 @@ class ReorderViewModel {
     };
 
     public StartDrag = (vm, event) => {
+        console.log("startdrag");
         event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
         event.originalEvent.currentTarget.classList.add("dragging");
         return true;
@@ -115,6 +116,7 @@ class ReorderViewModel {
     };
 
     public EnterDrag = (vm, event) => {
+        console.log("enterdrag");
         event.currentTarget.classList.add('dragging');
     };
 

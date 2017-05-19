@@ -13,7 +13,8 @@
     "gulp-dotnet":"2.0.0",
     "streamqueue": "1.1.1",
     "requirejs": "2.3.3",
-    "del": "2.2.2"
+    "del": "2.2.2",
+    "kuduscript": "1.0.15"
   },
   "dependencies": {
     "jquery": "1.12.4",

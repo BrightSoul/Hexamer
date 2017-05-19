@@ -1,8 +1,9 @@
-﻿<div class="row drag-content">
+﻿<h5 data-bind="locale: 'Reorder'"></h5>
+<div class="row drag-content">
 
   <div class="col-md-6">
-    <div class="drag-source drag-box well" data-bind="event: {drop: RemoveOptionByDragging, dragover: SetPlaceholder, dragend: EndDrag, dragleave: EndDrag, dragEnter: EnterDrag}">
-      <h5>Scelte disponibili</h5>
+    <div class="drag-source drag-box well" data-bind="event: {drop: RemoveOptionByDragging, dragover: SetPlaceholder, dragend: EndDrag, dragleave: EndDrag, dragEnter: EnterDrag, }">
+      <h5 data-bind="locale: 'AvailableOptions'"></h5>
       <div class="drag-parent" data-bind="foreach: AvailableOptions">
         <div class="drag-wrapper">
         <button type="button" draggable="true" data-bind="event: {dragstart: $parent.StartDrag, dragend: $parent.EndDrag}, text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.ChooseOption" data-placement="left" data-trigger="manual" class="btn btn-default btn-lg btn-block"></button>
@@ -12,7 +13,7 @@
 
   <div class="col-md-6">
     <div class="drag-target drag-box well" data-bind="event: {drop: ChooseOptionByDragging, dragover: SetPlaceholder, dragend: EndDrag, dragleave: EndDrag, dragEnter: EnterDrag }">
-      <h5 data-bind="css: {'text-danger': IsInvalidAnswer, 'text-success': IsCompleteAnswer}"><span class="glyphicon glyphicon-alert" data-bind="visible: IsInvalidAnswer" style="margin-right:5px"></span>Risposta <span data-bind="text: Question.QuestionData.Choose"></span> voci</h5>
+      <h5 data-bind="css: {'text-danger': IsInvalidAnswer, 'text-success': IsCompleteAnswer}"><span class="glyphicon glyphicon-alert" data-bind="visible: IsInvalidAnswer" style="margin-right:5px"></span><span data-bind="locale: 'DragOptions'"></span> <span data-bind="text: Question.QuestionData.Choose"></span> <span data-bind="locale: 'Options'"></span></h5>
       <div class="drag-parent" data-bind="foreach: ChosenOptions">
         <div class="drag-wrapper">
         <button type="button" draggable="true" data-bind="event: {dragstart: $parent.StartDrag, dragend: $parent.EndDrag}, text: Text, attr: {'data-title': 'Ordinal' in $data ? Ordinal : '', 'data-toggle': 'Ordinal' in $data ? 'tooltip' : '' }, click: $parent.RemoveOption" data-placement="left" data-trigger="manual" class="btn btn-primary btn-lg btn-block"></button>

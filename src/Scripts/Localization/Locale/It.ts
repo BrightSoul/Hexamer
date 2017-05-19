@@ -22,10 +22,13 @@ export class It implements ILocale {
     RevealAnswer: string = "Mostra risposta";
     HideAnswer: string = "Nascondi risposta";
     RemainingTime: string = "Tempo rimanente";
+    AvailableOptions: string = "Scelte disponibili";
+    DragOptions: string = "Trascina qui";
     TimesUp: string = "Tempo scaduto!";
     Choose: string = "Scegli";
     Answers: string = "risposte";
     Answer: string = "risposta";
+    Options: string = "scelte";
     CompleteCode: string = "Completa il codice selezionando le voci corrette";
     ClickImage: string = "Clicca sull'immagine nel punto corretto";
     Reorder: string = "Trascina i blocchi nel contenitore a destra nell'ordine corretto";

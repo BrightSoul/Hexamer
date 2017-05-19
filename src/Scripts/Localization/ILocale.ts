@@ -20,6 +20,8 @@ export interface ILocale {
     CompleteCode: string;
     ClickImage: string;
     Reorder: string;
+    AvailableOptions: string;
+    DragOptions: string;
 
     Next: string;
     Previous: string;
@@ -34,6 +36,7 @@ export interface ILocale {
     Choose: string;
     Answer: string;
     Answers: string;
+    Options: string;
     Explanation: string;
 
     BackToHome: string;

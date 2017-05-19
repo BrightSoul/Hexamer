@@ -625,9 +625,12 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.RevealAnswer = "Reveal answer";
             this.HideAnswer = "Hide answer";
             this.RemainingTime = "Remaining time";
+            this.AvailableOptions = "Available options";
+            this.DragOptions = "Drag here";
             this.Choose = "Choose";
             this.Answers = "answers";
             this.Answer = "answer";
+            this.Options = "options";
             this.CompleteCode = "Complete the code by selecting the correct options";
             this.ClickImage = "Click the image on the correct spot";
             this.Reorder = "Drag the options on the container on the right in the correct order";
@@ -670,10 +673,13 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.RevealAnswer = "Mostra risposta";
             this.HideAnswer = "Nascondi risposta";
             this.RemainingTime = "Tempo rimanente";
+            this.AvailableOptions = "Scelte disponibili";
+            this.DragOptions = "Trascina qui";
             this.TimesUp = "Tempo scaduto!";
             this.Choose = "Scegli";
             this.Answers = "risposte";
             this.Answer = "risposta";
+            this.Options = "scelte";
             this.CompleteCode = "Completa il codice selezionando le voci corrette";
             this.ClickImage = "Clicca sull'immagine nel punto corretto";
             this.Reorder = "Trascina i blocchi nel contenitore a destra nell'ordine corretto";
@@ -868,6 +874,7 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 _this.dropIndex = Number.NaN;
             };
             this.StartDrag = function (vm, event) {
+                console.log("startdrag");
                 event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
                 event.originalEvent.currentTarget.classList.add("dragging");
                 return true;
@@ -904,6 +911,7 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 event.currentTarget.classList.remove("below");
             };
             this.EnterDrag = function (vm, event) {
+                console.log("enterdrag");
                 event.currentTarget.classList.add('dragging');
             };
             this.ChooseOptionByDragging = function (vm, event) {
