@@ -5,28 +5,9 @@
     <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="wwwroot/js\Question.js" />
-    <Content Remove="wwwroot/js\Question.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="wwwroot\exams.html">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\html\Exam.html" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Templates\" />
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\css\app.css" />
-    <None Include="wwwroot\html\Container.html" />
-    <None Include="wwwroot\html\Exams.html" />
-    <None Include="wwwroot\Layout.html" />
-    <None Include="wwwroot\html\Login.html" />
-    <None Include="wwwroot\html\QuestionTypes\MultipleChoice.html" />
-    <None Include="wwwroot\html\QuestionTypes\Reorder.html" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
