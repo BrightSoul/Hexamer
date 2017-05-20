@@ -632,14 +632,14 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.HideAnswer = "Hide answer";
             this.RemainingTime = "Remaining time";
             this.AvailableOptions = "Available options";
-            this.DragOptions = "Drag here";
+            this.DragOptions = "Move here";
             this.Choose = "Choose";
             this.Answers = "answers";
             this.Answer = "answer";
             this.Options = "options";
             this.CompleteCode = "Complete the code by selecting the correct options";
             this.ClickImage = "Click the image on the correct spot";
-            this.Reorder = "Drag the options on the container on the right in the correct order";
+            this.Reorder = "Move the options to the solution container. Order is important!";
             this.Explanation = "Explanation";
             this.TimesUp = "Time's up!";
             this.BookmarkAnswer = "Review this question later";
@@ -688,7 +688,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.Options = "scelte";
             this.CompleteCode = "Completa il codice selezionando le voci corrette";
             this.ClickImage = "Clicca sull'immagine nel punto corretto";
-            this.Reorder = "Trascina i blocchi nel contenitore a destra nell'ordine corretto";
+            this.Reorder = "Sposta i blocchi nel contenitore della soluzione. L'ordine è importante!";
             this.Explanation = "Spiegazione";
             this.BookmarkAnswer = "Ricontrolla questa domanda più tardi";
             this.AverageTimePerAnswer = "circa per domanda";

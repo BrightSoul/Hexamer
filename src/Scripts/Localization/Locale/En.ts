@@ -23,14 +23,14 @@ export class En implements ILocale {
     HideAnswer: string = "Hide answer";
     RemainingTime: string = "Remaining time";
     AvailableOptions: string = "Available options";
-    DragOptions: string = "Drag here";
+    DragOptions: string = "Move here";
     Choose: string = "Choose";
     Answers: string = "answers";
     Answer: string = "answer";
     Options: string = "options";
     CompleteCode: string = "Complete the code by selecting the correct options";
     ClickImage: string = "Click the image on the correct spot";
-    Reorder: string = "Drag the options on the container on the right in the correct order";
+    Reorder: string = "Move the options to the solution container. Order is important!";
     Explanation: string = "Explanation";
     TimesUp: string = "Time's up!";
     BookmarkAnswer: string = "Review this question later";

@@ -252,17 +252,26 @@ input[type=checkbox]:checked + label::before {
 /* reorder */
 
 .drag-content {
-    width: 70%;
-    min-width: 450px;
     margin: auto;
     text-align: center;
     margin-top: 40px;
 }
 
+@media (min-width: 768px) {
+    .drag-content {
+        width: 70%;
+    }
+}
+
 .drag-box {
     min-width: 150px;
-    max-width: 420px;
-    min-height: 440px;
+}
+
+
+@media (min-width: 768px) {
+    .drag-content {
+        min-height: 440px;
+    }
 }
 
 h6 {
@@ -350,8 +359,13 @@ footer {
     width: 100%;
     position: fixed;
     bottom: 0;
-    padding: 20px;
+    padding: 18px;
     text-align: center;
+}
+@media (max-width: 768px) {
+    footer {
+        padding: 5px;
+    }
 }
 
 .pagination {
@@ -443,12 +457,7 @@ footer {
     display: table;
 }
 
-@media (max-width: 500px) {
-    .module-questions .summary, .module-questions .question, .module-exams .content {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-}
+
 
 
 .module-questions .question {
@@ -461,13 +470,32 @@ footer {
     padding-right: 18px;
     overflow-y: auto;
 }
+
+@media (max-width: 768px) {
+    .module-questions .question { 
+        bottom: 54px;
+    }
+}
+
 .module-exams .content {
     position: fixed;
-    top: 40px;
+    top: 35px;
     bottom: 0;
     padding-left: 18px;
     padding-right: 18px;
     overflow-y: auto;
+}
+@media (min-width: 768px) {
+    .module-exams .content {
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .module-questions .summary, .module-questions .question, .module-exams .content {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
 
 .examlist li {

@@ -1,7 +1,7 @@
 ﻿<h5 data-bind="locale: 'Reorder'"></h5>
 <div class="row drag-content">
 
-  <div class="col-xs-6">
+  <div class="col-sm-6">
     <div class="drag-source drag-box well" data-bind="event: {drop: RemoveOptionByDragging, dragover: SetPlaceholder, dragend: EndDrag, dragleave: LeaveDrag, dragEnter: EnterDrag, }">
       <h5 data-bind="locale: 'AvailableOptions'"></h5>
       <div class="drag-parent" data-bind="foreach: AvailableOptions">
@@ -11,7 +11,7 @@
       </div></div>
   </div>
 
-  <div class="col-xs-6">
+  <div class="col-sm-6">
     <div class="drag-target drag-box well" data-bind="event: {drop: ChooseOptionByDragging, dragover: SetPlaceholder, dragend: EndDrag, dragleave: LeaveDrag, dragEnter: EnterDrag }">
       <h5 data-bind="css: {'text-danger': IsInvalidAnswer, 'text-success': IsCompleteAnswer}"><span class="glyphicon glyphicon-alert" data-bind="visible: IsInvalidAnswer" style="margin-right:5px"></span><span data-bind="locale: 'DragOptions'"></span> <span data-bind="text: Question.QuestionData.Choose"></span> <span data-bind="locale: 'Options'"></span></h5>
       <div class="drag-parent" data-bind="foreach: ChosenOptions">
