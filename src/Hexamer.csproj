@@ -3,11 +3,11 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
     <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Templates\" />
-    <Folder Include="wwwroot\" />
+    <Content Include="Data\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="wwwroot\**\*" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
