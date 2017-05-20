@@ -1,14 +1,13 @@
-﻿
-    <header class="summary">
-        <div class="pull-left">
-            <h2 data-bind="if: Question"><span data-bind="locale: 'Question'"></span> <span data-bind="text: Question().Number"></span> <span data-bind="locale: 'Of'"></span> <span data-bind="text: Exam().Questions"></span></h2>
-            <input type="checkbox" class="bookmark-checkbox" id="bookmark" name="bookmark" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="bookmark" for="bookmark" data-bind="locale: 'BookmarkAnswer'"></label>
-        </div>
-        <div class="pull-right" data-bind="if: RemainingTime">
-            <h2><span data-bind="visible: HasExpirationTime, locale: 'RemainingTime'"></span> <time data-bind="text: RemainingTime, css: {'running-out': TimeIsRunningOut}"></time></h2>
-            <h4>Circa 0:00 a domanda</h4>
-        </div>
-    </header>
+﻿<header class="summary">
+    <div class="pull-left">
+        <h2 data-bind="if: Question"><span data-bind="locale: 'Question'"></span> <span data-bind="text: Question().Number"></span> <span data-bind="locale: 'Of'"></span> <span data-bind="text: Exam().Questions"></span></h2>
+        <input type="checkbox" class="bookmark-checkbox" id="bookmark" name="bookmark" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="bookmark" for="bookmark" data-bind="locale: 'BookmarkAnswer'"></label>
+    </div>
+    <div class="pull-right" data-bind="if: RemainingTime">
+        <h2><span data-bind="visible: HasExpirationTime, locale: 'RemainingTime'"></span> <time data-bind="text: RemainingTime, css: {'running-out': TimeIsRunningOut}"></time></h2>
+        <h4>Circa 0:00 a domanda</h4>
+    </div>
+</header>
 
 <section class="question" data-bind="with: Question">
     <p data-bind="html: Text"></p>
@@ -23,12 +22,12 @@
     <div class="btn-group pagination text-center" role="group">
         <button type="button" class="btn btn-default" data-bind="click: PreviousQuestion"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span>&nbsp;</span></button>
         <button type="button" class="btn btn-default" data-bind="click: ToggleIndicators"><span data-bind="text: Question() ? Question().Number : ''"></span> <span data-bind="locale: 'Of'"></span> <span data-bind="text: Exam().Questions"></span></button>
-        <button type="button" class="btn" data-bind="click: NextQuestion, css: {'btn-success': IsLastQuestion(), 'btn-primary': !IsLastQuestion()}"><span class="glyphicon" data-bind="css: {'glyphicon-flag': IsLastQuestion(), 'glyphicon-menu-right': !IsLastQuestion()}" aria-hidden="true"></span> <span data-bind="locale: IsLastQuestion() ? 'Finish' : 'Next'"></span></button>
+        <button type="button" class="btn" data-bind="click: NextQuestion, css: {'btn-success': IsLastQuestion(), 'btn-primary': !IsLastQuestion()}"><span class="glyphicon" data-bind="css: {'glyphicon-flag': IsLastQuestion(), 'glyphicon-menu-right': !IsLastQuestion()}" aria-hidden="true"></span><span style="margin-left: 8px;" class="hidden-xs" data-bind="locale: IsLastQuestion() ? 'Finish' : 'Next'"></span></button>
         <div class="popover fade top in" role="tooltip" data-bind="visible: IndicatorsVisible" style="display:none;"><div class="arrow" style="left: 50%;"></div><h3 class="popover-title" style="display: none;"></h3><div class="popover-content">
         <div class="questions-index" data-bind="foreach: QuestionIndicators">
             <button class="btn btn-xs" type="button" data-bind="click: $parent.NavigateToQuestion, text: Number, css: {'btn-primary': IsAnswered, 'btn-default': !IsAnswered(), 'bookmarked': IsBookmarked, 'current': $parent.Question() && Number == $parent.Question().Number}"></button>
         </div>
     </div></div>
     </div>
-    <button data-bind="visible: Question() && Question().CanShowAnswer, locale: Question() && Question().AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer', click: ToggleAnswer" type="button" class="btn btn-default pull-left reveal-answer"></button>
+    <button data-bind="visible: Question() && Question().CanShowAnswer, click: ToggleAnswer" type="button" class="btn btn-default pull-left reveal-answer"><span class="glyphicon" data-bind="css: {'glyphicon-eye-close': Question() && Question().AnswerRevealed(), 'glyphicon-eye-open': !Question() || !Question().AnswerRevealed()}"></span><span style="margin-left: 8px;" class="hidden-xs" data-bind="locale: Question() && Question().AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer'"></span></button>
 </footer>

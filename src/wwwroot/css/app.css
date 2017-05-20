@@ -193,8 +193,15 @@ p {
 .multiple-choice-answers label.correct {
     border-color: orange;
 }
+@media (min-width: 768px) {
 .reveal-answer {
-    min-width: 150px;
+    min-width: 160px;
+}
+}
+
+.reveal-answer .glyphicon {
+    position:relative;
+    top: 3px !important;
 }
 
 .ui-block {
@@ -431,7 +438,7 @@ footer {
 .module-questions .summary {
     width: 100%;
     position: fixed;
-    top: 40px;
+    top: 35px;
     padding:18px;
     display: table;
 }
@@ -439,7 +446,7 @@ footer {
 
 .module-questions .question {
     position: fixed;
-    top: 105px;
+    top: 115px;
     bottom: 70px;
     left:0;
     right:0;
