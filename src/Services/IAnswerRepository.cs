@@ -13,5 +13,6 @@ namespace Hexamer.Services
         Task<bool> UpdateAnswer(string username, string examId, int questionNumber, string answerProvided, double scoreAwarded, bool isCorrectAnswer, bool isCompleteAnswer);
         Task<bool> UpdateDisplayed(string username, string examId, int questionNumber);
         Task<bool> UpdateBookmark(string username, string examId, int questionNumber, bool bookmarked);
+        Task<bool> Reset(string username, string examId);
     }
 }

@@ -123,9 +123,20 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
             this.OpenExam = function (exam) {
                 _this.navigationContext.Layout.Navigate(Page_2.Page.Questions, exam.Id + "/" + exam.LastQuestionDisplayed);
             };
-            this.ResetExam = function (exam) {
-                alert("reset");
-            };
+            this.ResetExam = function (exam) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (!confirm("Vuoi davvero ricominciare da capo?")) return [3 /*break*/, 2];
+                            return [4 /*yield*/, this.navigationContext.Layout.Post("/api/Exams/" + exam.Id, null)];
+                        case 1:
+                            _a.sent();
+                            window.location.reload();
+                            _a.label = 2;
+                        case 2: return [2 /*return*/];
+                    }
+                });
+            }); };
             this.Exams = ko.observableArray();
             this.navigationContext.Layout.IsBusy(true);
             this.GetExams();

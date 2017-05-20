@@ -30,8 +30,11 @@ class ExamsViewModel {
         this.navigationContext.Layout.Navigate(Page.Questions, `${exam.Id}/${exam.LastQuestionDisplayed}`);
     }
 
-    public ResetExam = (exam: Exam) : void => {
-        alert("reset");
+    public ResetExam = async (exam: Exam) : Promise<void> => {
+        if (confirm("Vuoi davvero ricominciare da capo?")) {
+            await this.navigationContext.Layout.Post<void, void>(`/api/Exams/${exam.Id}`, null);
+            window.location.reload();
+        }
     }
 }
 export function initialize(navigationContext: NavigationContext) {

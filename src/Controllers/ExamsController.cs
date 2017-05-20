@@ -109,5 +109,16 @@ namespace Hexamer.Controllers
             await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
             return Ok(result);
         }
+
+        [HttpPost("{examId}")]
+        public async Task<IActionResult> Reset(string examId)
+        {
+            var exam = examRepository.GetById(examId, Request.GetLanguage());
+            if (exam == null)
+                return NotFound("Exam");
+
+            await answerRepository.Reset(User.Identity.Name, examId);
+            return Ok();
+        }
     }
 }

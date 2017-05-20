@@ -81,6 +81,20 @@ namespace Hexamer.Services
             }
         }
 
+        public async Task<bool> Reset(string username, string exam)
+        {
+            using (var conn = await GetDbConnectionForUser(username))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Answers WHERE Exam=@exam";
+                    cmd.AddParameter("exam", exam);
+                    var rowsAffected = await cmd.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
         public async Task<bool> UpdateDisplayed(string username, string examId, int questionNumber)
         {
             using (var conn = await GetDbConnectionForUser(username))
