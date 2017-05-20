@@ -62,7 +62,7 @@ namespace Hexamer.Model.Results
                 return;
             }
 
-            if ((DateTime.Now - lastAnswered.Value).TotalSeconds <= 30) {
+            if ((DateTime.Now - lastAnswered.Value).TotalMinutes <= 5) {
                 IsNewlyCompleted = true;
             }
 

@@ -133,7 +133,7 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
         }
         ExamsViewModel.prototype.GetExams = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var exams;
+                var exams, showConfetti;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, this.navigationContext.Layout.Get('/api/Exams')];
@@ -141,9 +141,12 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
                             exams = _a.sent();
                             this.Exams(exams);
                             this.navigationContext.Layout.IsBusy(false);
-                            setTimeout(function () {
-                                window["confettiful"] = new window["Confettiful"](document.querySelector('#confetti'));
-                            }, 500);
+                            showConfetti = exams.filter(function (exam) { return exam.IsNewlyCompleted && exam.Passed === true; });
+                            if (showConfetti.length > 0) {
+                                setTimeout(function () {
+                                    window["confettiful"] = new window["Confettiful"](document.querySelector('#confetti'));
+                                }, 500);
+                            }
                             return [2 /*return*/];
                     }
                 });

@@ -18,9 +18,12 @@ class ExamsViewModel {
         let exams = await this.navigationContext.Layout.Get<Exam[]>('/api/Exams');
         this.Exams(exams);
         this.navigationContext.Layout.IsBusy(false);
-        setTimeout(() => {
-            window["confettiful"] = new window["Confettiful"](document.querySelector('#confetti'));
-        }, 500);
+        let showConfetti = exams.filter(exam => exam.IsNewlyCompleted && exam.Passed === true);
+        if (showConfetti.length > 0) {
+            setTimeout(() => {
+                window["confettiful"] = new window["Confettiful"](document.querySelector('#confetti'));
+            }, 500);
+        }
     }
 
     public OpenExam = (exam: Exam) : void => {

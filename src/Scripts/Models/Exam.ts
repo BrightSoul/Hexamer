@@ -16,4 +16,6 @@ export class Exam {
     public CanShowAnswer: boolean;
     public Status: ExamStatus;
     public Score?: number;
+    public IsNewlyCompleted: boolean;
+    public Passed: boolean;
 }

@@ -1,0 +1,34 @@
+{
+  "name": "Hexamer",
+  "short_name": "Hexamer",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ae2589",
+  "description": "Exam evaluation app for students",
+  "icons": [{
+    "src": "icon/hexamer48.png",
+    "sizes": "48x48",
+    "type": "image/png"
+  }, {
+    "src": "icon/hexamer72.png",
+    "sizes": "72x72",
+    "type": "image/png"
+  }, {
+    "src": "icon/hexamer96.png",
+    "sizes": "96x96",
+    "type": "image/png"
+  }, {
+    "src": "icon/hexamer144.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }, {
+    "src": "icon/hexamer168.png",
+    "sizes": "168x168",
+    "type": "image/png"
+  }, {
+    "src": "icon/hexamer192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }]
+}
