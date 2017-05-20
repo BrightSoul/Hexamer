@@ -1,4 +1,5 @@
-﻿<header class="summary">
+﻿<div class="questions-container">
+<header class="summary">
     <div class="pull-left">
         <h2 data-bind="if: Question"><span data-bind="locale: 'Question'"></span> <span data-bind="text: Question().Number"></span> <span data-bind="locale: 'Of'"></span> <span data-bind="text: Exam().Questions"></span></h2>
         <input type="checkbox" class="bookmark-checkbox" id="bookmark" name="bookmark" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="bookmark" for="bookmark" data-bind="locale: 'BookmarkAnswer'"></label>
@@ -31,3 +32,4 @@
     </div>
     <button data-bind="visible: Question() && Question().CanShowAnswer, click: ToggleAnswer" type="button" class="btn btn-default pull-left reveal-answer"><span class="glyphicon" data-bind="css: {'glyphicon-eye-close': Question() && Question().AnswerRevealed(), 'glyphicon-eye-open': !Question() || !Question().AnswerRevealed()}"></span><span style="margin-left: 8px;" class="hidden-xs" data-bind="locale: Question() && Question().AnswerRevealed() ? 'HideAnswer' : 'RevealAnswer'"></span></button>
 </footer>
+</div>

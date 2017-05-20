@@ -126,6 +126,10 @@ class QuestionsViewModel {
         this.IsCurrentQuestionBookmarked(question.IsBookmarked);
         this.Question(question);
         this.navigationContext.Layout.IsBusy(false);
+
+        window["jQuery"](".questions-container").off("swipeleft").on("swipeleft", () => { this.PreviousQuestion(); });
+        window["jQuery"](".questions-container").off("swiperight").on("swiperight", () => { this.NextQuestion(); });
+
     }
 
     private UpdateBookmark = async (): Promise<void> => {

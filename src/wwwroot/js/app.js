@@ -514,6 +514,7 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                 _this.NavigateToQuestionNumber(question.Number - 1);
             };
             this.GetExam = function (examId, questionNumber) { return __awaiter(_this, void 0, void 0, function () {
+                var _this = this;
                 var exam, questionIndicators, i, indicator, question;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
@@ -545,6 +546,8 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             this.IsCurrentQuestionBookmarked(question.IsBookmarked);
                             this.Question(question);
                             this.navigationContext.Layout.IsBusy(false);
+                            window["jQuery"](".questions-container").off("swipeleft").on("swipeleft", function () { _this.PreviousQuestion(); });
+                            window["jQuery"](".questions-container").off("swiperight").on("swiperight", function () { _this.NextQuestion(); });
                             return [2 /*return*/];
                     }
                 });

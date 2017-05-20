@@ -484,12 +484,8 @@ footer {
     bottom: 0;
     padding-left: 18px;
     padding-right: 18px;
+    padding-top: 30px;
     overflow-y: auto;
-}
-@media (min-width: 768px) {
-    .module-exams .content {
-        padding-top: 30px;
-    }
 }
 
 @media (max-width: 768px) {
