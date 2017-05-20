@@ -452,6 +452,12 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
             this.navigationContext = navigationContext;
             this.ToggleIndicators = function () {
                 _this.IndicatorsVisible(!_this.IndicatorsVisible());
+                if (_this.IndicatorsVisible()) {
+                    setTimeout(function () {
+                        var popover = window["jQuery"](".module-questions .popover");
+                        popover.css("top", (-(popover.height() + 10)) + "px");
+                    }, 10);
+                }
             };
             this.ToggleAnswer = function () {
                 _this.Question().AnswerRevealed(!_this.Question().AnswerRevealed());
@@ -852,31 +858,14 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 window["jQuery"]('.drag-content [data-toggle="tooltip"]').tooltip(newValue ? 'show' : 'hide');
             };
             this.ChooseOption = function (option) {
-                _this.AvailableOptions.remove(option);
-                if (isNaN(_this.dropIndex) || (_this.dropIndex >= _this.ChosenOptions().length)) {
-                    _this.ChosenOptions.push(option);
-                }
-                else {
-                    _this.ChosenOptions.splice(_this.dropIndex, 0, option);
-                }
-                _this.UpdateAnswer();
-                _this.dropIndex = Number.NaN;
+                _this.MoveOption(_this.AvailableOptions, _this.ChosenOptions, option.Id, _this.dropIndex);
             };
             this.RemoveOption = function (option) {
-                _this.ChosenOptions.remove(option);
-                if (isNaN(_this.dropIndex) || (_this.dropIndex >= _this.AvailableOptions().length)) {
-                    _this.AvailableOptions.push(option);
-                }
-                else {
-                    _this.AvailableOptions.splice(_this.dropIndex, 0, option);
-                }
-                _this.UpdateAnswer();
-                _this.dropIndex = Number.NaN;
+                _this.MoveOption(_this.ChosenOptions, _this.AvailableOptions, option.Id, _this.dropIndex);
             };
             this.StartDrag = function (vm, event) {
-                console.log("startdrag");
                 event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
-                event.originalEvent.currentTarget.classList.add("dragging");
+                event.originalEvent.currentTarget.parentNode.parentNode.classList.add("dragging");
                 return true;
             };
             this.SetPlaceholder = function (vm, event) {
@@ -905,23 +894,17 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
             };
             this.EndDrag = function (vm, event) {
                 event.currentTarget.classList.remove("dragging");
-                event.currentTarget.classList.remove("start");
-                event.currentTarget.classList.remove("above");
-                event.currentTarget.classList.remove("end");
-                event.currentTarget.classList.remove("below");
+            };
+            this.LeaveDrag = function (vm, event) {
+                if (!event.toElement.classList.contains("btn"))
+                    event.currentTarget.classList.remove("dragging");
             };
             this.EnterDrag = function (vm, event) {
-                console.log("enterdrag");
                 event.currentTarget.classList.add('dragging');
             };
             this.ChooseOptionByDragging = function (vm, event) {
                 var optionId = event.originalEvent.dataTransfer.getData("text");
-                var option = _this.AvailableOptions().filter(function (opt) { return opt.Id == optionId; });
-                if (option.length == 0) {
-                    console.log("Option not found!");
-                    return;
-                }
-                _this.ChooseOption(option[0]);
+                _this.ChooseOption({ Id: optionId });
                 if (event.stopPropagation)
                     event.stopPropagation();
                 event.target.classList.remove('dragging');
@@ -929,12 +912,7 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
             };
             this.RemoveOptionByDragging = function (vm, event) {
                 var optionId = event.originalEvent.dataTransfer.getData("text");
-                var option = _this.ChosenOptions().filter(function (opt) { return opt.Id == optionId; });
-                if (option.length == 0) {
-                    console.log("Option not found!");
-                    return;
-                }
-                _this.RemoveOption(option[0]);
+                _this.RemoveOption({ Id: optionId });
                 if (event.stopPropagation)
                     event.stopPropagation();
                 event.target.classList.remove('dragging');
@@ -946,6 +924,7 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 _this.Question.IsDirty = true;
                 _this.IsCompleteAnswer(_this.Question.QuestionData.Choose == chosenOptions.length);
                 _this.IsInvalidAnswer(_this.Question.QuestionData.Choose < chosenOptions.length);
+                _this.dropIndex = null;
             };
             this.Question = question;
             question.AnswerRevealed.subscribe(this.UpdateTooltips);
@@ -987,6 +966,45 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
             this.IsCompleteAnswer = ko.observable(question.QuestionData.Choose == chosenIds.length);
             this.IsInvalidAnswer = ko.observable(question.QuestionData.Choose < chosenIds.length);
         }
+        ReorderViewModel.prototype.FindOptionById = function (options, optionId) {
+            var option = options.filter(function (opt) { return opt.Id == optionId; });
+            if (option.length > 0) {
+                return option[0];
+            }
+            else {
+                return null;
+            }
+        };
+        ReorderViewModel.prototype.MoveBetweenCollections = function (from, to, option, index) {
+            from.remove(option);
+            to.splice(index, 0, option);
+        };
+        ReorderViewModel.prototype.MoveWithinCollection = function (collection, option, index) {
+            index = index || collection.length;
+            var currentIndex = collection().indexOf(option);
+            if (index > currentIndex)
+                index--;
+            collection.remove(option);
+            collection.splice(index, 0, option);
+        };
+        ReorderViewModel.prototype.MoveOption = function (from, to, optionId, index) {
+            var option = this.FindOptionById(from(), optionId);
+            if (option) {
+                this.MoveBetweenCollections(from, to, option, index || to().length);
+            }
+            else {
+                var option_1 = this.FindOptionById(to(), optionId);
+                if (option_1) {
+                    this.MoveWithinCollection(to, option_1, index || to().length);
+                }
+                else {
+                    console.log("Option not found");
+                    return;
+                }
+            }
+            this.UpdateAnswer();
+        };
+        ;
         return ReorderViewModel;
     }());
     function initialize(question) {

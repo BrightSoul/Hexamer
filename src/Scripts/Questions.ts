@@ -48,6 +48,12 @@ class QuestionsViewModel {
 
     public ToggleIndicators = () : void => {
         this.IndicatorsVisible(!this.IndicatorsVisible());
+        if (this.IndicatorsVisible()) {
+            setTimeout(() => {
+                let popover = window["jQuery"](".module-questions .popover");
+                popover.css("top", (-(popover.height()+10))+"px");
+            }, 10);
+        }
     }
 
     public ToggleAnswer = () : void => {

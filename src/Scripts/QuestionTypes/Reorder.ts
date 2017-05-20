@@ -29,7 +29,7 @@ class ReorderViewModel {
         for (let i: number = 0; i < chosenIds.length; i++) {
             let options = question.QuestionData.Options.filter(q => q.Id.toLowerCase() == chosenIds[i]);
             if (options.length == 0) {
-                console.log("Missing an option!")
+                console.log("Missing an option!");
             } else {
                 chosenOptions.push(options[0]);
             }
@@ -53,32 +53,54 @@ class ReorderViewModel {
         window["jQuery"]('.drag-content [data-toggle="tooltip"]').tooltip(newValue ? 'show' : 'hide');
     };
 
-    public ChooseOption = (option) => {
-        this.AvailableOptions.remove(option);
-        if (isNaN(this.dropIndex) || (this.dropIndex >= this.ChosenOptions().length)) { 
-            this.ChosenOptions.push(option);
+    private FindOptionById(options: any[], optionId: string) : any {
+        let option = options.filter(opt => opt.Id == optionId);
+        if (option.length > 0) {
+            return option[0];
         } else {
-            this.ChosenOptions.splice(this.dropIndex, 0, option);
+            return null;
         }
-        
+    }
+    private MoveBetweenCollections(from: KnockoutObservableArray<any>, to: KnockoutObservableArray<any>, option: any, index: number) {
+        from.remove(option);
+        to.splice(index, 0, option);
+    }
+    private MoveWithinCollection(collection: KnockoutObservableArray<any>, option: any, index: number) {
+        index = index || collection.length;
+        let currentIndex = collection().indexOf(option);
+        if (index > currentIndex)
+            index--;
+
+        collection.remove(option);
+        collection.splice(index, 0, option);
+    }
+
+    private MoveOption(from: KnockoutObservableArray<any>, to: KnockoutObservableArray<any>, optionId: string, index: number) {
+        let option = this.FindOptionById(from(), optionId);
+        if (option) {
+            this.MoveBetweenCollections(from, to, option, index || to().length);
+        } else {
+            let option = this.FindOptionById(to(), optionId);
+            if (option) {
+                this.MoveWithinCollection(to, option, index || to().length);
+            } else {
+                console.log("Option not found");
+                return;
+            }
+        }
         this.UpdateAnswer();
-        this.dropIndex = Number.NaN;
     };
-    public RemoveOption = (option) => {
-        this.ChosenOptions.remove(option);
-        if (isNaN(this.dropIndex) || (this.dropIndex >= this.AvailableOptions().length)) {
-            this.AvailableOptions.push(option);
-        } else {
-            this.AvailableOptions.splice(this.dropIndex, 0, option);
-        }
-        this.UpdateAnswer();
-        this.dropIndex = Number.NaN;
+
+    public ChooseOption = (option: any) => {
+        this.MoveOption(this.AvailableOptions, this.ChosenOptions, option.Id, this.dropIndex);
+    };
+    public RemoveOption = (option: any) => {
+        this.MoveOption(this.ChosenOptions, this.AvailableOptions, option.Id, this.dropIndex);
     };
 
     public StartDrag = (vm, event) => {
-        console.log("startdrag");
         event.originalEvent.dataTransfer.setData('text/plain', vm.Id);
-        event.originalEvent.currentTarget.classList.add("dragging");
+        event.originalEvent.currentTarget.parentNode.parentNode.classList.add("dragging");
         return true;
     };
 
@@ -109,25 +131,20 @@ class ReorderViewModel {
     };
     public EndDrag = (vm, event) => {
         event.currentTarget.classList.remove("dragging");
-        event.currentTarget.classList.remove("start");
-        event.currentTarget.classList.remove("above");
-        event.currentTarget.classList.remove("end");
-        event.currentTarget.classList.remove("below");
+    };
+
+    public LeaveDrag = (vm, event) => {
+        if (!event.toElement.classList.contains("btn"))
+            event.currentTarget.classList.remove("dragging");
     };
 
     public EnterDrag = (vm, event) => {
-        console.log("enterdrag");
         event.currentTarget.classList.add('dragging');
     };
 
     public ChooseOptionByDragging = (vm,event) => {
         let optionId = event.originalEvent.dataTransfer.getData("text");
-        let option = this.AvailableOptions().filter(opt => opt.Id == optionId);
-        if (option.length == 0)  {
-            console.log("Option not found!");
-            return;
-        } 
-        this.ChooseOption(option[0]);
+        this.ChooseOption({Id: optionId});
         if (event.stopPropagation) event.stopPropagation();
         event.target.classList.remove('dragging');
         return false;
@@ -136,12 +153,7 @@ class ReorderViewModel {
 
     public RemoveOptionByDragging = (vm,event) => {
         let optionId = event.originalEvent.dataTransfer.getData("text");
-        let option = this.ChosenOptions().filter(opt => opt.Id == optionId);
-        if (option.length == 0)  {
-            console.log("Option not found!");
-            return;
-        } 
-        this.RemoveOption(option[0]);
+        this.RemoveOption({Id: optionId});
         if (event.stopPropagation) event.stopPropagation();
         event.target.classList.remove('dragging');
         return false;
@@ -153,6 +165,7 @@ class ReorderViewModel {
         this.Question.IsDirty = true;
         this.IsCompleteAnswer(this.Question.QuestionData.Choose == chosenOptions.length);
         this.IsInvalidAnswer(this.Question.QuestionData.Choose < chosenOptions.length);
+        this.dropIndex = null;
     };
 }
 export function initialize(question: Question) {
