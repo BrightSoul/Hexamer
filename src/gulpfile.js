@@ -35,6 +35,7 @@ gulp.task('libs', function () {
     return streamqueue({ objectMode: true },
         gulp.src('node_modules/jquery/dist/jquery.min.js').pipe(rename('jquery.js')),
         gulp.src([
+            'node_modules/jquery.event.swipe/js/jquery.event.swipe.js',
             'node_modules/requirejs/require.js',
             'Scripts/Config/require-config.js',
         ]),

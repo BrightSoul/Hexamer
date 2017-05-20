@@ -546,8 +546,8 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             this.IsCurrentQuestionBookmarked(question.IsBookmarked);
                             this.Question(question);
                             this.navigationContext.Layout.IsBusy(false);
-                            window["jQuery"](".questions-container").off("swipeleft").on("swipeleft", function () { _this.PreviousQuestion(); });
-                            window["jQuery"](".questions-container").off("swiperight").on("swiperight", function () { _this.NextQuestion(); });
+                            window["jQuery"](".question").off("swipeleft").on("swipeleft", function () { _this.PreviousQuestion(); });
+                            window["jQuery"](".question").off("swiperight").on("swiperight", function () { _this.NextQuestion(); });
                             return [2 /*return*/];
                     }
                 });

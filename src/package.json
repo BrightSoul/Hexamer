@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "jquery": "1.12.4",
+    "jquery.event.swipe": "0.5.4",
     "axios": "0.16.1",
     "knockout": "3.4.2",
     "knockout-amd-helpers": "1.0.0",
