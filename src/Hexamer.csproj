@@ -6,6 +6,7 @@
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="*.json" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="Data\**\*" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="wwwroot\**\*" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
