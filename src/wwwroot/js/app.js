@@ -141,6 +141,9 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
                             exams = _a.sent();
                             this.Exams(exams);
                             this.navigationContext.Layout.IsBusy(false);
+                            setTimeout(function () {
+                                window["confettiful"] = new window["Confettiful"](document.querySelector('#confetti'));
+                            }, 500);
                             return [2 /*return*/];
                     }
                 });

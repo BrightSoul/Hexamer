@@ -45,11 +45,13 @@
     <div data-bind="module: {name: NavigationContext().Page, data: NavigationContext()}"></div>
 </div>
     <script src="/js/libs.js"></script>
+    <script src="/js/confetti.js"></script>
     <script>
         require(['Layout', 'knockout', 'text', 'domReady', 'knockout-amd-helpers'], function (module, ko) {
             ko.applyBindings(new module.LayoutViewModel());
         });
     </script>
     <div class="ui-block" data-bind="visible: IsBusy"></div>
+    <div id="confetti"></div>
 </body>
 </html>
