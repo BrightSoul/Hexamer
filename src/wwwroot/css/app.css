@@ -827,7 +827,8 @@ hr {
     #username {display:none;}
 }
 .form-control {
-    display: inline;
+    display: inline-block;
+    width: auto;
 }
 .tooltip-inner {
     background-color:darkorange;
