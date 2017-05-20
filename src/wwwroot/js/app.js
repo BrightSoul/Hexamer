@@ -129,6 +129,7 @@ define("Exams", ["require", "exports", "knockout", "Models/Page"], function (req
             this.Exams = ko.observableArray();
             this.navigationContext.Layout.IsBusy(true);
             this.GetExams();
+            navigationContext.Layout.SetTitle("Homepage");
         }
         ExamsViewModel.prototype.GetExams = function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -660,7 +661,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.ApplicationName = "Exams";
             this.LanguageName = "Italiano";
             this.Welcome = "Benvenuto!";
-            this.WelcomeMessage = "Per accedere all'esame, effettua il login con Slack premendo il bottone qui sotto.";
+            this.WelcomeMessage = "Per accedere all'esame, effettua il login premendo il bottone qui sotto.";
             this.BeginExam = "Inizia";
             this.ContinueExam = "Continua";
             this.ReviewExam = "Ricontrolla";
@@ -680,7 +681,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.HideAnswer = "Nascondi risposta";
             this.RemainingTime = "Tempo rimanente";
             this.AvailableOptions = "Scelte disponibili";
-            this.DragOptions = "Trascina qui";
+            this.DragOptions = "Sposta qui";
             this.TimesUp = "Tempo scaduto!";
             this.Choose = "Scegli";
             this.Answers = "risposte";
@@ -690,7 +691,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.ClickImage = "Clicca sull'immagine nel punto corretto";
             this.Reorder = "Sposta i blocchi nel contenitore della soluzione. L'ordine è importante!";
             this.Explanation = "Spiegazione";
-            this.BookmarkAnswer = "Ricontrolla questa domanda più tardi";
+            this.BookmarkAnswer = "Ricontrolla la domanda più tardi";
             this.AverageTimePerAnswer = "circa per domanda";
             this.BackToHome = "Torna alla home";
             this.BackToHomeConfirmation = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";
@@ -790,7 +791,7 @@ define("QuestionTypes/CodeCompletion", ["require", "exports", "knockout"], funct
                 var block = question.QuestionData.Blocks[i];
                 var options = block.Options.map(function (option) { return '<option value="' + option.Id + '"' + (answerProvided.indexOf((block.Id + option.Id).toLowerCase()) > -1 ? ' selected="selected"' : '') + '>' + option.Text + '</option>'; });
                 var correctOption = block.Options.filter(function (option) { return correctOptions.indexOf((block.Id + option.Id).toLowerCase()) > -1; });
-                var dropDownList = '<select class="form-control" name="block' + block.Id + '" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="manual" data-title="' + (correctOption.length > 0 ? correctOption[0].Text : '').split('"').join('&quot;') + '"><option></option>' + options.join('') + '</select>';
+                var dropDownList = '<select class="form-control" name="block' + block.Id + '" data-html="true" data-placement="top" data-toggle="tooltip" data-animation="false" data-trigger="manual" data-title="' + (correctOption.length > 0 ? correctOption[0].Text : '').split('"').join('&quot;') + '"><option></option>' + options.join('') + '</select>';
                 codeText = codeText.replace('{' + block.Id + '}', dropDownList);
             };
             //Do some replacements
@@ -874,7 +875,7 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 event.currentTarget.classList.add('dragging');
                 event.originalEvent.dataTransfer.dropEffect = 'move';
                 var div = event.currentTarget.lastElementChild;
-                var elements = div.getElementsByTagName("div");
+                var elements = div.getElementsByClassName("drag-wrapper");
                 var y = Math.round((event.offsetY - 60) / 50);
                 y = Math.max(Math.min(y, elements.length), 0);
                 _this.dropIndex = y;
@@ -889,6 +890,9 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                     else if (i == y - 1) {
                         elements[i].classList.add(y == elements.length ? "end" : "below");
                     }
+                }
+                if (_this.Question.AnswerRevealed()) {
+                    _this.UpdateTooltips(true);
                 }
                 return false;
             };
@@ -925,6 +929,9 @@ define("QuestionTypes/Reorder", ["require", "exports", "knockout"], function (re
                 _this.IsCompleteAnswer(_this.Question.QuestionData.Choose == chosenOptions.length);
                 _this.IsInvalidAnswer(_this.Question.QuestionData.Choose < chosenOptions.length);
                 _this.dropIndex = null;
+                if (_this.Question.AnswerRevealed()) {
+                    setTimeout(function () { return _this.UpdateTooltips(true); }, 20);
+                }
             };
             this.Question = question;
             question.AnswerRevealed.subscribe(this.UpdateTooltips);

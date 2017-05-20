@@ -72,17 +72,17 @@ namespace Hexamer.Model.Results
             } else {
                 normalizedScore = Math.Floor(normalizedScore);
             }
-            Score = normalizedScore;
-            if (Score > MaximumScore) {
+            if (normalizedScore > MaximumScore) {
                 Rating = "excellent";
-            } else if (Score == MaximumScore) {
+            } else if (normalizedScore == MaximumScore) {
                 Rating = "welldone";
-            } else if (Score < MinimumScore) {
+            } else if (normalizedScore < MinimumScore) {
                 Rating = "notpassed";
             } else {
                 Rating = "passed";
             }
-            Passed = Score >= MinimumScore;
+            Passed = normalizedScore >= MinimumScore;
+            Score = Math.Min(normalizedScore, MaximumScore);
         }
     }
 }

@@ -112,7 +112,7 @@ class ReorderViewModel {
         event.currentTarget.classList.add('dragging'); 
         event.originalEvent.dataTransfer.dropEffect = 'move'
         let div = <HTMLDivElement> event.currentTarget.lastElementChild;
-        let elements = div.getElementsByTagName("div");
+        let elements = div.getElementsByClassName("drag-wrapper");
         let y = Math.round((event.offsetY-60) /50);
         y = Math.max(Math.min(y, elements.length), 0);
         this.dropIndex = y;
@@ -126,6 +126,9 @@ class ReorderViewModel {
             } else if (i == y-1) {
                 elements[i].classList.add(y == elements.length ? "end" : "below");
             }
+        }
+        if (this.Question.AnswerRevealed()) {
+            this.UpdateTooltips(true);
         }
         return false;
     };
@@ -166,6 +169,9 @@ class ReorderViewModel {
         this.IsCompleteAnswer(this.Question.QuestionData.Choose == chosenOptions.length);
         this.IsInvalidAnswer(this.Question.QuestionData.Choose < chosenOptions.length);
         this.dropIndex = null;
+        if (this.Question.AnswerRevealed()) {
+            setTimeout(() => this.UpdateTooltips(true), 20);
+        }
     };
 }
 export function initialize(question: Question) {

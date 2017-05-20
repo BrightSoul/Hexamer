@@ -11,6 +11,7 @@ class ExamsViewModel {
         this.Exams = ko.observableArray<Exam>();
         this.navigationContext.Layout.IsBusy(true);
         this.GetExams();
+        navigationContext.Layout.SetTitle("Homepage");
     }
 
     private async GetExams() : Promise<void> {

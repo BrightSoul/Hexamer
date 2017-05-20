@@ -13,8 +13,8 @@
           <p>Disponibile dal 10/17/2017 ore 19:30</p>
         </header>
         <section data-bind="attr: {class: 'exam-mark ' + Rating + ' ' + (IsNewlyCompleted ? 'animated' : '')}">
-          <span class="exam-mark-value" data-bind="text: Score || '--'"><span>
-          <span class="exam-mark-comment" data-bind="locale: 'CumLaude'"></span>
+          <span class="exam-mark-value" data-bind="text: Score || '--'"></span>
+          <span class="exam-mark-comment" data-bind="locale: 'CumLaude', visible: Rating == 'excellent'"></span>
         </section>
         <footer>
           <button type="button" class="btn btn-link btn-block" data-bind="visible: CanResetExam, locale: 'ResetExam', click:$parent.ResetExam"></button>

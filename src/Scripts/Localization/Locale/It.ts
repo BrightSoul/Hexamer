@@ -3,7 +3,7 @@ export class It implements ILocale {
     ApplicationName: string = "Exams";
     LanguageName: string = "Italiano";
     Welcome: string = "Benvenuto!";
-    WelcomeMessage: string = "Per accedere all'esame, effettua il login con Slack premendo il bottone qui sotto.";
+    WelcomeMessage: string = "Per accedere all'esame, effettua il login premendo il bottone qui sotto.";
     BeginExam: string = "Inizia";
     ContinueExam: string = "Continua";
     ReviewExam: string = "Ricontrolla";
@@ -33,7 +33,7 @@ export class It implements ILocale {
     ClickImage: string = "Clicca sull'immagine nel punto corretto";
     Reorder: string = "Sposta i blocchi nel contenitore della soluzione. L'ordine è importante!";
     Explanation: string = "Spiegazione";
-    BookmarkAnswer: string = "Ricontrolla questa domanda più tardi";
+    BookmarkAnswer: string = "Ricontrolla la domanda più tardi";
     AverageTimePerAnswer: string = "circa per domanda";
     BackToHome: string = "Torna alla home";
     BackToHomeConfirmation: string = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";

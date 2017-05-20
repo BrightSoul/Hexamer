@@ -1,6 +1,6 @@
 {
   "Type": "CodeCompletion",
-  "ScoreAwarded": 2.0,
+  "ScoreAwarded": 7.0,
   "CorrectAnswer": "A1,B2,C3",
   "Text": {
 	"It": "Questo è il problema del codice",

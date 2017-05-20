@@ -1,6 +1,6 @@
 ﻿{
   "Type": "MultipleChoice",
-  "ScoreAwarded": 2.0,
+  "ScoreAwarded": 7.0,
   "CorrectAnswer": "A,F",
   "Text": {
 	"It": "# This is an tag\nCome stai? ()\n**This text will be bold** _This will also be bold_\n[link to Google!](http://google.com) ![GitHub Logo](cog.jpg)

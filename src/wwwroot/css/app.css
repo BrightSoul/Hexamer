@@ -22,7 +22,7 @@ body {
     border: 0px;
     border-right: white solid 1px;
     display: inline-block;
-    width: 40px;
+    width: auto;
     height: 30px;
 }
 
@@ -455,6 +455,7 @@ footer {
     top: 35px;
     padding:18px;
     display: table;
+    padding-bottom:10px;
 }
 
 
@@ -627,7 +628,7 @@ footer {
     text-align: center;
     display:block;
     position:absolute;
-    top: 80px;
+    top: 95px;
     left:0;
     right:0;
 }
@@ -690,8 +691,19 @@ footer {
 .navbar-nav>li>a.back-to-home {
     padding-top: 6px;
     padding-bottom: 28px;
-    padding-right: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
     display: inline-block;
+}
+@media (max-width:768px) {
+    .navbar-nav>li>a.back-to-home {
+        padding-left:5px;
+        padding-right:5px;
+    }
+    .locale-selector {
+        padding-right: 5px !important;
+        padding-left: 8px !important;
+    }
 }
 .navbar .container-fluid {
     padding-left:0;

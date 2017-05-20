@@ -19,7 +19,7 @@ class CodeCompletionViewModel {
             let block = question.QuestionData.Blocks[i];
             let options = block.Options.map(option => '<option value="' + option.Id + '"' + (answerProvided.indexOf((block.Id+option.Id).toLowerCase()) > -1 ? ' selected="selected"' : '')  + '>' + option.Text + '</option>');
             let correctOption = block.Options.filter(option => correctOptions.indexOf((block.Id+option.Id).toLowerCase()) > -1);
-            let dropDownList = '<select class="form-control" name="block'+block.Id+'" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="manual" data-title="'+(correctOption.length > 0 ? correctOption[0].Text : '').split('"').join('&quot;')+'"><option></option>'+options.join('')+'</select>';
+            let dropDownList = '<select class="form-control" name="block'+block.Id+'" data-html="true" data-placement="top" data-toggle="tooltip" data-animation="false" data-trigger="manual" data-title="'+(correctOption.length > 0 ? correctOption[0].Text : '').split('"').join('&quot;')+'"><option></option>'+options.join('')+'</select>';
             codeText = codeText.replace('{'+block.Id+'}', dropDownList);
         }
 

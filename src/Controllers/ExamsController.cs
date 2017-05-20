@@ -31,7 +31,7 @@ namespace Hexamer.Controllers
         {
             string language = Request.GetLanguage();
             var enabledExams = examRepository.GetAll(language).Visible().ToList();
-            var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam));
+            var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam)).ToList();
             foreach (var examResult in examResults) {
                 var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
                 examResult.SetScore(answers);
