@@ -156,7 +156,15 @@ namespace Hexamer.Model
                 return !Hidden && !ValidTo.HasValue && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
             }
         }
-        public bool CanOpenExam
+        public bool CanOpen
+        {
+            get
+            {
+                return !Hidden && (!ValidTo.HasValue || ValidTo.Value > DateTime.Now) && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
+            }
+        }
+
+        public bool CanReset
         {
             get
             {

@@ -11,8 +11,8 @@ export class Exam {
     public LastQuestionDisplayed: number;
     public BeginsInSeconds?: number;
     public RemainingSeconds?: number;
-    public CanOpenExam: boolean;
-    public CanResetExam: boolean;
+    public CanOpen: boolean;
+    public CanReset: boolean;
     public CanShowAnswer: boolean;
     public Status: ExamStatus;
     public Score?: number;

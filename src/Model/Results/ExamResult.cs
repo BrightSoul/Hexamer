@@ -44,9 +44,9 @@ namespace Hexamer.Model.Results
         public DateTime? ValidTo { get; private set; }
         public int Questions { get; private set; }
         public bool IsNewlyCompleted { get; private set; }
-        public bool CanOpenExam {get; private set;}
+        public bool CanOpen {get; private set;}
         public bool CanShowAnswer {get; private set;}
-        public bool CanResetExam {
+        public bool CanReset {
             get {
                 return Questions <= QuestionsAnswered.Length && !ValidTo.HasValue;
             }

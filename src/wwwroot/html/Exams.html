@@ -17,7 +17,7 @@
           <span class="exam-mark-comment" data-bind="locale: 'CumLaude', visible: Rating == 'excellent'"></span>
         </section>
         <footer>
-          <button type="button" class="btn btn-link btn-block" data-bind="visible: CanResetExam, locale: 'ResetExam', click:$parent.ResetExam"></button>
+          <button type="button" class="btn btn-link btn-block" data-bind="visible: CanReset, locale: 'ResetExam', click:$parent.ResetExam"></button>
           <button type="button" class="btn btn-start btn-block btn-primary btn-lg" data-bind="locale: QuestionsAnswered.length == 0 ? 'BeginExam' : (QuestionsAnswered.length >= Questions ? 'ReviewExam' : 'ResumeExam'), 'BeginExam', click:$parent.OpenExam"></button>
         </footer>
     </li>

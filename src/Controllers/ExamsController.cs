@@ -61,7 +61,7 @@ namespace Hexamer.Controllers
         {
             string language = Request.GetLanguage();
             var exam = examRepository.GetById(examId, language);
-            if (exam == null || !exam.CanOpenExam)
+            if (exam == null || !exam.CanOpen)
                 return NotFound();
 
             string contentPath = null;
@@ -116,6 +116,9 @@ namespace Hexamer.Controllers
             var exam = examRepository.GetById(examId, Request.GetLanguage());
             if (exam == null)
                 return NotFound("Exam");
+
+            if (!exam.CanReset)
+                return BadRequest("Can't reset");
 
             await answerRepository.Reset(User.Identity.Name, examId);
             return Ok();
