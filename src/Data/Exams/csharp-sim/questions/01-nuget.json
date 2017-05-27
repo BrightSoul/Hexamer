@@ -1,22 +1,26 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "C",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Mentre stai sviluppando un'applicazione console con il .NET Core, ti rendi conto di aver bisogno di un componente creato da un altro sviluppatore che è stato reso disponibile come pacchetto. Qual è il _package manager_ che usi per ottenere tale pacchetto?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "allora è così perché...",
+	"It": "Il package manager per le applicazioni .NET è **NuGet**, visibile su [https://www.nuget.org/](https://www.nuget.org/).  
+_Maven_, invece, serve ad organizzare progetti Java mentre _PyPI_ è il _package manager_ per le applicazioni Python.  
+_Bower_ contiene per lo più pacchetti per lo sviluppo client-side di un'applicazione web. Può essere usato in aggiunta a _NuGet_ quando si sviluppa con ASP.NET Core ma non risulta utile per le applicazioni console, come richiesto dalla domanda.  
+
+**Materiale di studio**
+
+[Lezione 1, slide 28](https://slack-files.com/files-pri/T4LSU7RKJ-F4MLLGSJW/01-lezione-dotnetcore.pdf#page=28)",
 	"En": "",
   },
   "Group": "01",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Maven", "En": "Maven" } },
+	{ "Id": "B", "Text": { "It": "Bower", "En": "Bower" } },
+	{ "Id": "C", "Text": { "It": "NuGet", "En": "NuGet" } },
+	{ "Id": "D", "Text": { "It": "PyPI", "En": "PyPI" } }
   ]
 }

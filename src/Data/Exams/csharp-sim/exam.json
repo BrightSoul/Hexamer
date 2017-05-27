@@ -4,7 +4,7 @@
   "DefaultLanguage": "It",
   "SupportedLanguages": [ "It", "En" ],
   "Title": { "It": "Programmazione C#", "En": "C# programming" },
-  "Subtitle": { "It": "Simulazione", "En": "Mock exam" },
+  "Subtitle": { "It": "(Simulazione)", "En": "(Mock exam)" },
   "MaximumQuestions": 40,
   "MinimumScore": 18.0,
   "MaximumScore": 30.0,

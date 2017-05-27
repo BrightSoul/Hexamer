@@ -1,22 +1,31 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "B",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Visual Studio Code ti sta segnalando un problema in corrispondenza della riga di codice illustrata qui sotto. Qual è il problema?   
+![Errore](error.png)",
 	"En": ""
   },
   "AnswerText": {
-	"It": "allora è così perché...",
+	"It": "Nell'immagine, si sta cercando di sommare un numero intero ad una stringa, che sono tipi diversi, e di riassegnare il risultato alla variabile `numero`.  
+In C# questo non è possibile perché è un linguaggio staticamente tipizzato, ovvero non permette di riassegnare ad una variabile `int` un valore di tipo `string`.  
+
+L'operatore `+=` viene appunto usato per incrementare il valore di una variabile `int` ma è necessario che il secondo operando sia esso stesso un `int` e non una stringa come illustrato nell'immagine.  
+
+La soluzione consiste nel togliere le virgolette attorno al numero, così che non venga interpretato come stringa.  
+Il numero non sarebbe troppo grande per un `int`. Infatti, il valore massimo che un `int` può assumere è `2147483647`.  
+
+**Materiale di studio**
+
+[Lezione 1, slide 19](https://slack-files.com/files-pri/T4LSU7RKJ-F4P9ZQPK9/01-esercitazione.pdf#page=19)",
 	"En": "",
   },
   "Group": "01",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Il numero indicato è troppo grande per essere assegnato ad una variabile int", "En": "" } },
+	{ "Id": "B", "Text": { "It": "Si sta cercando di incrementare una variabile int con un valore di tipo diverso", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Una variabile non può essere riassegnata dopo la sua inizializzazione", "En": "" } },
+	{ "Id": "D", "Text": { "It": "L'operatore += non può essere usato per incrementare il valore di una variabile int", "En": "" } }
   ]
 }
