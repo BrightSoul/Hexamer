@@ -39,6 +39,8 @@ export class It implements ILocale {
     BackToHomeConfirmation: string = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";
     Logout: string = "Esci";
     LogoutConfirmation: string = "Sei sicuro di voler uscire?";
+    Expiration: string = "Disponibile fino al";
+    NoExpiration: string = "Nessuna scadenza";
 
 
 }

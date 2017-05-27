@@ -3,10 +3,12 @@
         <h2 data-bind="if: Question"><span data-bind="locale: 'Question'"></span> <span data-bind="text: Question().Number"></span> <span data-bind="locale: 'Of'"></span> <span data-bind="text: Exam().Questions"></span></h2>
         <input type="checkbox" class="bookmark-checkbox" id="bookmark" name="bookmark" data-bind="checked: IsCurrentQuestionBookmarked" /><label class="bookmark" for="bookmark" data-bind="locale: 'BookmarkAnswer'"></label>
     </div>
+    <!--
     <div class="pull-right" data-bind="if: RemainingTime">
         <h2><span data-bind="visible: HasExpirationTime, locale: 'RemainingTime'"></span> <time data-bind="text: RemainingTime, css: {'running-out': TimeIsRunningOut}"></time></h2>
         <h4>Circa 0:00 a domanda</h4>
     </div>
+    -->
 </header>
 
 <section class="question" data-bind="with: Question">

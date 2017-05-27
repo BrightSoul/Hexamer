@@ -669,6 +669,8 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.BackToHomeConfirmation = "Are you sure you want to go back to the homepage? You'll be able to resume this exam at any time.";
             this.Logout = "Logout";
             this.LogoutConfirmation = "Are you sure you want to logout?";
+            this.Expiration = "Available until";
+            this.NoExpiration = "No expiration date";
         }
         return En;
     }());
@@ -717,6 +719,8 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.BackToHomeConfirmation = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";
             this.Logout = "Esci";
             this.LogoutConfirmation = "Sei sicuro di voler uscire?";
+            this.Expiration = "Disponibile fino al";
+            this.NoExpiration = "Nessuna scadenza";
         }
         return It;
     }());

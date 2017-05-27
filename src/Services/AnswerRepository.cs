@@ -154,14 +154,24 @@ namespace Hexamer.Services
                 using (var transaction = conn.BeginTransaction(IsolationLevel.Serializable))
                 {
                     var answers = (await GetAll(username, exam.Id)).ToList();
-                    var allQuestions = exam.Questions.Select(q => q.Id);
+                    var maximumQuestions = Math.Min(exam.MaximumQuestions, exam.Questions.Count());
+                    if (answers.Count >= maximumQuestions) {
+                        return false;
+                    }
                     var userQuestions = answers.Select(a => a.Question);
-                    var questionsToCreate = allQuestions.Except(userQuestions);
-                    if (questionsToCreate.Count() > 0)
+                    var allQuestions = exam.Questions
+                        .OrderBy(q => q.Group)
+                        .ThenBy(q => Guid.NewGuid().ToString())
+                        .Select(q => q.Id)
+                        .ToList();
+                    
+                    var difference = maximumQuestions - answers.Count;
+                    var questionsToCreate = allQuestions.Except(userQuestions).Take(difference).ToList();
+                    if (questionsToCreate.Count > 0)
                     {
-                        answers = questionsToCreate.Select(
-                            q => new Answer { Exam = exam.Id, Question = q }
-                        ).ToList();
+                        answers = questionsToCreate
+                            .Select(q => new Answer { Exam = exam.Id, Question = q })
+                            .ToList();
                     }
                     else
                     {

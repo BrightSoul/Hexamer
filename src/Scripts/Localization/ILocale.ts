@@ -43,4 +43,7 @@ export interface ILocale {
     BackToHomeConfirmation: string;
     Logout: string;
     LogoutConfirmation: string;
+
+    Expiration: string;
+    NoExpiration: string;
 }

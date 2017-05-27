@@ -31,7 +31,7 @@ namespace Hexamer.Controllers
         {
             string language = Request.GetLanguage();
             var enabledExams = examRepository.GetAll(language).Visible().ToList();
-            var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam)).ToList();
+            var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam, language)).ToList();
             foreach (var examResult in examResults) {
                 var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
                 examResult.SetScore(answers);
@@ -50,7 +50,7 @@ namespace Hexamer.Controllers
             if (await answerRepository.CreateMissingAnswers(User.Identity.Name, exam)) {
                 exam = examRepository.GetById(examId, language);
             }
-            var examResult = ExamResult.FromEntity(exam);
+            var examResult = ExamResult.FromEntity(exam, language);
             var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
             examResult.SetScore(answers);
             return Ok(examResult);

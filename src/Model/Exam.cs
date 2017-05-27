@@ -13,13 +13,15 @@ namespace Hexamer.Model
     public class Exam
     {
         public string Id { get; set; }
+        public bool IsMockExam { get; set; }
         public string DefaultLanguage { get; set; }
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public decimal MinimumScore { get; set; }
         public decimal MaximumScore { get; set; }
-        public DateTime? ValidFrom { get; set; }
-        public DateTime? ValidTo { get; set; }
+        public int MaximumQuestions { get; set; }
+        public DateTimeOffset? ValidFrom { get; set; }
+        public DateTimeOffset? ValidTo { get; set; }
         public bool Hidden { get; set; }
 
         public static Exam FromFile(string fileName, string language = null)
@@ -149,18 +151,24 @@ namespace Hexamer.Model
             return jObject;
         }
 
+        private bool IsInTimeInterval {
+            get {
+                return (!ValidTo.HasValue || ValidTo.Value > DateTimeOffset.Now) && (!ValidFrom.HasValue || ValidFrom.Value < DateTimeOffset.Now);
+            }
+        }
+
         public bool CanShowAnswer
         {
             get
             {
-                return !Hidden && !ValidTo.HasValue && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
+                return !Hidden && IsMockExam && IsInTimeInterval;
             }
         }
         public bool CanOpen
         {
             get
             {
-                return !Hidden && (!ValidTo.HasValue || ValidTo.Value > DateTime.Now) && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
+                return !Hidden && IsInTimeInterval;
             }
         }
 
@@ -168,7 +176,7 @@ namespace Hexamer.Model
         {
             get
             {
-                return !Hidden && (!ValidTo.HasValue || ValidTo.Value > DateTime.Now) && (!ValidFrom.HasValue || ValidFrom.Value < DateTime.Now);
+                return !Hidden && IsMockExam && IsInTimeInterval;
             }
         }
 

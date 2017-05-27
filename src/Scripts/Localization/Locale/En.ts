@@ -39,4 +39,6 @@ export class En implements ILocale {
     BackToHomeConfirmation: string = "Are you sure you want to go back to the homepage? You'll be able to resume this exam at any time.";
     Logout: string = "Logout";
     LogoutConfirmation: string = "Are you sure you want to logout?";
+    Expiration: string = "Available until";
+    NoExpiration: string = "No expiration date";
 }

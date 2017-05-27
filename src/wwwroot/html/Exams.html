@@ -10,7 +10,8 @@
         </figure>
         <header>
           <p><span data-bind="text: Questions"></span> <span data-bind="locale: 'Questions'"></span><span data-bind="visible: QuestionsAnswered.length > 0">, <span data-bind="text: QuestionsAnswered.length"></span> <span data-bind="locale: 'QuestionsAlreadyAnswered'"></span></span></p>
-          <p>Disponibile dal 10/17/2017 ore 19:30</p>
+          <p data-bind="visible: ValidTo"><span data-bind="locale: 'Expiration'"></span> <span data-bind="text: ValidTo"></span></p>
+          <p data-bind="visible: !ValidTo, locale: 'NoExpiration'"></p>
         </header>
         <section data-bind="attr: {class: 'exam-mark ' + Rating + ' ' + (IsNewlyCompleted ? 'animated' : '')}">
           <span class="exam-mark-value" data-bind="text: Score || '--'"></span>
@@ -18,7 +19,7 @@
         </section>
         <footer>
           <button type="button" class="btn btn-link btn-block" data-bind="visible: CanReset, locale: 'ResetExam', click:$parent.ResetExam"></button>
-          <button type="button" class="btn btn-start btn-block btn-primary btn-lg" data-bind="locale: QuestionsAnswered.length == 0 ? 'BeginExam' : (QuestionsAnswered.length >= Questions ? 'ReviewExam' : 'ResumeExam'), 'BeginExam', click:$parent.OpenExam"></button>
+          <button type="button" class="btn btn-start btn-block btn-primary btn-lg" data-bind="locale: QuestionsAnswered.length == 0 ? 'BeginExam' : (QuestionsAnswered.length >= Questions ? 'ReviewExam' : 'ContinueExam'), 'BeginExam', click:$parent.OpenExam"></button>
         </footer>
     </li>
 </ul>

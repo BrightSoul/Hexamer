@@ -495,6 +495,7 @@ footer {
     }
 }
 
+
 .examlist li {
     width: 240px;
     height: 460px;
@@ -821,6 +822,15 @@ hr {
 }
 @media (max-width: 640px) {
     #username {display:none;}
+    .navbar-title {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        overflow: hidden;
+        width: calc(100% - 140px);
+        font-size: 14px;
+        margin-top: 6px !important;
+    }
 }
 .form-control {
     display: inline-block;
