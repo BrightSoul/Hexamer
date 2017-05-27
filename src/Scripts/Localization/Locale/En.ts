@@ -36,7 +36,7 @@ export class En implements ILocale {
     BookmarkAnswer: string = "Review this question later";
     AverageTimePerAnswer: string = "approximately per question";
     BackToHome: string = "Back to home";
-    BackToHomeConfirmation: string = "Are you sure you want to go back to the homepage? You'll be able to resume this exam at any time.";
+    BackToHomeConfirmation: string = "Are you sure you want to go back to the homepage? Any edit to the current question will be lost.";
     Logout: string = "Logout";
     LogoutConfirmation: string = "Are you sure you want to logout?";
     Expiration: string = "Available until";

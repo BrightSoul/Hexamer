@@ -36,7 +36,7 @@ export class It implements ILocale {
     BookmarkAnswer: string = "Ricontrolla la domanda più tardi";
     AverageTimePerAnswer: string = "circa per domanda";
     BackToHome: string = "Torna alla home";
-    BackToHomeConfirmation: string = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";
+    BackToHomeConfirmation: string = "Sei sicuro di voler tornare alla home? Le modifiche alla domanda attuale verranno perse!";
     Logout: string = "Esci";
     LogoutConfirmation: string = "Sei sicuro di voler uscire?";
     Expiration: string = "Disponibile fino al";

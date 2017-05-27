@@ -165,7 +165,7 @@ export class LayoutViewModel implements ILayout {
         }
     }
     private BackToHome() {
-        if (confirm("Vuoi davvero tornare alla home?")) {
+        if (confirm(this.Locale().BackToHomeConfirmation)) {
             this.Navigate(Page.Exams);
         }
     }

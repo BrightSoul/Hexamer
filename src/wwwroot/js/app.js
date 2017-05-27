@@ -360,7 +360,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             }
         };
         LayoutViewModel.prototype.BackToHome = function () {
-            if (confirm("Vuoi davvero tornare alla home?")) {
+            if (confirm(this.Locale().BackToHomeConfirmation)) {
                 this.Navigate(Page_3.Page.Exams);
             }
         };
@@ -666,7 +666,7 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.BookmarkAnswer = "Review this question later";
             this.AverageTimePerAnswer = "approximately per question";
             this.BackToHome = "Back to home";
-            this.BackToHomeConfirmation = "Are you sure you want to go back to the homepage? You'll be able to resume this exam at any time.";
+            this.BackToHomeConfirmation = "Are you sure you want to go back to the homepage? Any edit to the current question will be lost.";
             this.Logout = "Logout";
             this.LogoutConfirmation = "Are you sure you want to logout?";
             this.Expiration = "Available until";
@@ -716,7 +716,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.BookmarkAnswer = "Ricontrolla la domanda più tardi";
             this.AverageTimePerAnswer = "circa per domanda";
             this.BackToHome = "Torna alla home";
-            this.BackToHomeConfirmation = "Sei sicuro di voler tornare alla home? Potrai riprendere questo esame in qualsiasi momento.";
+            this.BackToHomeConfirmation = "Sei sicuro di voler tornare alla home? Le modifiche alla domanda attuale verranno perse!";
             this.Logout = "Esci";
             this.LogoutConfirmation = "Sei sicuro di voler uscire?";
             this.Expiration = "Disponibile fino al";

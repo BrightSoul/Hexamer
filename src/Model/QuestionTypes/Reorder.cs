@@ -40,7 +40,7 @@ namespace Hexamer.Model.QuestionTypes
             return new
             {
                 Choose = CorrectAnswer.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Length,
-                Options = Options
+                Options = SortList(Options, randomizationSeed)
             };
         }
 
