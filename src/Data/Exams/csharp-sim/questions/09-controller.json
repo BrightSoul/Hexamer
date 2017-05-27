@@ -1,0 +1,23 @@
+{
+  "Type": "CodeCompletion",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "A1,B2,C3",
+  "Text": {
+	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Ecco la risposta",
+	"En": "",
+  },
+  "Group": "09",
+  "CodeText": { 
+	"It": "public pippo {A} on \n {B} on {C}",
+	"En": ""
+  },
+  "Blocks": [
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "\"IEnumerable\"" }, { "Id": "2", "Text": "IList" }, { "Id": "3", "Text": "ICollection" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Task" }, { "Id": "2", "Text": "void" }, { "Id": "3", "Text": "async" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "return" }, { "Id": "2", "Text": "yield" }, { "Id": "3", "Text": "break" } ] }
+  ]
+}

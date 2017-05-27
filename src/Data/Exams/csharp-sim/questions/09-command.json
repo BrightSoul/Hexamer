@@ -1,0 +1,21 @@
+{
+  "Type": "Reorder",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "B,C,D,A",
+  "Text": {
+	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Ecco la risposta",
+	"En": "",
+  },
+  "Group": "09",
+  "Options": [
+	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
+	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
+	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
+	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
+	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } }
+  ]
+}

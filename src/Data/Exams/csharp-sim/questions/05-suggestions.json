@@ -1,0 +1,15 @@
+{
+  "Type": "ClickImage",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "0,43,50,50",
+  "Text": {
+	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Ecco la risposta",
+	"En": "",
+  },
+  "Group": "05",
+  "Image": "vscode.png"
+}
