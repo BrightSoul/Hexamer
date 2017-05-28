@@ -1,24 +1,21 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "D",
   "Text": {
-	"It": "Scegli il metodo delle richieste che inviano dati per inserire
-",
+	"It": "Stai realizzando il sito web per un famoso ristorante. Nella homepage del sito hai aggiunto un link per condurre l'utente alla pagina di prenotazione online dei tavoli. Che tipo di richiesta verrà inviata al server cliccando tale link?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 19, 09 lezione
+	"It": "Slide 23, 09 lezione
 ",
 	"En": "",
   },
   "Group": "09",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "DELETE", "En": "" } },
+	{ "Id": "B", "Text": { "It": "POST", "En": "" } },
+	{ "Id": "C", "Text": { "It": "PUT", "En": "" } },
+	{ "Id": "D", "Text": { "It": "GET", "En": "" } }
   ]
 }

@@ -29,6 +29,8 @@ class ClickImageViewModel {
                 Width: correctCoordinates[2],
                 Height: correctCoordinates[3]
             };
+        } else {
+            this.Area = null;
         }
     }
 

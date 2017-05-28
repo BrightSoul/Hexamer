@@ -32,13 +32,25 @@ namespace Hexamer.Controllers
             string language = Request.GetLanguage();
             var enabledExams = examRepository.GetAll(language).Visible().ToList();
             var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam, language)).ToList();
-            foreach (var examResult in examResults) {
+            foreach (var examResult in examResults)
+            {
                 var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
                 examResult.SetScore(answers);
+                if (examResult.IsNewlyCompleted)
+                {
+                    try
+                    {
+                        System.IO.File.AppendAllText(Path.Combine(config.ExamsDataDirectory, "examlog.txt"), $"{DateTime.Now.ToString("yyyyMMddHHmmss")}\t{User.Identity.Name}\t{examResult.Score}\r\n");
+                    }
+                    catch
+                    {
+
+                    }
+                }
             }
             return examResults;
         }
-        
+
         [HttpGet("{examId}")]
         public async Task<IActionResult> Detail(string examId)
         {
@@ -47,7 +59,8 @@ namespace Hexamer.Controllers
             if (exam == null)
                 return NotFound();
 
-            if (await answerRepository.CreateMissingAnswers(User.Identity.Name, exam)) {
+            if (await answerRepository.CreateMissingAnswers(User.Identity.Name, exam))
+            {
                 exam = examRepository.GetById(examId, language);
             }
             var examResult = ExamResult.FromEntity(exam, language);
@@ -65,19 +78,23 @@ namespace Hexamer.Controllers
                 return NotFound();
 
             string contentPath = null;
-            if (string.IsNullOrEmpty(path)) {
+            if (string.IsNullOrEmpty(path))
+            {
                 contentPath = Path.Combine(config.ExamsDataDirectory, exam.Id, "exam.jpg");
                 if (!System.IO.File.Exists(contentPath))
                     contentPath = Path.Combine(config.ExamsDataDirectory, "default-exam-image.jpg");
-            } else {
+            }
+            else
+            {
                 contentPath = Path.Combine(config.ExamsDataDirectory, exam.Id, "content", Path.GetFileName(path));
             }
-             
+
             if (!System.IO.File.Exists(contentPath))
                 return NotFound();
             var extension = Path.GetExtension(contentPath).Trim('.').ToLowerInvariant();
             Stream contentStream = System.IO.File.OpenRead(contentPath);
-            switch (extension) {
+            switch (extension)
+            {
                 case "gif":
                     return File(contentStream, "image/gif");
                 case "jpg":
@@ -93,10 +110,12 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}/{questionNumber}")]
         public async Task<IActionResult> QuestionDetail(string examId, int questionNumber)
         {
+            var language = Request.GetLanguage();
+
             var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
             if (answer == null)
                 return NotFound("Answer");
-            
+
             var exam = examRepository.GetById(examId, Request.GetLanguage());
             if (exam == null)
                 return NotFound("Exam");
@@ -105,7 +124,11 @@ namespace Hexamer.Controllers
             if (question == null)
                 return NotFound("Question");
 
-            var result = QuestionResult.FromEntities(exam, question, answer, User.Identity);
+            var examResult = ExamResult.FromEntity(exam, language);
+            var answers = await answerRepository.GetAll(User.Identity.Name, examResult.Id);
+            examResult.SetScore(answers);
+
+            var result = QuestionResult.FromEntities(examResult, question, answer, User.Identity);
             await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
             return Ok(result);
         }

@@ -13,7 +13,7 @@ namespace Hexamer.Model.Results
         public bool IsBookmarked { get; set; }
         public object QuestionData { get; set; }
         public bool CanShowAnswer {get;set;}
-        public static object FromEntities(Exam exam, Question question, Answer answer, IIdentity user)
+        public static object FromEntities(ExamResult exam, Question question, Answer answer, IIdentity user)
         {
             return new QuestionResult {
                 ExamId = exam.Id,
@@ -23,8 +23,8 @@ namespace Hexamer.Model.Results
                 CanShowAnswer = exam.CanShowAnswer,
                 IsBookmarked = answer.IsBookmarked,
                 AnswerProvided = answer.AnswerProvided,
-                AnswerText = exam.CanShowAnswer ? question.AnswerText : null,
-                CorrectAnswer = exam.CanShowAnswer ? question.CorrectAnswer : null,
+                AnswerText = exam.CanShowAnswer ? question.AnswerText : string.Empty,
+                CorrectAnswer = exam.CanShowAnswer ? question.CorrectAnswer : string.Empty,
                 QuestionData = question.GetQuestionData(GetRandomizationSeed(answer.Number, user.Name))
             };
         }

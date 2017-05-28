@@ -771,6 +771,9 @@ define("QuestionTypes/ClickImage", ["require", "exports", "knockout"], function 
                     Height: correctCoordinates[3]
                 };
             }
+            else {
+                this.Area = null;
+            }
         }
         return ClickImageViewModel;
     }());

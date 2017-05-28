@@ -1,10 +1,9 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "C",
   "Text": {
-	"It": "Chi ha la responsabilità di ricevere richieste http e di orchestrare gli altri componenti per fornire una risposta all'utente? Model View Controller ViewModel
-",
+	"It": "Hai iniziato a studiare ASP.NET Core MVC per essere in grado di realizzare applicazioni web. Quale dei seguenti componenti riceve le richieste HTTP degli utenti e si occupa di fornire loro una risposta, orchestrando l'attività degli altri componenti del pattern MVC?",
 	"En": ""
   },
   "AnswerText": {
@@ -14,11 +13,9 @@
   },
   "Group": "09",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Model", "En": "" } },
+	{ "Id": "B", "Text": { "It": "View", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Controller", "En": "" } },
+	{ "Id": "D", "Text": { "It": "ViewModel", "En": "" } }
   ]
 }

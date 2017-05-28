@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Hexamer.Extensions;
+using Newtonsoft.Json;
 
 namespace Hexamer.Model.Results
 {
@@ -21,7 +23,7 @@ namespace Hexamer.Model.Results
             QuestionsBookmarked = new int[0];
             CanShowAnswer = exam.CanShowAnswer;
             CanOpen = exam.CanOpen;
-            canReset =  CanReset;
+            canReset =  exam.CanReset;
 
             var culture = new CultureInfo(language);
             if (exam.ValidTo.HasValue) {
@@ -44,6 +46,7 @@ namespace Hexamer.Model.Results
         public int[] QuestionsBookmarked { get; private set; }
         public decimal MinimumScore {get; private set;}
 
+        [JsonIgnore]
         private int lastQuestionDisplayed;
         public int LastQuestionDisplayed {get { return Math.Max(1, lastQuestionDisplayed); } private set { lastQuestionDisplayed = value; }}
         public decimal MaximumScore {get; private set;}
@@ -55,6 +58,7 @@ namespace Hexamer.Model.Results
         public bool IsNewlyCompleted { get; private set; }
         public bool CanOpen { get; private set; }
         public bool CanShowAnswer { get; private set; }
+        [JsonIgnore]
         private bool canReset;
         public bool CanReset { 
             get {
@@ -69,6 +73,7 @@ namespace Hexamer.Model.Results
             QuestionsAnswered = answers.Answered().Select(a => a.Number).ToArray();
             QuestionsBookmarked = answers.Bookmarked().Select(a => a.Number).ToArray();
             if (QuestionsAnswered.Length < Questions) {
+                CanShowAnswer = false;
                 return;
             }
 

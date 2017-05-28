@@ -1,10 +1,10 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "B",
   "Text": {
-	"It": "Scegli tra il codice che ti permette di registrare un DbContext. AddScoped, AddTransient, AddSingleton, AddLifetime
-",
+	"It": "Hai creato un'applicazione web ASP.NET Core MVC per la registrazione degli studenti agli esami. L'applicazione informa gli studenti via e-mail ogni volta che si verifica una variazione alla data di un esame o per confermare l'avvenuta iscrizione. Dato che l'invio e-mail è un servizio molto utilizzato in questa applicazione, hai deciso di inserire la logica in una classe chiamata `InvioEmail` e di registrarla come servizio nel metodo `Startup.ConfigureServices`.  
+Vuoi che ASP.NET Core fornisca sempre la stessa istanza ad ogni Controller che abbia bisogno di inviare e-mail, dato che la classe `InvioEmail` è thread-safe e può essere riutilizzata per tutto il ciclo di vita dell'applicazione. Come registri la classe?",
 	"En": ""
   },
   "AnswerText": {
@@ -14,11 +14,9 @@
   },
   "Group": "10",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "services.AddScoped(typeof(InvioEmail));", "En": "" } },
+	{ "Id": "B", "Text": { "It": "services.AddSingleton(typeof(InvioEmail));", "En": "" } },
+	{ "Id": "C", "Text": { "It": "services.AddTransient(typeof(InvioEmail));", "En": "" } },
+	{ "Id": "D", "Text": { "It": "services.Add(typeof(InvioEmail));", "En": "" } }
   ]
 }

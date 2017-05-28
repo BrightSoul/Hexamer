@@ -1,9 +1,11 @@
 {
   "Type": "CodeCompletion",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A1,B2,C3",
+  "CorrectAnswer": "A1,B2,C2",
   "Text": {
-	"It": "Devi mappare una relazione uno a uno, fagli scegliere HasOne WithOne e HasForeignKey
+	"It": "La Regione ti ha affidato lo sviluppo di un'applicazione per gestire l'anagrafe canina. L'applicazione serve a registrare su database i nomi dei cani e dei loro padroni. Hai scelto di usare _Entity Framework Core_ per questo scopo.  
+Finora hai scritto le classi `Padrone` e `Cane` e tra loro hai determinato che esiste una relazione 1-a-molti. Infatti, secondo la specifica che ti è stata fornita dall'anagrafe, un padone può registrare molti cani, ma un cane DEVE essere registrato con uno e un solo padrone.  
+Come mappi la relazione tra `Cane` e `Padrone` nel metodo `OnModelCreating`?
 ",
 	"En": ""
   },
@@ -14,12 +16,19 @@
   },
   "Group": "08",
   "CodeText": { 
-	"It": "public pippo {A} on \n {B} on {C}",
+	"It": "protected override void OnModelCreating(ModelBuilder mb){
+    mb.Entity&lt;Padrone&gt;().ToTable(\"Padroni\").HasKey(padrone => padrone.Id);
+    mb.Entity&lt;Cane&gt;().ToTable(\"Cani\").HasKey(cane => cane.Id);
+    mb.Entity&lt;Cane&gt;()
+        .{A}(cane => cane.Padrone)
+        .{B}(padrone => padrone.Cani)
+        .{C}();
+}",
 	"En": ""
   },
   "Blocks": [
-	{ "Id": "A", "Options": [ { "Id": "1", "Text": "\"IEnumerable\"" }, { "Id": "2", "Text": "IList" }, { "Id": "3", "Text": "ICollection" } ] },
-	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Task" }, { "Id": "2", "Text": "void" }, { "Id": "3", "Text": "async" } ] },
-	{ "Id": "C", "Options": [ { "Id": "1", "Text": "return" }, { "Id": "2", "Text": "yield" }, { "Id": "3", "Text": "break" } ] }
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "HasOne" }, { "Id": "2", "Text": "HasMany" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "WithOne" }, { "Id": "2", "Text": "WithMany" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "IsOptional" }, { "Id": "2", "Text": "IsRequired" } ] }
   ]
 }

@@ -3,7 +3,7 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A1,B3,C1",
   "Text": {
-	"It": "Stai creando un'applicazione per leggere e scrivere i dati dei film in un database Sqlite e per far questo hai deciso di avvalerti di _Entity Framework_. Ora stai scrivendo la classe che deriva da `DbContext` per creare la mappatura tra la classe `Film` e la relativa tabella. La classe `Film` contiene le seguenti proprietà:
+	"It": "Stai creando un'applicazione per leggere e scrivere i dati dei film in un database Sqlite e per far questo hai deciso di avvalerti di _Entity Framework Core_. Ora stai scrivendo la classe che deriva da `DbContext` per creare la mappatura tra la classe `Film` e la relativa tabella. La classe `Film` contiene le seguenti proprietà:
 ```
 public class Film {
     public int Id { get; private set; }
@@ -14,7 +14,7 @@ public class Film {
 	"En": ""
   },
   "AnswerText": {
-	"It": "Per usare _Entity Framework_ dobbiamo creare una classe che deriva da `DbContext` e che rappresenterà il nostro servizio per l'accesso al database, sia in lettura che in scrittura. Questa classe astrae dal database relazionale sottostante e ci permette di lavorare con un modello ad oggetti, anziché con le righe di una tabella. In questo modo possiamo sfruttare tutti i concetti della programmazione orientata agli oggetti.  
+	"It": "Per usare _Entity Framework Core_ dobbiamo creare una classe che deriva da `DbContext` e che rappresenterà il nostro servizio per l'accesso al database, sia in lettura che in scrittura. Questa classe astrae dal database relazionale sottostante e ci permette di lavorare con un modello ad oggetti, anziché con le righe di una tabella. In questo modo possiamo sfruttare tutti i concetti della programmazione orientata agli oggetti.  
 All'interno della nostra classe, facciamo l'override di due metodi:  
 `OnConfiguring`, per indicare a quale database vogliamo collegarci (e qual è la sua connection string). Ad esempio, con `UseSqlite` indichiamo che dovrà essere usato il provider di Sqlite per l'accesso al db;
 `OnModelCreating`, per creare il \"mapping\" tra le classi del nostro modello e le rispettive tabelle del database.  
@@ -34,7 +34,7 @@ Se vogliamo usare una delle nostre classi con Entity Framework è necessario che
         db.{A}(@\"Data Source=..\\..\\..\\mydb.db;\");
     }  
     protected override void {B}(ModelBuilder mb){
-        mb.Entity<Film>().ToTable(\"Film\").HasKey({C});
+        mb.Entity&lt;Film&gt;().ToTable(\"Film\").HasKey({C});
     }
 }",
 	"En": ""
@@ -42,6 +42,6 @@ Se vogliamo usare una delle nostre classi con Entity Framework è necessario che
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "UseSqlite" }, { "Id": "2", "Text": "UseSqlServer" }, { "Id": "3", "Text": "WithDatabase" } ] },
 	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Map" }, { "Id": "2", "Text": "Start" }, { "Id": "3", "Text": "OnModelCreating" } ] },
-	{ "Id": "C", "Options": [ { "Id": "1", "Text": "film => film.Id" }, { "Id": "2", "Text": "\"Id\"" }, { "Id": "3", "Text": "film.Id" } ] }
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "film =&gt; film.Id" }, { "Id": "2", "Text": "&quot;Id&quot;" }, { "Id": "3", "Text": "film.Id" } ] }
   ]
 }

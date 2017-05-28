@@ -1,10 +1,9 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "A,C,E",
   "Text": {
-	"It": "Cosa fa entity framework core? Traduce le nostre query LINQ in query SQL; Salva gli oggetti nel contesto di una transazione (salva tutto o niente); Richiede che le nostre classi del modello derivino da DbEntity, Richiede che le nostre classi del modello abbiano una chiave primaria, Gli oggetti vengono inseriti nel database quando si invoca il metodo Add
-",
+	"It": "Quali di queste affermazioni su Entity Framework Core sono vere?",
 	"En": ""
   },
   "AnswerText": {
@@ -14,11 +13,10 @@
   },
   "Group": "08",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Richiede che le classi del modello possiedano una proprietà che agirà da chiave primaria", "En": "" } },
+	{ "Id": "B", "Text": { "It": "Richiede che le classi del modello derivino da DbEntity", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Traduce le query LINQ in query SQL", "En": "" } },
+	{ "Id": "D", "Text": { "It": "Gli oggetti vengono inseriti nel database nonappena si invoca il metodo Add", "En": "" } },
+	{ "Id": "E", "Text": { "It": "Invocando SaveChangesAsync, gli oggetti vengono salvati nel database nel contesto di una transazione (tutti o nessuno)", "En": "" } }
   ]
 }

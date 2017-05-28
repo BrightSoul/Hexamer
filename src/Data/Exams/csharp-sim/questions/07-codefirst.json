@@ -3,7 +3,7 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "D,E,B,A",
   "Text": {
-	"It": "Vuoi crearti un database personale di tutti i film che possiedi in DVD. Decidi di scrivere un'applicazione che si avvale di _Entity Framework_ per leggere e scrivere i dati dei film su un database locale Sqlite. Hai scelto di usare l'approccio _code first_, quali sono i passi che ti porteranno a salvare il primo film nel database?
+	"It": "Vuoi crearti un database personale di tutti i film che possiedi in DVD. Decidi di scrivere un'applicazione che si avvale di _Entity Framework Core_ per leggere e scrivere i dati dei film su un database locale Sqlite. Hai scelto di usare l'approccio _code first_, quali sono i passi che ti porteranno a salvare il primo film nel database?
 ",
 	"En": ""
   },

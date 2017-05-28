@@ -1,25 +1,32 @@
 {
   "Type": "CodeCompletion",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A1,B2,C3",
+  "CorrectAnswer": "A3,B1,C2",
   "Text": {
-	"It": "Un normale controller con un'action che restituisce una view
-",
+	"It": "Stai realizzando un'applicazione web per il CUP Regionale, per la prenotazione di visite mediche specialistiche. I pazienti possono visitare una pagina web e compilare un form per prenotarsi autonomamente.  
+Finora hai scritto l'action `Prenota` che riceve i dati inviati dal form. La prenotazione viene accettata solo se il paziente ha digitato correttamente tutte le informazioni. Se è così, viene reindirizzato all'action `Index`, dove potrà visualizzare il riepilogo di tutte le sue prenotazioni. Invece, se i dati inviati non fossero corretti, vedrà riapparire la stessa View da cui dovrà correggere i dati prima di inviarli di nuovo. Come realizzi l'action `Prenota`?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 8, 09 esercitazione
-",
+	"It": "",
 	"En": "",
   },
   "Group": "09",
   "CodeText": { 
-	"It": "public pippo {A} on \n {B} on {C}",
+	"It": "[HttpPost]
+public async Task<IActionResult> Prenota(Prenotazione prenotazione) {
+    if ({A}) {
+        await servizioPrenotazioni.Aggiungi(prenotazione);
+        return {B}(\"Index\");
+    } else {
+        return {C}(prenotazione);
+    }
+}",
 	"En": ""
   },
   "Blocks": [
-	{ "Id": "A", "Options": [ { "Id": "1", "Text": "\"IEnumerable\"" }, { "Id": "2", "Text": "IList" }, { "Id": "3", "Text": "ICollection" } ] },
-	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Task" }, { "Id": "2", "Text": "void" }, { "Id": "3", "Text": "async" } ] },
-	{ "Id": "C", "Options": [ { "Id": "1", "Text": "return" }, { "Id": "2", "Text": "yield" }, { "Id": "3", "Text": "break" } ] }
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Correct" }, { "Id": "2", "Text": "!ModelState.IsValid" }, { "Id": "3", "Text": "ModelState.IsValid" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "RedirectToAction" }, { "Id": "2", "Text": "File" }, { "Id": "3", "Text": "Ok" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "Ok" }, { "Id": "2", "Text": "View" } ] }
   ]
 }

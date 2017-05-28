@@ -209,6 +209,10 @@ Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 
+#Logs
+examlog.txt
+answerlog.txt
+
 # SQL Server files
 *.mdf
 *.ldf
