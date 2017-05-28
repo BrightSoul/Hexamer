@@ -1,17 +1,26 @@
 {
   "Type": "ClickImage",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "0,43,50,50",
+  "CorrectAnswer": "87,164,200,33",
   "Text": {
-	"It": "Clicca sulla riga in cui entity framework invia la query al db (CountAsync)
-",
+	"It": "_Entity Framework_ permette di interrogare il database usando query LINQ. La query può essere raffinata con istruzioni successive, finché non manifestiamo l'intenzione di voler leggere i risultati dal database. E' solo in quel momento che _Entity Framework_ prepara una query SQL conforme alla query LINQ che abbiamo composto e la invia al database. Nel seguente blocco di codice, indica qual è il metodo che costringe Entity Framework a preparare la query SQL e ad inviarla al database.",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 11, 08 lezione
-",
+	"It": "Finché usiamo metodi come `Where`, `Select`, `OrderBy`, `Skip` e `Take`, stiamo soltando creando e raffiando una query LINQ, che è semplicemente un albero di espressioni residente in memoria.  
+E' quando usiamo metodi come `ToListAsync`, `CountAsync` o quando usiamo un `ciclo foreach` che Entity Framework è costretto a creare una query SQL corrispondente alla nostra query LINQ per andare a recuperare i risultati dal database. Infatti, `ToListAsync`, in questo caso, ha l'effetto di creare una `List<Fattura>`, ovvero una lista di oggetti `Fattura` residente in memoria che è possibile creare solo andando a recupeare i dati al database.  
+
+Questa caratteristica di _Entity Framework_ prende il nome di [deferred execution](https://blogs.msdn.microsoft.com/charlie/2007/12/10/linq-and-deferred-execution/).
+
+Anche un `CountAsync` forzerebbe _Entity Framework_ ad inviare la query. Infatti, anche nel caso di metodi di aggregazione, il risultato si trova nel database e per ottenerlo è necessaria che sia inviata una query SQL.  
+
+Un grosso indizio ci arriva dal fatto che `ToListAsync` ha come suffisso la parola `Async` e si tratta perciò dell'unica operazione asincrona presentata nell'immagine. Leggere dati dal database è appunto un'operazione asincrona.  
+
+**Materiale di studio**
+
+[Lezione 8, slide 11](https://files.slack.com/files-pri/T4LSU7RKJ-F5AE3AWGZ/08-lezione-entityframework-relazioni.pdf#page=11)",
 	"En": "",
   },
   "Group": "08",
-  "Image": "vscode.png"
+  "Image": "query.png"
 }
