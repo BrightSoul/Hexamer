@@ -266,7 +266,9 @@ input[type=checkbox]:checked + label::before {
 .drag-box {
     min-width: 150px;
 }
-
+.drag-box button {
+    white-space: pre-wrap;
+}
 
 @media (min-width: 768px) {
     .drag-content {

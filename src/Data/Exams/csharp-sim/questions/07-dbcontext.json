@@ -1,25 +1,47 @@
 {
   "Type": "CodeCompletion",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A1,B2,C3",
+  "CorrectAnswer": "A1,B3,C1",
   "Text": {
-	"It": "Decidi di usare Entity Framework per accedere ai dati. Completa la classe. DbContext faglielo completare e pure OnModelCreating (ma non OnConfiguring)
-",
+	"It": "Stai creando un'applicazione per leggere e scrivere i dati dei film in un database Sqlite e per far questo hai deciso di avvalerti di _Entity Framework_. Ora stai scrivendo la classe che deriva da `DbContext` per creare la mappatura tra la classe `Film` e la relativa tabella. La classe `Film` contiene le seguenti proprietà:
+```
+public class Film {
+    public int Id { get; private set; }
+    public string Titolo { get; private set; }
+    public DateTime DataPubblicazione { get; private set; }
+}
+```",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 41, 07 lezione
-",
+	"It": "Per usare _Entity Framework_ dobbiamo creare una classe che deriva da `DbContext` e che rappresenterà il nostro servizio per l'accesso al database, sia in lettura che in scrittura. Questa classe astrae dal database relazionale sottostante e ci permette di lavorare con un modello ad oggetti, anziché con le righe di una tabella. In questo modo possiamo sfruttare tutti i concetti della programmazione orientata agli oggetti.  
+All'interno della nostra classe, facciamo l'override di due metodi:  
+`OnConfiguring`, per indicare a quale database vogliamo collegarci (e qual è la sua connection string). Ad esempio, con `UseSqlite` indichiamo che dovrà essere usato il provider di Sqlite per l'accesso al db;
+`OnModelCreating`, per creare il \"mapping\" tra le classi del nostro modello e le rispettive tabelle del database.  
+
+Nel mapping ci sono utili due metodi (ma non sono i soli): con `ToTable` indichiamo il nome della tabella sulla quale verranno salvati i dati, mentre con `HasKey` andremo ad indicare con una _lambda expression_ qual è la proprietà designata come chiave primaria.  
+Se vogliamo usare una delle nostre classi con Entity Framework è necessario che disponga di una proprietà da usare come **chiave primaria** (es. Id) e che disponga di un **costruttore senza parametri**, anche se `private`.  
+
+**Materiale di studio**
+
+[Lezione 7, slide 41](https://files.slack.com/files-pri/T4LSU7RKJ-F56QEGDR7/07-lezione-async-await-entityframework.pdf#page=41)",
 	"En": "",
   },
   "Group": "07",
   "CodeText": { 
-	"It": "public pippo {A} on \n {B} on {C}",
+	"It": "public Database : DbContext {
+    protected override void OnConfiguring(DbContextOptionsBuilder db){
+        db.{A}(@\"Data Source=..\\..\\..\\mydb.db;\");
+    }  
+    protected override void {B}(ModelBuilder mb){
+        mb.Entity<Film>().ToTable(\"Film\").HasKey({C});
+    }
+}",
 	"En": ""
   },
   "Blocks": [
-	{ "Id": "A", "Options": [ { "Id": "1", "Text": "\"IEnumerable\"" }, { "Id": "2", "Text": "IList" }, { "Id": "3", "Text": "ICollection" } ] },
-	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Task" }, { "Id": "2", "Text": "void" }, { "Id": "3", "Text": "async" } ] },
-	{ "Id": "C", "Options": [ { "Id": "1", "Text": "return" }, { "Id": "2", "Text": "yield" }, { "Id": "3", "Text": "break" } ] }
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "UseSqlite" }, { "Id": "2", "Text": "UseSqlServer" }, { "Id": "3", "Text": "WithDatabase" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Map" }, { "Id": "2", "Text": "Start" }, { "Id": "3", "Text": "OnModelCreating" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "film => film.Id" }, { "Id": "2", "Text": "\"Id\"" }, { "Id": "3", "Text": "film.Id" } ] }
   ]
 }
