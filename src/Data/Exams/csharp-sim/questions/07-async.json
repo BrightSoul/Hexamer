@@ -3,11 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A,F",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Scegli le operazioni asincrone, cioè quelle che traggono beneficio dall'uso delle parole chiave async/await. Ridimensionare un'immagine in memoria, Leggere da un database server che si trova in rete locale, invocare un webservice, Attendere 3 secondi prima di riprovare ad eseguire un'operazione fallita, calcolare le prime mille cifre del PI greco, Ordinare una lista di oggetti presenti in una LIst<T> in memoria
+",
 	"En": ""
   },
   "AnswerText": {
-	"It": "allora è così perché...",
+	"It": "Slide 12, 07 lezione
+",
 	"En": "",
   },
   "Group": "07",

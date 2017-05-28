@@ -3,11 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A1,B2,C3",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Decidi di usare Entity Framework per accedere ai dati. Completa la classe. DbContext faglielo completare e pure OnModelCreating (ma non OnConfiguring)
+",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Ecco la risposta",
+	"It": "Slide 41, 07 lezione
+",
 	"En": "",
   },
   "Group": "07",

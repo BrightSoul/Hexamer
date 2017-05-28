@@ -3,11 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A1,B2,C3",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Creazione di un'interfaccia. Scegli Inome, scegli un membro senza il modificatore public. Scegli una proprietà con il solo get e non private set
+",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Ecco la risposta",
+	"It": "Slide 6, 03 lezione
+",
 	"En": "",
   },
   "Group": "03",

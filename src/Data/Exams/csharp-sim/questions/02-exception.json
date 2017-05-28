@@ -1,23 +1,38 @@
 {
   "Type": "CodeCompletion",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A1,B2,C3",
+  "CorrectAnswer": "A1,B2",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Hai scritto una riga di codice che invoca `ScaricaDati()` ma hai visto che questo metodo può sollevare un'eccezione perché va a leggere dei dati da un webservice che ogni tanto risulta irraggiungibile. Siccome non puoi farci nulla, decidi almeno di gestire questo problema nella tua applicazione, in modo che non abbia ripercussioni negative sui tuoi utenti. Quindi scrivi del codice per catturare l'ecccezione e visualizzare il testo dell'errore all'utente.",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Ecco la risposta",
+	"It": "Quando l'invocazione di un metodo solleva un'eccezione, questa ha un effetto negativo sull'applicazione e la manda in crash se non viene gestita con un `try...catch`.  
+Nel blocco `try` inseriamo le righe di codice che _potrebbero_ sollevare un'eccezione, mentre nel blocco `catch` inseriamo il codice che verrà eseguito in caso sia stata effettivamente sollevata un'eccezione.  
+Il blocco `catch` ci permette anche di indicare tra parentesi il tipo di eccezione che vogliamo gestire e il nome di una variabile  (ad esempio _exc_), in modo da poter accedere ai dettagli dell'eccezione, come la sua proprietà `Message` che ci fornisce un'indicazione sulle cause del problema. In questa domanda si sta appunto cercando di visualizzare il testo dell'errore.  
+Il blocco `finally`, invece, contiene righe di codice che andranno in esecuzione in ogni caso, a prescindere che si sia verificato o no un errore.  
+
+**Materiale di studio**
+
+[Lezione 2, slide 13](https://slack-files.com/files-pri/T4LSU7RKJ-F4Q1R8REV/02-lezione-modellazione.pdf#page=13)",
 	"En": "",
   },
   "Group": "02",
-  "CodeText": { 
-	"It": "public pippo {A} on \n {B} on {C}",
+  "CodeText": {
+	"It": "public async Task VisualizzaDati() {
+    Console.WriteLine(\"Inizio a scaricare i dati...\");
+    {A}
+    {
+        string dati = await ScaricaDati();
+        Console.WriteLine($\"Ecco i dati: {dati}\");
+    {B}
+        Console.WriteLine($\"Si è verificato l'errore: {exc.Message}\");
+    }
+}",
 	"En": ""
   },
   "Blocks": [
-	{ "Id": "A", "Options": [ { "Id": "1", "Text": "\"IEnumerable\"" }, { "Id": "2", "Text": "IList" }, { "Id": "3", "Text": "ICollection" } ] },
-	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Task" }, { "Id": "2", "Text": "void" }, { "Id": "3", "Text": "async" } ] },
-	{ "Id": "C", "Options": [ { "Id": "1", "Text": "return" }, { "Id": "2", "Text": "yield" }, { "Id": "3", "Text": "break" } ] }
+    { "Id": "A", "Options": [ { "Id": "1", "Text": "try" }, { "Id": "2", "Text": "capture" }, { "Id": "3", "Text": "async" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "} catch {" }, { "Id": "2", "Text": "} catch (Exception exc) {" }, { "Id": "3", "Text": "} finally (Exception exc) {" } ] }
   ]
 }

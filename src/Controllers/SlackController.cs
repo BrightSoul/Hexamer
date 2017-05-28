@@ -9,6 +9,7 @@ using Hexamer.Model;
 using Hexamer.Model.Results;
 using Hexamer.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Scacchi.Model.Results;
@@ -50,8 +51,12 @@ namespace Hexamer.Controllers
                     throw new InvalidOperationException();
 
                 var principal = CreatePrincipal(result);
+                var properties = new AuthenticationProperties() {
+                  IsPersistent = true,
+                  ExpiresUtc = DateTime.Now.AddMonths(3)  
+                };
                 await userRepository.CreateUserIfNotExists(principal);
-                await HttpContext.Authentication.SignInAsync("CookieAuth", principal);
+                await HttpContext.Authentication.SignInAsync("CookieAuth", principal, properties);
 
                 return Redirect("/");
             }

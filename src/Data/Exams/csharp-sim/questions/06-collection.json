@@ -3,11 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A,F",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "List<t>, Stack<T>, Queue<T>, ObservableCollection<t>. Stai sviluppando un'applicazione del gioco degli scacchi e vuoi consentire agli utenti di annullare le proprie mosse dopo averle fatte. L'ultima mossa fatta è la prima che può essere annullata.Se i giocatori vogliono annullare tre mosse, annulleranno prima l'ultima, poi la penultima e poi la terzultima. Quale classe è più indicata per conservare lo storico delle mosse e consentire l'annullamento? Stack<T>
+",
 	"En": ""
   },
   "AnswerText": {
-	"It": "allora è così perché...",
+	"It": "Slide 26, 06 lezione
+",
 	"En": "",
   },
   "Group": "06",

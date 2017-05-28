@@ -1,21 +1,30 @@
 {
   "Type": "Reorder",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "B,C,D,A",
+  "CorrectAnswer": "B,A,E,C",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Vuoi iniziare a sviluppare una nuova applicazione e hai deciso di renderla open-source sul tuo account GitHub. All'inizio il repository è vuoto ma subito ti metti a scrivere codice sul tuo PC di sviluppo e dopo un paio d'ore vuoi pubblicare il tuo lavoro sul repository GitHub in modo che tutti lo vedano. Quali passi devi compiere?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Ecco la risposta",
+	"It": "Git è un sistema di controllo di versione distribuito. Vuol dire che non esiste un repository \"centrale\" ma esistono varie copie dello stesso repository che devono essere sincronizzare tra loro.  
+Dopo aver creato un nuovo repository su GitHub, è necessario fare il `Clone` per crearne una copia locale su cui puoi iniziare ad apportare modifiche.  
+Per storicizzare le tue modifiche sul repository locale, effettua un `Commit` e poi fai un `Push` per inviare quei commit sul repository remoto, ospitato su GitHub.  
+La `Pull request` non c'entra, perché ti serve solo nel momento in cui vuoi chiedere al proprietario di un altro repository GitHub di integrare il tuo lavoro. In questo caso c'è un solo repository GitHub ed appartiene a te. E' sufficiente fare un `Push` per pubblicare i tuoi commit locali.  
+Il `Revert` qui non c'entra perché la domanda non chiede di annullare dei commit che hai inviato per sbaglio.  
+
+**Materiale di studio**
+
+[Lezione 2, slide 4](https://slack-files.com/files-pri/T4LSU7RKJ-F4Q1R8REV/02-lezione-modellazione.pdf#page=4)",
 	"En": "",
   },
   "Group": "02",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Clona il repository", "En": "" } },
+	{ "Id": "B", "Text": { "It": "Crea un nuovo repository su GitHub", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Fai un push dei commit", "En": "" } },
+	{ "Id": "D", "Text": { "It": "Crea una pull request", "En": "" } },
+	{ "Id": "E", "Text": { "It": "Scrivi codice e fai un commit", "En": "" } },
+	{ "Id": "F", "Text": { "It": "Fai un revert dei commit", "En": "" } }
   ]
 }

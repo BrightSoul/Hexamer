@@ -3,11 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A1,B2,C3",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Dictionary<Tkey, tValue>. L'accademia della crusca ti ha chiamato e ha detto che puoi aggiungere la parola \"petaloso\" e la sua definizione \"pieno di petali\" al dizionario della lingua italiana. Decidi di predisporre un metodo che abbia lo scopo di aggiungere una parola al dizionario e che restituisca true se l'inserimento è avvenuto con successo. Add e containsKey
+",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Ecco la risposta",
+	"It": "Slide 29, 06 lezione
+",
 	"En": "",
   },
   "Group": "06",

@@ -3,11 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A,F",
   "Text": {
-	"It": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"It": "Cosa fa entity framework core? Traduce le nostre query LINQ in query SQL; Salva gli oggetti nel contesto di una transazione (salva tutto o niente); Richiede che le nostre classi del modello derivino da DbEntity, Richiede che le nostre classi del modello abbiano una chiave primaria, Gli oggetti vengono inseriti nel database quando si invoca il metodo Add
+",
 	"En": ""
   },
   "AnswerText": {
-	"It": "allora è così perché...",
+	"It": "Slide 43, 07 lezione; Slide 11, 08 lezione; Slide 12, 08 lezione
+",
 	"En": "",
   },
   "Group": "08",
