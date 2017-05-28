@@ -1,24 +1,35 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "B,C,E",
   "Text": {
-	"It": "Garbage collector: Il C# è un linguaggio managed che ti permette . Hai creato una List<Persona>, chi è che elimina dalla memoria? Garbage collector, nessuno.
-",
+	"It": "Quali delle seguenti affermazioni sul _Garbage Collector_ sono vere?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 12, 05 esercitazione
-",
+	"It": "Il _Garbage Collector_ è uno dei servizi offerti dal runtime del .NET Core che permette allo sviluppatore di essere più produttivo e di non doversi preoccupare di allocare (e deallocare) la memoria RAM. Questa è una pratica che in altri linguaggi di più basso livello come il C deve essere svolta con cura, per non incappare in _memory leaks_, ovvero un sempre crescente uso della memoria RAM, man mano che il programma continua a funzionare.  
+
+Lo scopo del _Garbage Collector_ è quello di liberare periodicamente la memoria RAM dello `heap` dagli oggetti `reference type`, come una List<T>, che non sono più in uso nel programma e perciò possono essere distrutti.
+
+Il suo funzionamento è automatico, quindi non è necessario \"richiamarlo\" in alcun modo ma se lo sviluppatore lo desidera può invocare `GC.Collect()` per farlo agire in momenti specifici.  
+
+Gli oggetti `value type` (come i tipi primitivi int, bool, ecc...) non sono soggetti al lavoro del _Garbage Collector_ perché vengono allocati nell'area di memoria chiamata `stack` e vengono puliti automaticamente quando l'esecuzione di un metodo termina e lo stack si riduce.  
+
+Durante la \"pulitura\" della memoria RAM, i thread dell'applicazione vengono fermati (come quando si fanno le pulizie nei momenti di chiusura degli uffici o dei ristoranti) ma è raramente un problema dato che è un'operazione molto rapida che non si riesce neanche a percepire durante il funzionamento dell'applicazione.  
+
+**Materiale di studio**
+
+[Esercitazione 5, slide 12](https://slack-files.com/files-pri/T4LSU7RKJ-F51GY0J5N/05-esercitazione-covarianza-stack-heap.pdf#page=12)  
+[Lezione 6, slide 4](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=4)  
+[Lezione 6, slide 6](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=6)",
 	"En": "",
   },
   "Group": "05",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Va esplicitamente richiamato dallo sviluppatore, altrimenti non funziona", "En": "" } },
+	{ "Id": "B", "Text": { "It": "Libera la memoria RAM dagli oggetti che non sono più in uso", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Durante la sua esecuzione, blocca i thread dell'applicazione", "En": "" } },
+	{ "Id": "D", "Text": { "It": "Agisce sia sugli oggetti reference type (come List&lt;T&gt;) che su quelli value type (come int)", "En": "" } },
+	{ "Id": "E", "Text": { "It": "E' un ausilio per lo sviluppatore C# che non esiste in altri linguaggi di più basso livello", "En": "" } }
   ]
 }

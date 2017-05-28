@@ -1,17 +1,20 @@
 {
   "Type": "ClickImage",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "0,43,50,50",
+  "CorrectAnswer": "54,150,35,35",
   "Text": {
-	"It": "Decidi di usare LINQ per filtrare una lista ma il compilatore ti segna in rosso la Where. Cosa clicchi per avere suggerimenti su come risolvere il problema?
-",
+	"It": "Stai creando un'applicazione per l'anagrafe che genera statistiche sui Comuni italiani. Dopo aver ottenuto la lista di tutti i Comuni d'Italia, vuoi filtrarli per ottenere solo quelli della provincia di Macerata. Il compilatore ti sottolinea in rosso la query LINQ ma in questo momento non ti viene in mente quale potrebbe essere il problema, visto che la sintassi sembra corretta. Cosa clicchi per avere suggerimenti su come risolvere il problema?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 47, 05 lezione
-",
+	"It": "La lampadina che appare di fianco alle righe di codice è un ausilio che serve a mostrare i suggerimenti del compilatore `Roslyn`, in situazioni d'errore o quando esistono modi per ottimizzare il codice che abbiamo scritto.  
+L'elenco dei suggerimenti può essere richiamato anche premendo la combinazione di tasti `CTRL+.` sulla tastiera.  
+
+**Materiale di studio**
+
+[Esercitazione 5, slide 47](https://slack-files.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=47)",
 	"En": "",
   },
   "Group": "05",
-  "Image": "vscode.png"
+  "Image": "suggestions.png"
 }
