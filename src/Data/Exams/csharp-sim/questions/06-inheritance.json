@@ -1,25 +1,54 @@
 {
   "Type": "CodeCompletion",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A1,B2,C3",
+  "CorrectAnswer": "A2,B1,C3,D2",
   "Text": {
-	"It": "Scegli la parola override e il tipo restituito. Vuoi creare una classe gatto che deriva da animale e vuoi ridefinire il metodo base FaiIlVerso
-",
+	"It": "Un giardino zoologico ti ha commissionato un'applicazione interattiva che permetterà ai visitatori di interagire con un monitor touch. L'applicazione mostrerà le figure di tutte le specie animali ospitate nel parco e, quando un visitatore interagisce con una di esse, verrà riprodotto un file MP3 con il verso dell'animale.  
+Dato che la logica di riproduzione del file audio è comune a tutte le specie, hai creato una classe base chiamata `Animale`.
+```
+public abstract class Animale {
+    protected virtual string NomeFileMp3 {
+        get {
+            return \"silenzio.mp3\";
+        }
+    }
+    
+    public void RiproduciVersoDellAnimale() {
+        System.Media.Play(NomeFileMp3);
+    }
+}
+```  
+A questo punto, inizi ad implementare una classe `Tigre` che deriva da `Animale`, e così farai per ogni altra specie ospitata nel parco. Fai in modo che la classe `Tigre` possa ridefinire il nome del file MP3 da riprodurre.",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 41, 06 Lezione
-",
+	"It": "Per derivare dalla classe base `Animale` si usa la sintassi `public class Tigre : Animale`.  
+	
+Nella classe derivata `Tigre` è possibile ridefinire il comportamento dei membri che nella classe base `Animale` sono stati marcati come `virtual`. In questo caso, la proprietà `NomeFileMp3` è sottoponibile ad `override`.  
+
+Dunque facciamo l'override di `NomeFileMp3` per indicare lo specifico file MP3 da riprodurre quando il visitatore cliccherà sull'immagine della tigre.  
+
+**Materiale di studio**
+
+[Lezione 6, slide 41](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=41)  
+[Lezione 6, slide 46](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=46)",
 	"En": "",
   },
   "Group": "06",
   "CodeText": { 
-	"It": "public pippo {A} on \n {B} on {C}",
+	"It": "public class {A} : {B} {
+    protected {C} string {D} {
+        get {
+            return \"roar.mp3\";
+        }
+    }
+}",
 	"En": ""
   },
   "Blocks": [
-	{ "Id": "A", "Options": [ { "Id": "1", "Text": "\"IEnumerable\"" }, { "Id": "2", "Text": "IList" }, { "Id": "3", "Text": "ICollection" } ] },
-	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Task" }, { "Id": "2", "Text": "void" }, { "Id": "3", "Text": "async" } ] },
-	{ "Id": "C", "Options": [ { "Id": "1", "Text": "return" }, { "Id": "2", "Text": "yield" }, { "Id": "3", "Text": "break" } ] }
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Animale" }, { "Id": "2", "Text": "Tigre" }, { "Id": "3", "Text": "Object" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Animale" }, { "Id": "2", "Text": "Tigre" }, { "Id": "3", "Text": "Object" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "abstract" }, { "Id": "2", "Text": "async" }, { "Id": "3", "Text": "override" } ] },
+	{ "Id": "D", "Options": [ { "Id": "1", "Text": "RiproduciVersoDellAnimale" }, { "Id": "2", "Text": "NomeFileMp3" } ] }
   ]
 }
