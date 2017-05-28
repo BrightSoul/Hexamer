@@ -1,24 +1,26 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "C",
   "Text": {
-	"It": "Scegli decimal anziché float, double, e qualcos'altro
-",
+	"It": "Sei stato assunto nel reparto IT di una banca e stai sviluppando un'applicazione che calcola i tassi di interesse sugli investimenti finanziari dei clienti. Ti serve una variabile a cui assegnerai il risultato del calcolo. Che tipo scegli per dichiarare la variabile?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 13, 02 esercitazione
-",
+	"It": "`decimal` è il tipo più indicato in quanto ti permette di rappresentare numeri in virgola mobile (come percentuali e importi monetari) in maniera esatta. Inoltre, essendo un tipo numerico, ti permette agevolmente di effettuare calcoli matematici.   
+`float` e `double` potrebbero funzionare ma è consigliato non usarli in applicazioni finanziare perché sono soggetti ad approssimazioni indesiderate.  
+`string` è un tipo di dato testuale che potrebbe certamente rappresentare un valore numerico in maniera esatta ma che non consentirebbe di usare quel valore in calcoli matematici come richiesto dalla domanda.  
+
+**Materiale di studio**
+
+[Esercitazione 2, slide 13](https://slack-files.com/files-pri/T4LSU7RKJ-F4RK3EEF4/02-esercitazione-modellazione.pdf#page=13)",
 	"En": "",
   },
   "Group": "02",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "double", "En": "" } },
+	{ "Id": "B", "Text": { "It": "float", "En": "" } },
+	{ "Id": "C", "Text": { "It": "decimal", "En": "" } },
+	{ "Id": "D", "Text": { "It": "string", "En": "" } }
   ]
 }

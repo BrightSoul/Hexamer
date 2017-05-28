@@ -837,6 +837,9 @@ hr {
     display: inline-block;
     width: auto;
 }
+.tooltip {
+    pointer-events: none;
+}
 .tooltip-inner {
     background-color:darkorange;
 }

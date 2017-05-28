@@ -1,24 +1,41 @@
 ﻿{
   "Type": "MultipleChoice",
   "ScoreAwarded": 1.0,
-  "CorrectAnswer": "A,F",
+  "CorrectAnswer": "D",
   "Text": {
-	"It": "Hai un metodo con parametri e tipo restituito a quale lambda corrisponde?
-",
+	"It": "Stai realizzando un sito web per la biblioteca locale e hai scritto un metodo `FiltraPerGenere` per estrarre dal catalogo solo i libri appartenenti ad un certo genere letterario. Il metodo è il seguente:
+```
+public IEnumerable<Libro> FiltraPerGenere(Libro[] libri, string genere) {
+   foreach (Libro libro in libri) {
+        if (libro.Genere == genere) {
+           yield return libro;
+        }
+   }
+}
+```  
+Ora vuoi sostituire questo metodo perché hai scoperto che potresti fare la stessa cosa in maniera molto più compatta usando _LINQ_ e una _lambda expression_. Quale tra le seguenti istruzioni restituisce lo stesso risultato del metodo `FiltraPerGenere`?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 46, 04 Lezione
-",
+	"It": "Il metodo `Where` è quello che si occupa di filtrare una lista e restituire un numero di elementi inferiore o uguale al numero di elementi di partenza.  
+Il metodo `Select`, invece, si occupa di \"proiettare\" gli elementi della lista, ovvero restituire lo stesso numero di elementi ma di tipo diverso, in base a cosa è stato restituito dalla _lambda expression_. Usando `Select`, in questo caso, otterremmo un elenco di valori booleani, anziché un elenco di libri.  
+Il metodo `Take` si occupa di estrarre solo un certo numero di elementi ma qui è stato usato in maniera impropria perché si aspetta un numero intero come argomento, e non una lambda expression.  
+Il metodo `All` non restituisce una lista ma un semplice valore booleano che è _true_ se tutti gli elementi della lista originale sono conformi al criterio di filtro indicato dalla lambda expression.  
+Quando scriviamo la _lambda expression_ per la `Where`, facciamo attenzione a coinvolgere la proprietà `Genere`, altrimenti andiamo a confrontare una stringa (la variabile `genere`) con l'istanza di `Libro`, e questo produrrebbe un errore di compilazione.  
+
+**Materiale di studio**
+
+[Lezione 4, slide 46](https://files.slack.com/files-pri/T4LSU7RKJ-F4XRA1B4M/04-lezione-esame-unittest-eventi-lambdaexpressions.pdf#page=46)  
+[Lezione 5, slide 36](https://files.slack.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=36)",
 	"En": "",
   },
   "Group": "04",
   "Options": [
-	{ "Id": "A", "Text": { "It": "OpzioneA", "En": "" } },
-	{ "Id": "B", "Text": { "It": "OpzioneB", "En": "" } },
-	{ "Id": "C", "Text": { "It": "OpzioneC", "En": "" } },
-	{ "Id": "D", "Text": { "It": "OpzioneD", "En": "" } },
-	{ "Id": "E", "Text": { "It": "OpzioneE", "En": "" } },
-	{ "Id": "F", "Text": { "It": "OpzioneF", "En": "" } }
+	{ "Id": "A", "Text": { "It": "libri.Select(libro => libro.Genere == genere);", "En": "" } },
+	{ "Id": "B", "Text": { "It": "libri.All(libro => libro.Genere == genere);", "En": "" } },
+	{ "Id": "C", "Text": { "It": "libri.Where(libro => libro == genere);", "En": "" } },
+	{ "Id": "D", "Text": { "It": "libri.Where(libro => libro.Genere == genere);", "En": "" } },
+	{ "Id": "E", "Text": { "It": "libri.Select(libro => libro == genere);", "En": "" } },
+	{ "Id": "F", "Text": { "It": "libri.Take(libro => libro == genere);", "En": "" } }
   ]
 }

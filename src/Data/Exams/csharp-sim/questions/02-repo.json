@@ -22,9 +22,9 @@ Il `Revert` qui non c'entra perché la domanda non chiede di annullare dei commi
   "Options": [
 	{ "Id": "A", "Text": { "It": "Clona il repository", "En": "" } },
 	{ "Id": "B", "Text": { "It": "Crea un nuovo repository su GitHub", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Fai un push dei commit", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Fai un push", "En": "" } },
 	{ "Id": "D", "Text": { "It": "Crea una pull request", "En": "" } },
 	{ "Id": "E", "Text": { "It": "Scrivi codice e fai un commit", "En": "" } },
-	{ "Id": "F", "Text": { "It": "Fai un revert dei commit", "En": "" } }
+	{ "Id": "F", "Text": { "It": "Fai un revert", "En": "" } }
   ]
 }
