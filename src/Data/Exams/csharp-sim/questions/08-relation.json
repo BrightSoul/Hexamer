@@ -10,8 +10,11 @@ Come mappi la relazione tra `Cane` e `Padrone` nel metodo `OnModelCreating`?
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 32, 08 lezione
-",
+	"It": "  
+
+**Materiale di studio**
+
+[Lezione 8, slide 32](https://files.slack.com/files-pri/T4LSU7RKJ-F5AE3AWGZ/08-lezione-entityframework-relazioni.pdf#page=32)",
 	"En": "",
   },
   "Group": "08",
@@ -20,8 +23,8 @@ Come mappi la relazione tra `Cane` e `Padrone` nel metodo `OnModelCreating`?
     mb.Entity&lt;Padrone&gt;().ToTable(\"Padroni\").HasKey(padrone => padrone.Id);
     mb.Entity&lt;Cane&gt;().ToTable(\"Cani\").HasKey(cane => cane.Id);
     mb.Entity&lt;Cane&gt;()
-        .{A}(cane => cane.Padrone)
-        .{B}(padrone => padrone.Cani)
+        .{A}(cane =&gt; cane.Padrone)
+        .{B}(padrone =&gt; padrone.Cani)
         .{C}();
 }",
 	"En": ""

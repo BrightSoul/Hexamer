@@ -23,7 +23,7 @@ Quando si dice che una data è \"trascorsa\", vuol dire che è nel passato e qui
   "Group": "04",
   "CodeText": { 
 	"It": "public void RimuoviProdottiNonPiùValidi({A} prodotti) {
-    {B} (int i = prodotti.Count-1; i >= 0; i--) {
+    {B} (int i = prodotti.Count-1; i &gt;= 0; i--) {
         if (prodotti[i].DataValidità {C} DateTime.Now) {
             prodotti.RemoveAt(i);
         }

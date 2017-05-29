@@ -8,13 +8,17 @@ Finora hai scritto l'action `Prenota` che riceve i dati inviati dal form. La pre
 	"En": ""
   },
   "AnswerText": {
-	"It": "",
+	"It": "  
+
+**Materiale di studio**
+
+[Lezione 9, slide 8](https://files.slack.com/files-pri/T4LSU7RKJ-F5EAZRPB7/09-lezione-asp-net-core.pdf#page=8)",
 	"En": "",
   },
   "Group": "09",
   "CodeText": { 
 	"It": "[HttpPost]
-public async Task<IActionResult> Prenota(Prenotazione prenotazione) {
+public async Task&lt;IActionResult&gt; Prenota(Prenotazione prenotazione) {
     if ({A}) {
         await servizioPrenotazioni.Aggiungi(prenotazione);
         return {B}(\"Index\");

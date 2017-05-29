@@ -8,8 +8,11 @@ Vuoi che ASP.NET Core fornisca sempre la stessa istanza ad ogni Controller che a
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 21, 10 lezione
-",
+	"It": "  
+
+**Materiale di studio**
+
+[Lezione 10, slide 21](https://files.slack.com/files-pri/T4LSU7RKJ-F5HP1EQLA/10-lezione-refactoring-model-binding.pdf#page=21)",
 	"En": "",
   },
   "Group": "10",

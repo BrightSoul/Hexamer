@@ -33,11 +33,11 @@ Il metodo `OrderBy` in questo caso non è utile perché il risultato finale deve
   },
   "Group": "05",
   "CodeText": { 
-	"It": "public decimal CalcolaImportiNonPagati(IEnumerable<Fattura> fatture, int idCliente) {
+	"It": "public decimal CalcolaImportiNonPagati(IEnumerable&lt;Fattura&gt; fatture, int idCliente) {
     return fatture
-            .{A}(fattura => !fattura.Pagata)
-            .{B}(fattura => fattura.IdCliente == idCliente)
-            .{C}(fattura => fattura.ImportoFattura)
+            .{A}(fattura =&gt; !fattura.Pagata)
+            .{B}(fattura =&gt; fattura.IdCliente == idCliente)
+            .{C}(fattura =&gt; fattura.ImportoFattura)
             .Sum();
 }",
 	"En": ""

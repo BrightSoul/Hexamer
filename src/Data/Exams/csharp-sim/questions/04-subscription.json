@@ -29,9 +29,9 @@ Eventualmente, puoi fare in modo che l'evento passi come argomento l'oggetto `Ap
   },
   "Group": "04",
   "Options": [
-	{ "Id": "A", "Text": { "It": "calendario.NotificaAppuntamento += (sender, args) => { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } },
-	{ "Id": "B", "Text": { "It": "calendario.NotificaAppuntamento.Subscribe((sender, args) => { Console.WriteLine(\"Hai un appuntamento!\"); })", "En": "" } },
-	{ "Id": "C", "Text": { "It": "calendario.NotificaAppuntamento = sender, args => { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } },
-	{ "Id": "D", "Text": { "It": "calendario.NotificaAppuntamento => (sender, args) { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } }
+	{ "Id": "A", "Text": { "It": "calendario.NotificaAppuntamento += (sender, args) =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } },
+	{ "Id": "B", "Text": { "It": "calendario.NotificaAppuntamento.Subscribe((sender, args) =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); })", "En": "" } },
+	{ "Id": "C", "Text": { "It": "calendario.NotificaAppuntamento = sender, args =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } },
+	{ "Id": "D", "Text": { "It": "calendario.NotificaAppuntamento =&gt; (sender, args) { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } }
   ]
 }

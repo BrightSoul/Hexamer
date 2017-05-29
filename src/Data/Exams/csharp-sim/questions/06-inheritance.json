@@ -39,7 +39,7 @@ Dunque facciamo l'override di `NomeFileMp3` per indicare lo specifico file MP3 d
 	"It": "public class {A} : {B} {
     protected {C} string {D} {
         get {
-            return \"roar.mp3\";
+            return \"ruggito.mp3\";
         }
     }
 }",

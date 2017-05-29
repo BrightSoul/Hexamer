@@ -8,8 +8,11 @@ Essendo un lavoro intensivo per la CPU, hai scoperto che potresti ottenere perfo
 	"En": ""
   },
   "AnswerText": {
-	"It": "Slide 9, 08 esercizione
-",
+	"It": "  
+
+**Materiale di studio**
+
+[Esercitazione 8, slide 9](https://files.slack.com/files-pri/T4LSU7RKJ-F5BKMUU04/08-lezione-parallelismo.pdf#page=9)",
 	"En": "",
   },
   "Group": "08",
@@ -19,7 +22,7 @@ Essendo un lavoro intensivo per la CPU, hai scoperto che potresti ottenere perfo
     return parole
              .{A}()
              .{B}(3)
-             .Select(parola => CalcolaPunteggioPerParola(parola))
+             .Select(parola =&gt; CalcolaPunteggioPerParola(parola))
              .Avg();
 }",
 	"En": ""
