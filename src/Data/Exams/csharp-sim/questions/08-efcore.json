@@ -3,11 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A,C,E",
   "Text": {
-	"It": "Quali di queste affermazioni su Entity Framework Core sono vere?",
+	"It": "Quali di queste affermazioni su _Entity Framework Core_ sono vere?",
 	"En": ""
   },
   "AnswerText": {
-	"It": "  
+	"It": "_Entity Framework Core_ si occupa di `tradurre le nostre query LINQ in SQL` e perciò richiede che le `classi abbiano una chiave primaria` per un motivo pratico: deve poterle distinguere univocamente nel momento in le legge, le aggiorna o le elimina dal database;  
+Le classi del modello `non devono derivare da alcuna altra classe`, infatti si dice che possono restare _POCO_ (Plain-old C# Object);  
+Quando aggiungiamo un oggetto con il metodo `Add` alla classe che deriva dal `DbContext`, il nostro oggetto viene semplicemente \"tracciato\" dal `DbContext`, ma il suo effettivo inserimento nel database si verificherà soltanto nel momento in cui invochiamo il metodo `SaveChangesAsync`. Tutti gli oggetti che erano stati aggiunti con il metodo `Add` (o modificati o eliminati), verranno persistiti nel contesto di una transazione: se anche uno solo dei comandi SQL dovesse fallire, l'intera operazione di aggiornamento fallirà. La transazione serve appunto ad assicurarci che non ci troveremo con dati inconsistenti e perciò verrà aggiornato o tutto o niente.
 
 **Materiale di studio**
 
