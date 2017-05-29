@@ -10,7 +10,12 @@ Come mappi la relazione tra `Cane` e `Padrone` nel metodo `OnModelCreating`?
 	"En": ""
   },
   "AnswerText": {
-	"It": "  
+	"It": "Una relazione 1-a-molti può essere mappata sia partendo dall'entità principale `Padrone` ma anche dall'entità dipendente `Cane`. In questa domanda, la relazione viene mappata partendo dall'entità dipendente `Cane`.  
+Sappiamo che un `Cane` deve avere un solo padrone, quindi sceglieremo il metodo `HasOne` ed indicheremo la proprietà di navigazione chiamata `Padrone`.  
+Ora il mapping continua dal punto di vista del `Padrone`, che può avere molti cani, e perciò useremo il metodo `WithMany`.  
+Per concludere, dobbiamo indicare l'obbligatorietà della presenza di un `Padrone`. Questo si realizza usando il metodo `IsRequired`.  
+_Entity Framework Core_ farà in modo che il vincolo di foreign key venga posto su una colonna della tabella `Cani` e non ammetterà valori null.  
+Il codice delle classi `Cane` e `Padrone` non è stato mostrato, ma non è rilevante ai fini della soluzione.  
 
 **Materiale di studio**
 

@@ -8,7 +8,14 @@ Finora hai scritto l'action `Prenota` che riceve i dati inviati dal form. La pre
 	"En": ""
   },
   "AnswerText": {
-	"It": "  
+	"It": "Ogni volta che riceviamo dei dati dagli utenti, ricordiamoci di verificare che siano validi con `ModelState.IsValid`. ASP.NET MVC si assicurerà che tutti gli attributi come `[Required]` che abbiamo posto sulle proprietà della nostra classe `Prenotazione` siano rispettati.  
+Questa si chiama **validazione lato server** e ci assicura che nel nostro sistema entrino solo dati validi.  
+
+Se la prenotazione è valida, la aggiungiamo al servizio prenotazioni e poi reindirizziamo l'utente verso la pagina Index usando il metodo `RedirectToAction`.  
+Il metodo `File`, invece, serve a fornire un file all'utente, come per esempio una ricevuta della sua prenotazione ma in questo caso non era richiesto.  
+Il metodo `Ok` serve a restituire al client un oggetto serializzato in JSON o in XML, ed è più indicato per applicazioni Web API dato che il risultato non sarebbe facilmente leggibile da utenti inesperti (e sarebbe comunque un risultato testuale privo di grafica).  
+
+Invece, se i dati della prenotazione non fossero validi, mostriamo di nuovo la pagina di inserimento dati all'utente usando il metodo `View` affinché possa correggere i dati.  
 
 **Materiale di studio**
 

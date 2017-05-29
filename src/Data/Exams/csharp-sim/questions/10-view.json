@@ -3,12 +3,14 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A2,B1,C1",
   "Text": {
-	"It": "In un'applicazione ASP.NET Core, stai realizzando una view per presentare una lista di automobili.  
+	"It": "In un'applicazione ASP.NET Core, stai realizzando una view per presentare un elenco di automobili.  
 Le automobili devono essere presentate in un elenco puntato e per ciascuna va scritto il modello e l'anno di produzione.",
 	"En": ""
   },
   "AnswerText": {
-	"It": "  
+	"It": "Dovendo presentare un `elenco di automobili`, la direttiva `@model` dovrà essere impostata sul tipo `IEnumerable<Automobile>` che rappresenta appunto un elenco.  
+A questo punto, nella view avremo a disposizione una proprietà `Model` di quel tipo che conterrà il riferimento all'elenco di automobili fornito dal `Controller`. Potremo ciclarlo con un `@foreach` per scrivere il modello e l'anno, come richiesto dalla domanda.  
+Usare le chiocciole è importante per introdurre un blocco di codice C# all'interno della view, che sarà composta prevalentemente di codice HTML.
 
 **Materiale di studio**
 

@@ -7,7 +7,11 @@
 	"En": ""
   },
   "AnswerText": {
-	"It": "  
+	"It": "In un team, i vari sviluppatori hanno competenze e stili diversi, per non parlare delle loro diverse interpretazioni dei problemi da risolvere. In questa situazione, è facile che il codice diventi presto disomogeneo e ingestibile. E' importante essere disciplinati per evitare che ciò succeda.  
+Se l'intero team si accorda sulla creazione di `unit test` prima che venga scritta l'`implementazione` sarà anche più facile fare `refactoring` per tenere ordinato il codice e fare in modo che il progetto non rallenti.  
+Se il team non si accorda su queste buone pratiche, verrà presto introdotto del `debito tecnico` che non verrà mai smaltito, ovvero delle magagne fatte in preda alla frustrazione pur di far funzionare qualcosa. Se mancano gli `unit test`, nessuno si prenderà mai la responsabilità di toccare un qualcosa che, seppur in maniera pessima, funziona.  
+Quando il progetto è complesso, si preferisce creare classi `debolmente accoppiate` tra loro, ovvero che hanno pochi punti di contatto e che possono essere sostituite con altre implementazioni abbastanza facilmente nel caso in cui la specifica dovesse cambiare.  
+Scrivere classi `fortemente accoppiate` è invece il modo più rapido per creare una matassa che nessuno vorrà mai sbrogliare.  
 
 **Materiale di studio**
 
