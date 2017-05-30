@@ -41,4 +41,10 @@ export class En implements ILocale {
     LogoutConfirmation: string = "Are you sure you want to logout?";
     Expiration: string = "Available until";
     NoExpiration: string = "No expiration date";
+
+    Username: string = "Username";
+    AnswersNumber: string = "Answers";
+    Score: string = "Score";
+    Token: string = "Token";
+    Impersonate: string = "Impersonate";
 }

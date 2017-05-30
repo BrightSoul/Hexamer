@@ -42,5 +42,9 @@ export class It implements ILocale {
     Expiration: string = "Disponibile fino al";
     NoExpiration: string = "Nessuna scadenza";
 
-
+    Username: string = "Nome utente";
+    AnswersNumber: string = "Risposte";
+    Score: string = "Punteggio";
+    Token: string = "Token";
+    Impersonate: string = "Impersona";
 }

@@ -81,12 +81,7 @@ namespace Hexamer.Model.Results
                 IsNewlyCompleted = true;
             }
 
-            decimal normalizedScore = Convert.ToDecimal(score);
-            if (normalizedScore - Convert.ToInt32(normalizedScore) >= 0.7m) {
-                normalizedScore = Math.Ceiling(normalizedScore);
-            } else {
-                normalizedScore = Math.Floor(normalizedScore);
-            }
+            decimal normalizedScore = NormalizeScore(Convert.ToDecimal(score));
             if (normalizedScore > MaximumScore) {
                 Rating = "excellent";
             } else if (normalizedScore == MaximumScore) {
@@ -98,6 +93,16 @@ namespace Hexamer.Model.Results
             }
             Passed = normalizedScore >= MinimumScore;
             Score = Math.Min(normalizedScore, MaximumScore);
+        }
+
+        public static decimal NormalizeScore(decimal score) {
+            decimal normalizedScore = score;
+            if (normalizedScore - Convert.ToInt32(normalizedScore) >= 0.7m) {
+                normalizedScore = Math.Ceiling(normalizedScore);
+            } else {
+                normalizedScore = Math.Floor(normalizedScore);
+            }
+            return normalizedScore;
         }
     }
 }

@@ -46,4 +46,10 @@ export interface ILocale {
 
     Expiration: string;
     NoExpiration: string;
+    
+    Username: string;
+    AnswersNumber: string;
+    Score: string;
+    Token: string;
+    Impersonate: string;
 }

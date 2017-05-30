@@ -1,5 +1,6 @@
 export enum Page {
     Login,
     Exams,
-    Questions
+    Questions,
+    Admin
 }

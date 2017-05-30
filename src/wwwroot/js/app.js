@@ -40,6 +40,7 @@ define("Models/Page", ["require", "exports"], function (require, exports) {
         Page[Page["Login"] = 0] = "Login";
         Page[Page["Exams"] = 1] = "Exams";
         Page[Page["Questions"] = 2] = "Questions";
+        Page[Page["Admin"] = 3] = "Admin";
     })(Page = exports.Page || (exports.Page = {}));
 });
 define("Models/User", ["require", "exports"], function (require, exports) {
@@ -113,6 +114,38 @@ define("Models/Exam", ["require", "exports"], function (require, exports) {
         return Exam;
     }());
     exports.Exam = Exam;
+});
+define("Admin", ["require", "exports", "knockout"], function (require, exports, ko) {
+    "use strict";
+    var AdminViewModel = (function () {
+        function AdminViewModel(navigationContext) {
+            this.navigationContext = navigationContext;
+            this.Exams = ko.observableArray();
+            this.navigationContext.Layout.IsBusy(true);
+            this.GetExams();
+            navigationContext.Layout.SetTitle("Admin");
+        }
+        AdminViewModel.prototype.GetExams = function () {
+            return __awaiter(this, void 0, void 0, function () {
+                var exams;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.navigationContext.Layout.Get('/api/Exams')];
+                        case 1:
+                            exams = _a.sent();
+                            this.Exams(exams);
+                            this.navigationContext.Layout.IsBusy(false);
+                            return [2 /*return*/];
+                    }
+                });
+            });
+        };
+        return AdminViewModel;
+    }());
+    function initialize(navigationContext) {
+        return new AdminViewModel(navigationContext);
+    }
+    exports.initialize = initialize;
 });
 define("Exams", ["require", "exports", "knockout", "Models/Page"], function (require, exports, ko, Page_2) {
     "use strict";
@@ -671,6 +704,11 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.LogoutConfirmation = "Are you sure you want to logout?";
             this.Expiration = "Available until";
             this.NoExpiration = "No expiration date";
+            this.Username = "Username";
+            this.AnswersNumber = "Answers";
+            this.Score = "Score";
+            this.Token = "Token";
+            this.Impersonate = "Impersonate";
         }
         return En;
     }());
@@ -721,6 +759,11 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.LogoutConfirmation = "Sei sicuro di voler uscire?";
             this.Expiration = "Disponibile fino al";
             this.NoExpiration = "Nessuna scadenza";
+            this.Username = "Nome utente";
+            this.AnswersNumber = "Risposte";
+            this.Score = "Punteggio";
+            this.Token = "Token";
+            this.Impersonate = "Impersona";
         }
         return It;
     }());

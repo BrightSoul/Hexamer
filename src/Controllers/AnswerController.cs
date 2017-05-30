@@ -28,7 +28,6 @@ namespace Hexamer.Controllers
         [HttpPost("{examId}/{questionNumber}")]
         public async Task<IActionResult> Post(string examId, int questionNumber, [FromBody] AnswerRequest request)
         {
-
             var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
             if (answer == null)
                 return NotFound("Answer");

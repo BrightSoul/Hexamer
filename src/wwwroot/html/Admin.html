@@ -1,0 +1,26 @@
+﻿<section class="content">
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th data-bind="locale: 'Username'"></th>
+      <th data-bind="locale: 'AnswersNumber'"></th>
+      <th data-bind="locale: 'Score'"></th>
+      <th data-bind="locale: 'Token'"></th>
+      <th data-bind="locale: 'Impersonate'"></th>
+    </tr>
+    <tr>
+      <td><input type="search" class="form-control" data-bind="value: Search" /></td>
+      <td colspan="3"><select class="form-control" data-bind="options: Exams, optionText: 'Title'"></select></td>
+      <td><button type="button" data-bind="click: Impersonate, locale: 'Impersonate'"></button></td>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: FilteredUsers">
+    <tr>
+      <td data-bind="text: Username"></td>
+      <td data-bind="text: Score"></td>
+      <td></td>
+      <td><button type="button"></button></td>
+    </tr>
+  </tbody>
+</table>
+</section>
