@@ -48,6 +48,8 @@ namespace Hexamer
             services.AddTransient<IAnswerRepository, AnswerRepository>();
             services.AddSingleton<DbProviderFactory>(SqliteFactory.Instance);
             services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration, contentRootPath));
+            services.AddSingleton<Services.ILogger, FileLogger>();
+            services.AddSingleton<IAuthority, CookieAuthority>();
             services.AddMvc(options => {
                 var policy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()
