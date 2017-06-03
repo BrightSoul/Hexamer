@@ -32,7 +32,7 @@ namespace Hexamer.Controllers
             if (answer == null)
                 return NotFound("Answer");
 
-            var exam = examRepository.GetById(examId, Request.GetLanguage());
+            var exam = examRepository.GetById(examId, Request.GetLanguage(config.DefaultLocalization));
             if (exam == null)
                 return NotFound("Exam");
 
@@ -51,6 +51,9 @@ namespace Hexamer.Controllers
             {
 
             }
+            var token = User.Identity.Token(HttpContext);
+            //logger.LogAnswer
+
             return Ok();
         }
 

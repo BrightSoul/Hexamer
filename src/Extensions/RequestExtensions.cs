@@ -7,13 +7,10 @@ namespace Hexamer.Extensions
 {
     public static class RequestExtensions
     {
-        public static string GetLanguage(this HttpRequest request)
+        public static string GetLanguage(this HttpRequest request, string defaultLanguage)
         {
             var acceptLanguage = request.GetTypedHeaders().AcceptLanguage.FirstOrDefault();
-            if (acceptLanguage == null)
-                return "En";
-            
-            return acceptLanguage.Value;
+            return acceptLanguage?.Value ?? defaultLanguage;
         }
     }
 }

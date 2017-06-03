@@ -78,7 +78,7 @@ namespace Hexamer
             }
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
-                AuthenticationScheme = "CookieAuth",
+                AuthenticationScheme = Configuration["App:AuthenticationMechanism"],
                 LoginPath = new PathString("/"),
                 AccessDeniedPath = new PathString("/Error.html"),
                 AutomaticAuthenticate = true,

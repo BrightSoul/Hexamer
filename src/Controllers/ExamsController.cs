@@ -29,7 +29,7 @@ namespace Hexamer.Controllers
         [HttpGet]
         public async Task<IEnumerable<ExamResult>> GetAll()
         {
-            string language = Request.GetLanguage();
+            string language = Request.GetLanguage(config.DefaultLocalization);
             var enabledExams = examRepository.GetAll(language).Visible().ToList();
             var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam, language)).ToList();
             foreach (var examResult in examResults)
@@ -54,7 +54,7 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}")]
         public async Task<IActionResult> Detail(string examId)
         {
-            string language = Request.GetLanguage();
+            string language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
             if (exam == null)
                 return NotFound();
@@ -72,7 +72,7 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}/Image")]
         public IActionResult Image(string examId, string path)
         {
-            string language = Request.GetLanguage();
+            string language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
             if (exam == null || !exam.CanOpen)
                 return NotFound();
@@ -110,13 +110,13 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}/{questionNumber}")]
         public async Task<IActionResult> QuestionDetail(string examId, int questionNumber)
         {
-            var language = Request.GetLanguage();
+            var language = Request.GetLanguage(config.DefaultLocalization);
 
             var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
             if (answer == null)
                 return NotFound("Answer");
 
-            var exam = examRepository.GetById(examId, Request.GetLanguage());
+            var exam = examRepository.GetById(examId, language);
             if (exam == null)
                 return NotFound("Exam");
 
@@ -130,13 +130,19 @@ namespace Hexamer.Controllers
 
             var result = QuestionResult.FromEntities(examResult, question, answer, User.Identity);
             await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
+            
+            var token = User.Identity.Token(HttpContext);
+            //logger.LogDisplayed
+
             return Ok(result);
         }
+
 
         [HttpPost("{examId}")]
         public async Task<IActionResult> Reset(string examId)
         {
-            var exam = examRepository.GetById(examId, Request.GetLanguage());
+            var language = Request.GetLanguage(config.DefaultLocalization);
+            var exam = examRepository.GetById(examId, language);
             if (exam == null)
                 return NotFound("Exam");
 

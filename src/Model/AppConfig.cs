@@ -42,8 +42,9 @@ namespace Hexamer.Model
             }
         }
         public string[] SupportedLogins { get; set; }
+        public string[] Administrators { get; set; }
         public string DefaultLocalization { get; set; }
-
+        public string AuthenticationMechanism { get; set; }
         public string SlackClientId { get; set; }
         public string SlackSecret { get; set; }
         public string SlackTeamId { get; set; }
@@ -57,6 +58,9 @@ namespace Hexamer.Model
                 UserDataDirectory = configuration["App:UserDataDirectory"],
                 Name = configuration["App:Name"],
                 DefaultLocalization = configuration["App:DefaultLocalization"],
+                AuthenticationMechanism = configuration["App:AuthenticationMechanism"],
+                Administrators = configuration.GetValue<string[]>("App:Administrators"),
+                SupportedLogins = configuration.GetValue<string[]>("App:SupportedLogins"),
                 SlackClientId = configuration["App:SlackClientId"],
                 SlackSecret = configuration["App:SlackSecret"],
                 SlackTeamId = configuration["App:SlackTeamId"],

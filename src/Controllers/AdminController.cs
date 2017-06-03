@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hexamer.Extensions;
+using Hexamer.Model;
 using Hexamer.Model.Results;
 using Hexamer.Results;
 using Hexamer.Services;
@@ -14,17 +15,19 @@ namespace Hexamer.Controllers
         private readonly IUserRepository userRepository;
         private readonly IAnswerRepository answerRepository;
         private readonly IExamRepository examRepository;
-        public AdminController(IExamRepository examRepository, IUserRepository userRepository, IAnswerRepository answerRepository)
+        private readonly AppConfig config;
+        public AdminController(IExamRepository examRepository, IUserRepository userRepository, IAnswerRepository answerRepository, AppConfig config)
         {
             this.userRepository = userRepository;
             this.answerRepository = answerRepository;
             this.examRepository = examRepository;
+            this.config = config;
         }
 
         [HttpGet("Exams/{examId}")]
         public async Task<IActionResult> Index(string examId) {
 
-            var language = Request.GetLanguage();
+            var language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
             if (exam == null)
                 return NotFound();
