@@ -17,12 +17,14 @@ namespace Hexamer.Controllers
     {
         private readonly IExamRepository examRepository;
         private readonly IAnswerRepository answerRepository;
+        private readonly IStatistics statistics;
         private readonly AppConfig config;
-        public AnswerController(IExamRepository examRepository, IAnswerRepository answerRepository, AppConfig config)
+        public AnswerController(IExamRepository examRepository, IAnswerRepository answerRepository, IStatistics statistics, AppConfig config)
         {
             this.examRepository = examRepository;
             this.answerRepository = answerRepository;
             this.config = config;
+            this.statistics = statistics;
         }
 
         [HttpPost("{examId}/{questionNumber}")]
@@ -43,16 +45,8 @@ namespace Hexamer.Controllers
             var score = question.CalculateScore(request.AnswerProvided, out bool isCorrectAnswer, out bool isCompleteAnswer);
             var result = await answerRepository.UpdateAnswer(User.Identity.Name, examId, questionNumber, request.AnswerProvided, score, isCorrectAnswer, isCompleteAnswer);
 
-            try
-            {
-                System.IO.File.AppendAllText(Path.Combine(config.ExamsDataDirectory, "answerlog.txt"), $"{DateTime.Now.ToString("yyyyMMddHHmmss")}\t{User.Identity.Name}\t{question.Id}\t{score}\r\n");
-            }
-            catch
-            {
-
-            }
             var token = User.Identity.Token(HttpContext);
-            //logger.LogAnswer
+            statistics.LogQuestionAnswered(User.Identity.Name, User.Identity.Token(), examId, question.Id, answer.Number, answer.ScoreAwarded ?? 0.0, answer.IsCorrectAnswer);
 
             return Ok();
         }

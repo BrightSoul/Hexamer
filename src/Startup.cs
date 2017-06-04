@@ -48,7 +48,7 @@ namespace Hexamer
             services.AddTransient<IAnswerRepository, AnswerRepository>();
             services.AddSingleton<DbProviderFactory>(SqliteFactory.Instance);
             services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration, contentRootPath));
-            services.AddSingleton<Services.ILogger, FileLogger>();
+            services.AddSingleton<IStatistics, FileStatistics>();
             services.AddSingleton<IAuthority, CookieAuthority>();
             services.AddMvc(options => {
                 var policy = new AuthorizationPolicyBuilder()
@@ -80,7 +80,7 @@ namespace Hexamer
             }
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
-                AuthenticationScheme = Configuration["App:AuthenticationMechanism"],
+                AuthenticationScheme = Configuration["App:AuthenticationScheme"],
                 LoginPath = new PathString("/"),
                 AccessDeniedPath = new PathString("/Error.html"),
                 AutomaticAuthenticate = true,

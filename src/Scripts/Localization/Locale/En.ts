@@ -30,7 +30,7 @@ export class En implements ILocale {
     Options: string = "options";
     CompleteCode: string = "Complete the code by selecting the correct options";
     ClickImage: string = "Click the image on the correct spot";
-    Reorder: string = "Move the options to the solution container. Order is important!";
+    Reorder: string = "Move the options to the solution container by ordering them from top to bottom. Order is important!";
     Explanation: string = "Explanation";
     TimesUp: string = "Time's up!";
     BookmarkAnswer: string = "Review this question later";

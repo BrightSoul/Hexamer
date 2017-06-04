@@ -31,7 +31,7 @@ export class It implements ILocale {
     Options: string = "scelte";
     CompleteCode: string = "Completa il codice selezionando le voci corrette";
     ClickImage: string = "Clicca sull'immagine nel punto corretto";
-    Reorder: string = "Sposta i blocchi nel contenitore della soluzione. L'ordine è importante!";
+    Reorder: string = "Sposta i blocchi nel contenitore della soluzione, sistemandoli in ordine dall'alto in basso. L'ordine è importante!";
     Explanation: string = "Spiegazione";
     BookmarkAnswer: string = "Ricontrolla la domanda più tardi";
     AverageTimePerAnswer: string = "circa per domanda";

@@ -16,13 +16,15 @@ namespace Hexamer.Controllers
     {
         private readonly IExamRepository examRepository;
         private readonly IAnswerRepository answerRepository;
+        private readonly IStatistics statistics;
         private readonly AppConfig config;
 
-        public ExamsController(AppConfig config, IExamRepository examRepository, IAnswerRepository answerRepository)
+        public ExamsController(IExamRepository examRepository, IAnswerRepository answerRepository, IStatistics statistics, AppConfig config)
         {
             this.examRepository = examRepository;
             this.answerRepository = answerRepository;
             this.config = config;
+            this.statistics = statistics;
         }
 
         // GET api/values
@@ -38,14 +40,7 @@ namespace Hexamer.Controllers
                 examResult.SetScore(answers);
                 if (examResult.IsNewlyCompleted)
                 {
-                    try
-                    {
-                        System.IO.File.AppendAllText(Path.Combine(config.ExamsDataDirectory, "examlog.txt"), $"{DateTime.Now.ToString("yyyyMMddHHmmss")}\t{User.Identity.Name}\t{examResult.Score}\r\n");
-                    }
-                    catch
-                    {
-
-                    }
+                    statistics.LogExamCompleted(User.Identity.Name, User.Identity.Token(), examResult.Id, examResult.Score ?? 0m);
                 }
             }
             return examResults;

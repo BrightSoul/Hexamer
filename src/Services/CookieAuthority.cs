@@ -11,11 +11,12 @@ using Microsoft.AspNetCore.Http.Authentication;
 namespace Hexamer.Services {
     public class CookieAuthority : IAuthority
     {
-        private const string authenticationScheme = "CookieAuth";
+        private readonly string authenticationScheme;
         private readonly TimeSpan cookieDuration;
         private readonly AppConfig config;
         public CookieAuthority(AppConfig config)
         {
+            authenticationScheme = config.AuthenticationScheme;
             cookieDuration = TimeSpan.FromDays(90);
             this.config = config;
         }
