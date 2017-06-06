@@ -9,17 +9,18 @@
       <th data-bind="locale: 'Impersonate'"></th>
     </tr>
     <tr>
-      <td><input type="search" class="form-control" data-bind="value: Search" /></td>
-      <td colspan="3"><select class="form-control" data-bind="options: Exams, optionText: 'Title'"></select></td>
-      <td><button type="button" data-bind="click: Impersonate, locale: 'Impersonate'"></button></td>
+      <td><input type="search" class="form-control" data-bind="value: Search, valueUpdate: 'keyup'" style="width: 100%" /></td>
+      <td colspan="3"><select class="form-control" data-bind="options: Exams, optionsText: 'Title', optionsValue: 'Id', value: SelectedExam" style="width:100%"></select></td>
+      <td><button type="button" class="btn btn-default" data-bind="click: ImpersonateBySearch, locale: 'Impersonate'"></button></td>
     </tr>
   </thead>
-  <tbody data-bind="foreach: FilteredUsers">
+  <tbody data-bind="foreach: FilteredScoreResults">
     <tr>
       <td data-bind="text: Username"></td>
-      <td data-bind="text: Score"></td>
-      <td></td>
-      <td><button type="button"></button></td>
+      <td data-bind="text: AnsweredQuestions"></td>
+      <td><span data-bind="text: NormalizedScore, attr: {title: Score}"></span><span style="margin-left:6px;" data-bind="locale: 'CumLaude', visible: Excellence"></span></td>
+      <td data-bind="foreach: Tokens"><div data-bind="text: $data"></div></td>
+      <td><button type="button" class="btn btn-default" data-bind="locale: 'Impersonate'"></button></td>
     </tr>
   </tbody>
 </table>

@@ -52,20 +52,22 @@ namespace Hexamer.Model
 
         public static AppConfig FromConfiguration(IConfigurationRoot configuration, string contentRootPath)
         {
-            return new AppConfig(contentRootPath)
-            {
-                ExamsDataDirectory = configuration["App:ExamsDataDirectory"],
+            var config = new AppConfig(contentRootPath);
+
+            
+                configuration.GetSection("App").Bind(config);
+                /*ExamsDataDirectory = configuration["App:ExamsDataDirectory"],
                 UserDataDirectory = configuration["App:UserDataDirectory"],
                 Name = configuration["App:Name"],
                 DefaultLocalization = configuration["App:DefaultLocalization"],
                 AuthenticationScheme = configuration["App:AuthenticationScheme"],
-                Administrators = configuration.GetValue<string[]>("App:Administrators"),
-                SupportedLogins = configuration.GetValue<string[]>("App:SupportedLogins"),
+                Administrators = configuration.GetSection("App:Administrators").Bi,
+                SupportedLogins = configuration.GetSection("App:SupportedLogins"),
                 SlackClientId = configuration["App:SlackClientId"],
                 SlackSecret = configuration["App:SlackSecret"],
                 SlackTeamId = configuration["App:SlackTeamId"],
-                SlackScope = configuration["App:SlackScope"]
-            };
+                SlackScope = configuration["App:SlackScope"]*/
+            return config;
         }
     }
 }

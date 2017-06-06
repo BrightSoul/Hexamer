@@ -480,6 +480,9 @@ footer {
         bottom: 54px;
     }
 }
+.module-admin .content {
+    margin-top: 50px;
+}
 
 .module-exams .content {
     position: fixed;

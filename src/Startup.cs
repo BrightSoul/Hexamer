@@ -15,6 +15,7 @@ using Newtonsoft.Json.Serialization;
 using System.Data.Common;
 using Microsoft.Data.Sqlite;
 using CommonMark;
+using System.Security.Claims;
 
 namespace Hexamer
 {
@@ -57,10 +58,18 @@ namespace Hexamer
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             
+            services.AddAuthorization(options => {
+                var administratorPolicy = new AuthorizationPolicyBuilder()
+                .RequireClaim(ClaimTypes.Role, "Administrator")
+                .Build();
+                options.AddPolicy("Administrator", administratorPolicy);
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Hexamer API", Version = "v1" });
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

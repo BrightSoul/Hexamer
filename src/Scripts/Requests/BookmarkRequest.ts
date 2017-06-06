@@ -1,3 +1,3 @@
 export class BookmarkRequest {
-    IsBookmarked: boolean;
+    public IsBookmarked: boolean;
 }

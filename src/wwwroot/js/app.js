@@ -115,12 +115,95 @@ define("Models/Exam", ["require", "exports"], function (require, exports) {
     }());
     exports.Exam = Exam;
 });
-define("Admin", ["require", "exports", "knockout"], function (require, exports, ko) {
+define("Results/ScoreResult", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var ScoreResult = (function () {
+        function ScoreResult() {
+        }
+        return ScoreResult;
+    }());
+    exports.ScoreResult = ScoreResult;
+});
+define("Requests/ImpersonateRequest", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var ImpersonateRequest = (function () {
+        function ImpersonateRequest() {
+        }
+        return ImpersonateRequest;
+    }());
+    exports.ImpersonateRequest = ImpersonateRequest;
+});
+define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/ScoreResult", "Requests/ImpersonateRequest"], function (require, exports, ko, Page_2, ScoreResult_1, ImpersonateRequest_1) {
     "use strict";
     var AdminViewModel = (function () {
         function AdminViewModel(navigationContext) {
+            var _this = this;
             this.navigationContext = navigationContext;
+            this.FilterScoreResults = function () {
+                var results = _this.ScoreResults();
+                var search = _this.Search();
+                if (search) {
+                    return results.filter(function (r) { return r.Username.indexOf(search) > -1; });
+                }
+                else {
+                    return results;
+                }
+            };
+            this.ImpersonateBySearch = function () { return __awaiter(_this, void 0, void 0, function () {
+                var scoreResult;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            scoreResult = new ScoreResult_1.ScoreResult();
+                            scoreResult.Username = this.Search();
+                            return [4 /*yield*/, this.Impersonate(scoreResult)];
+                        case 1:
+                            _a.sent();
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
+            this.Impersonate = function (scoreResult) { return __awaiter(_this, void 0, void 0, function () {
+                var impersonateRequest, exams;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            this.navigationContext.Layout.IsBusy(true);
+                            impersonateRequest = new ImpersonateRequest_1.ImpersonateRequest();
+                            impersonateRequest.Username = scoreResult.Username;
+                            return [4 /*yield*/, this.navigationContext.Layout.Post('/api/Admin/Impersonate', impersonateRequest)];
+                        case 1:
+                            exams = _a.sent();
+                            this.navigationContext.Layout.IsBusy(false);
+                            this.navigationContext.Layout.Navigate(Page_2.Page.Exams);
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
+            this.GetScoreResults = function () { return __awaiter(_this, void 0, void 0, function () {
+                var examId, scoreResults;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            examId = this.SelectedExam();
+                            if (!examId)
+                                return [2 /*return*/];
+                            this.navigationContext.Layout.IsBusy(true);
+                            return [4 /*yield*/, this.navigationContext.Layout.Get('/api/Admin/Exams/' + examId)];
+                        case 1:
+                            scoreResults = _a.sent();
+                            this.ScoreResults(scoreResults);
+                            this.navigationContext.Layout.IsBusy(false);
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
             this.Exams = ko.observableArray();
+            this.Search = ko.observable();
+            this.SelectedExam = ko.observable();
+            this.ScoreResults = ko.observableArray();
+            this.FilteredScoreResults = ko.computed(this.FilterScoreResults);
+            this.ScoreResultsUpdater = ko.computed(this.GetScoreResults);
             this.navigationContext.Layout.IsBusy(true);
             this.GetExams();
             navigationContext.Layout.SetTitle("Admin");
@@ -147,14 +230,14 @@ define("Admin", ["require", "exports", "knockout"], function (require, exports, 
     }
     exports.initialize = initialize;
 });
-define("Exams", ["require", "exports", "knockout", "Models/Page"], function (require, exports, ko, Page_2) {
+define("Exams", ["require", "exports", "knockout", "Models/Page"], function (require, exports, ko, Page_3) {
     "use strict";
     var ExamsViewModel = (function () {
         function ExamsViewModel(navigationContext) {
             var _this = this;
             this.navigationContext = navigationContext;
             this.OpenExam = function (exam) {
-                _this.navigationContext.Layout.Navigate(Page_2.Page.Questions, exam.Id + "/" + exam.LastQuestionDisplayed);
+                _this.navigationContext.Layout.Navigate(Page_3.Page.Questions, exam.Id + "/" + exam.LastQuestionDisplayed);
             };
             this.ResetExam = function (exam) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
@@ -223,7 +306,7 @@ define("Localization/SupportedLocales", ["require", "exports"], function (requir
 define("Localization/ILocale", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page", "Localization/SupportedLocales"], function (require, exports, ko, axios_1, NavigationContext_1, Page_3, SupportedLocales_1) {
+define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page", "Localization/SupportedLocales"], function (require, exports, ko, axios_1, NavigationContext_1, Page_4, SupportedLocales_1) {
     "use strict";
     var LayoutViewModel = (function () {
         function LayoutViewModel() {
@@ -310,7 +393,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                         case 0: return [4 /*yield*/, this.Get("/api/User")];
                         case 1:
                             result = _a.sent();
-                            window.onhashchange = function () { _this.NavigateAccordingToHash(Page_3.Page.Login); };
+                            window.onhashchange = function () { _this.NavigateAccordingToHash(Page_4.Page.Login); };
                             if (!result.IsAuthenticated) return [3 /*break*/, 2];
                             this.Login(result.User);
                             return [3 /*break*/, 4];
@@ -359,7 +442,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         LayoutViewModel.prototype.EnsureSuccessStatusCode = function (statusCode) {
             if (statusCode == 401) {
                 alert("Per favore rieffettua il login");
-                this.Navigate(Page_3.Page.Login);
+                this.Navigate(Page_4.Page.Login);
             }
             else if (statusCode >= 400) {
                 alert("Si è verificato un errore nel server, per favore segnala questo problema");
@@ -367,7 +450,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         };
         LayoutViewModel.prototype.Navigate = function (page, navigationArgs) {
             if (navigationArgs === void 0) { navigationArgs = null; }
-            var newHash = Page_3.Page[page] + (navigationArgs ? '/' + navigationArgs : '');
+            var newHash = Page_4.Page[page] + (navigationArgs ? '/' + navigationArgs : '');
             if (location.hash.substr(location.hash.indexOf('#') + 1) == newHash)
                 this.NavigateAccordingToHash(page);
             else
@@ -376,15 +459,15 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         LayoutViewModel.prototype.NavigateAccordingToHash = function (defaultPage) {
             var navigationInfo = location.hash.substr(location.hash.indexOf('#') + 1).split('/');
             var destinationPage = defaultPage;
-            if (navigationInfo[0] in Page_3.Page) {
-                destinationPage = Page_3.Page[navigationInfo[0]];
+            if (navigationInfo[0] in Page_4.Page) {
+                destinationPage = Page_4.Page[navigationInfo[0]];
             }
             var navigationArgs = navigationInfo.length > 1 ? navigationInfo.slice(1).join('/') : null;
-            if (destinationPage == Page_3.Page.Login && this.User()) {
-                this.Navigate(Page_3.Page.Exams);
+            if (destinationPage == Page_4.Page.Login && this.User()) {
+                this.Navigate(Page_4.Page.Exams);
             }
-            else if (destinationPage != Page_3.Page.Login && !this.User()) {
-                this.Navigate(Page_3.Page.Login);
+            else if (destinationPage != Page_4.Page.Login && !this.User()) {
+                this.Navigate(Page_4.Page.Login);
             }
             else {
                 this.CurrentPage = destinationPage;
@@ -394,12 +477,12 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         };
         LayoutViewModel.prototype.BackToHome = function () {
             if (confirm(this.Locale().BackToHomeConfirmation)) {
-                this.Navigate(Page_3.Page.Exams);
+                this.Navigate(Page_4.Page.Exams);
             }
         };
         LayoutViewModel.prototype.Login = function (user) {
             this.User(user);
-            this.NavigateAccordingToHash(Page_3.Page.Exams);
+            this.NavigateAccordingToHash(Page_4.Page.Exams);
         };
         LayoutViewModel.prototype.Logout = function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -409,7 +492,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                         case 1:
                             _a.sent();
                             this.User(null);
-                            this.Navigate(Page_3.Page.Login);
+                            this.Navigate(Page_4.Page.Login);
                             return [2 /*return*/];
                     }
                 });
@@ -495,7 +578,7 @@ define("Requests/AnswerRequest", ["require", "exports"], function (require, expo
     }());
     exports.AnswerRequest = AnswerRequest;
 });
-define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page", "Requests/BookmarkRequest", "Requests/AnswerRequest"], function (require, exports, ko, QuestionIndicator_1, Page_4, BookmarkRequest_1, AnswerRequest_1) {
+define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page", "Requests/BookmarkRequest", "Requests/AnswerRequest"], function (require, exports, ko, QuestionIndicator_1, Page_5, BookmarkRequest_1, AnswerRequest_1) {
     "use strict";
     var QuestionsViewModel = (function () {
         function QuestionsViewModel(navigationContext) {
@@ -538,9 +621,9 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             _a.label = 2;
                         case 2:
                             if (number <= 0 || number > exam.Questions)
-                                this.navigationContext.Layout.Navigate(Page_4.Page.Exams);
+                                this.navigationContext.Layout.Navigate(Page_5.Page.Exams);
                             else
-                                this.navigationContext.Layout.Navigate(Page_4.Page.Questions, this.ExamId + "/" + number);
+                                this.navigationContext.Layout.Navigate(Page_5.Page.Questions, this.ExamId + "/" + number);
                             return [2 /*return*/];
                     }
                 });
@@ -693,7 +776,7 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.Options = "options";
             this.CompleteCode = "Complete the code by selecting the correct options";
             this.ClickImage = "Click the image on the correct spot";
-            this.Reorder = "Move the options to the solution container. Order is important!";
+            this.Reorder = "Move the options to the solution container by ordering them from top to bottom. Order is important!";
             this.Explanation = "Explanation";
             this.TimesUp = "Time's up!";
             this.BookmarkAnswer = "Review this question later";
@@ -749,7 +832,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.Options = "scelte";
             this.CompleteCode = "Completa il codice selezionando le voci corrette";
             this.ClickImage = "Clicca sull'immagine nel punto corretto";
-            this.Reorder = "Sposta i blocchi nel contenitore della soluzione. L'ordine è importante!";
+            this.Reorder = "Sposta i blocchi nel contenitore della soluzione, sistemandoli in ordine dall'alto in basso. L'ordine è importante!";
             this.Explanation = "Spiegazione";
             this.BookmarkAnswer = "Ricontrolla la domanda più tardi";
             this.AverageTimePerAnswer = "circa per domanda";
