@@ -46,7 +46,7 @@ namespace Hexamer.Controllers
             var result = await answerRepository.UpdateAnswer(User.Identity.Name, examId, questionNumber, request.AnswerProvided, score, isCorrectAnswer, isCompleteAnswer);
 
             var token = User.Identity.Token(HttpContext);
-            statistics.LogQuestionAnswered(User.Identity.Name, User.Identity.Token(), examId, question.Id, answer.Number, answer.ScoreAwarded ?? 0.0, answer.IsCorrectAnswer);
+            statistics.LogQuestionAnswered(User.Identity.Name, User.Identity.Token(HttpContext), examId, question.Id, answer.Number, answer.ScoreAwarded ?? 0.0, answer.IsCorrectAnswer);
 
             return Ok();
         }

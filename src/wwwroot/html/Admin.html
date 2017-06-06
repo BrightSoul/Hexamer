@@ -17,7 +17,7 @@
   <tbody data-bind="foreach: FilteredScoreResults">
     <tr>
       <td data-bind="text: Username"></td>
-      <td data-bind="text: AnsweredQuestions"></td>
+      <td><span data-bind="text: CorrectQuestions"></span>/<span data-bind="text: AnsweredQuestions"></span></td>
       <td><span data-bind="text: NormalizedScore, attr: {title: Score}"></span><span style="margin-left:6px;" data-bind="locale: 'CumLaude', visible: Excellence"></span></td>
       <td data-bind="foreach: Tokens"><div data-bind="text: $data"></div></td>
       <td><button type="button" class="btn btn-default" data-bind="locale: 'Impersonate'"></button></td>

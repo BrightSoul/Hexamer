@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +23,16 @@ namespace Hexamer.Controllers
         private readonly IAnswerRepository answerRepository;
         private readonly IExamRepository examRepository;
         private readonly IAuthority authority;
+        private readonly IStatistics statistics;
         private readonly AppConfig config;
-        public AdminController(IExamRepository examRepository, IUserRepository userRepository, IAnswerRepository answerRepository, IAuthority authority, AppConfig config)
+        
+        public AdminController(IExamRepository examRepository, IUserRepository userRepository, IAnswerRepository answerRepository, IAuthority authority, IStatistics statistics, AppConfig config)
         {
             this.userRepository = userRepository;
             this.answerRepository = answerRepository;
             this.examRepository = examRepository;
             this.authority = authority;
+            this.statistics = statistics;
             this.config = config;
         }
 
@@ -44,7 +48,7 @@ namespace Hexamer.Controllers
                 hash = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(username))).Replace("-", "").ToLower();
             }
             var user = new User {
-                Username = username ,
+                Username = username,
                 Name = username,
                 Email = username,
                 ImageUrl = $"https://www.gravatar.com/avatar/{hash}"
@@ -64,10 +68,22 @@ namespace Hexamer.Controllers
 
             var users = await userRepository.GetAll();
             var userScores = new List<ScoreResult>();
+            IEnumerable<UserStatistics> stats = null;
+            try {
+                stats = statistics.GetStatistics(examId);
+            } catch {
+
+            }
+
+             stats = stats ?? Enumerable.Empty<UserStatistics>();
             foreach (var user in users) {
                 var answers = await answerRepository.GetAll(user.Name, examId);
-                //TODO: estrai i token
-                var scoreResult = ScoreResult.FromEntities(user, exam, answers, new string[] {});
+                var stat = stats.FirstOrDefault(s => user.Name.Equals(s.Username, StringComparison.OrdinalIgnoreCase));
+                string[] tokens = null;
+                if (stat != null){
+                    tokens = stat.Tokens.Select(pair => $"[{pair.Value.ToString("yyyyMMdd.HHmmss.fff")}]{pair.Key}").ToArray();
+                }
+                var scoreResult = ScoreResult.FromEntities(user, exam, answers, tokens ?? new string[0]);
                 userScores.Add(scoreResult);
             }
             return Ok(userScores);

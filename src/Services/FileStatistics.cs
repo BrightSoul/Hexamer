@@ -64,23 +64,6 @@ namespace Hexamer.Services {
                         }
                         
                         stat.AddToken(token, date);
-                        try {
-                        switch (type) {
-                            case ExamType:
-                                stat.Score = decimal.Parse(parts[5], culture);
-                                break;
-                            case AnswerType:
-                                var questionId = parts[5];
-                                var isCorrect = bool.Parse(parts[7]);
-                                stat.AddAnswer(questionId, isCorrect);
-                                break;
-                            case DisplayType:
-
-                                break;
-                        }
-                        } catch {
-
-                        }
                     }
                 }
             }
@@ -91,7 +74,9 @@ namespace Hexamer.Services {
                 try {
                     string additionalText = text != null ? string.Join("\t", text) : string.Empty;
                     File.AppendAllText(filePath, $"{Environment.NewLine}{DateTime.Now.ToString(dateFormat, culture)}\t{type}\t{username}\t{token}\t{examId}\t{additionalText}");
-                } catch {
+                } catch
+                {
+                    
                 }
             }
         }

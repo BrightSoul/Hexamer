@@ -40,7 +40,7 @@ namespace Hexamer.Controllers
                 examResult.SetScore(answers);
                 if (examResult.IsNewlyCompleted)
                 {
-                    statistics.LogExamCompleted(User.Identity.Name, User.Identity.Token(), examResult.Id, examResult.Score ?? 0m);
+                    statistics.LogExamCompleted(User.Identity.Name, User.Identity.Token(HttpContext), examResult.Id, examResult.Score ?? 0m);
                 }
             }
             return examResults;
@@ -127,7 +127,7 @@ namespace Hexamer.Controllers
             await answerRepository.UpdateDisplayed(User.Identity.Name, examId, questionNumber);
             
             var token = User.Identity.Token(HttpContext);
-            //logger.LogDisplayed
+            statistics.LogQuestionDisplayed(User.Identity.Name, User.Identity.Token(HttpContext), examId, question.Id, answer.Number);
 
             return Ok(result);
         }
