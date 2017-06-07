@@ -156,7 +156,7 @@ export class LayoutViewModel implements ILayout {
 
         if (destinationPage == Page.Login && this.User()) {
             this.Navigate(Page.Exams);
-        } else if (destinationPage != Page.Login && !this.User()) {
+        } else if (destinationPage != Page.Login && destinationPage != Page.AdminLogin && !this.User()) {
             this.Navigate(Page.Login);
         } else {
             this.CurrentPage = destinationPage;

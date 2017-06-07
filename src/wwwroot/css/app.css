@@ -225,7 +225,7 @@ label {
     display: inline-block;
 }
 
-    label::before {
+    .multiple-choice-answers label::before {
         display: inline-block;
         content: ' ';
         width: 30px;
@@ -640,7 +640,7 @@ footer {
     box-shadow: 0 0 10px #888;
 }
 
-.module-login .modal-dialog {
+.module-login .modal-dialog, .module-adminlogin .modal-dialog {
     margin-top:100px;
 }
 

@@ -212,6 +212,7 @@ UpgradeLog*.htm
 #Logs
 examlog.txt
 answerlog.txt
+log.txt
 
 # SQL Server files
 *.mdf

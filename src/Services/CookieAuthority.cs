@@ -44,8 +44,8 @@ namespace Hexamer.Services {
             return DateTime.Now.ToString("yyyyMMdd.HHmmss.fff");
         }
         private bool IsAdministrator(IUser user) {
-            var administrators = config.Administrators ?? new string[0];
-            return administrators.Contains(user.Username, StringComparer.OrdinalIgnoreCase);
+            var administrator = config.AdministratorUsername ?? string.Empty;
+            return administrator.Equals(user.Username, StringComparison.OrdinalIgnoreCase);
         }
 
         private ClaimsPrincipal CreatePrincipal(IEnumerable<Claim> claims) {

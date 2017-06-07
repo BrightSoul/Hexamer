@@ -41,6 +41,7 @@ define("Models/Page", ["require", "exports"], function (require, exports) {
         Page[Page["Exams"] = 1] = "Exams";
         Page[Page["Questions"] = 2] = "Questions";
         Page[Page["Admin"] = 3] = "Admin";
+        Page[Page["AdminLogin"] = 4] = "AdminLogin";
     })(Page = exports.Page || (exports.Page = {}));
 });
 define("Models/User", ["require", "exports"], function (require, exports) {
@@ -176,6 +177,7 @@ define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/Score
                             exams = _a.sent();
                             this.navigationContext.Layout.IsBusy(false);
                             this.navigationContext.Layout.Navigate(Page_2.Page.Exams);
+                            window.location.reload();
                             return [2 /*return*/];
                     }
                 });
@@ -230,14 +232,67 @@ define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/Score
     }
     exports.initialize = initialize;
 });
-define("Exams", ["require", "exports", "knockout", "Models/Page"], function (require, exports, ko, Page_3) {
+define("Results/SlackAuthorizationUrlResult", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var SlackAuthorizationUrlResult = (function () {
+        function SlackAuthorizationUrlResult() {
+        }
+        return SlackAuthorizationUrlResult;
+    }());
+    exports.SlackAuthorizationUrlResult = SlackAuthorizationUrlResult;
+});
+define("Requests/AdminLoginRequest", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var AdminLoginRequest = (function () {
+        function AdminLoginRequest() {
+        }
+        return AdminLoginRequest;
+    }());
+    exports.AdminLoginRequest = AdminLoginRequest;
+});
+define("AdminLogin", ["require", "exports", "knockout", "Models/Page", "Requests/AdminLoginRequest"], function (require, exports, ko, Page_3, AdminLoginRequest_1) {
+    "use strict";
+    var AdminLoginViewModel = (function () {
+        function AdminLoginViewModel(navigationContext) {
+            var _this = this;
+            this.navigationContext = navigationContext;
+            this.AdminLogin = function () { return __awaiter(_this, void 0, void 0, function () {
+                var adminLoginRequest, result;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            this.navigationContext.Layout.IsBusy(true);
+                            adminLoginRequest = new AdminLoginRequest_1.AdminLoginRequest();
+                            adminLoginRequest.Username = this.Username();
+                            adminLoginRequest.Password = this.Password();
+                            return [4 /*yield*/, this.navigationContext.Layout.Post("/api/Admin/Login", adminLoginRequest)];
+                        case 1:
+                            result = _a.sent();
+                            this.navigationContext.Layout.IsBusy(false);
+                            this.navigationContext.Layout.Navigate(Page_3.Page.Exams);
+                            window.location.reload();
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
+            this.Username = ko.observable(null);
+            this.Password = ko.observable(null);
+        }
+        return AdminLoginViewModel;
+    }());
+    function initialize(navigationContext) {
+        return new AdminLoginViewModel(navigationContext);
+    }
+    exports.initialize = initialize;
+});
+define("Exams", ["require", "exports", "knockout", "Models/Page"], function (require, exports, ko, Page_4) {
     "use strict";
     var ExamsViewModel = (function () {
         function ExamsViewModel(navigationContext) {
             var _this = this;
             this.navigationContext = navigationContext;
             this.OpenExam = function (exam) {
-                _this.navigationContext.Layout.Navigate(Page_3.Page.Questions, exam.Id + "/" + exam.LastQuestionDisplayed);
+                _this.navigationContext.Layout.Navigate(Page_4.Page.Questions, exam.Id + "/" + exam.LastQuestionDisplayed);
             };
             this.ResetExam = function (exam) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
@@ -306,7 +361,7 @@ define("Localization/SupportedLocales", ["require", "exports"], function (requir
 define("Localization/ILocale", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page", "Localization/SupportedLocales"], function (require, exports, ko, axios_1, NavigationContext_1, Page_4, SupportedLocales_1) {
+define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationContext", "Models/Page", "Localization/SupportedLocales"], function (require, exports, ko, axios_1, NavigationContext_1, Page_5, SupportedLocales_1) {
     "use strict";
     var LayoutViewModel = (function () {
         function LayoutViewModel() {
@@ -393,7 +448,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                         case 0: return [4 /*yield*/, this.Get("/api/User")];
                         case 1:
                             result = _a.sent();
-                            window.onhashchange = function () { _this.NavigateAccordingToHash(Page_4.Page.Login); };
+                            window.onhashchange = function () { _this.NavigateAccordingToHash(Page_5.Page.Login); };
                             if (!result.IsAuthenticated) return [3 /*break*/, 2];
                             this.Login(result.User);
                             return [3 /*break*/, 4];
@@ -442,7 +497,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         LayoutViewModel.prototype.EnsureSuccessStatusCode = function (statusCode) {
             if (statusCode == 401) {
                 alert("Per favore rieffettua il login");
-                this.Navigate(Page_4.Page.Login);
+                this.Navigate(Page_5.Page.Login);
             }
             else if (statusCode >= 400) {
                 alert("Si è verificato un errore nel server, per favore segnala questo problema");
@@ -450,7 +505,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         };
         LayoutViewModel.prototype.Navigate = function (page, navigationArgs) {
             if (navigationArgs === void 0) { navigationArgs = null; }
-            var newHash = Page_4.Page[page] + (navigationArgs ? '/' + navigationArgs : '');
+            var newHash = Page_5.Page[page] + (navigationArgs ? '/' + navigationArgs : '');
             if (location.hash.substr(location.hash.indexOf('#') + 1) == newHash)
                 this.NavigateAccordingToHash(page);
             else
@@ -459,15 +514,15 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         LayoutViewModel.prototype.NavigateAccordingToHash = function (defaultPage) {
             var navigationInfo = location.hash.substr(location.hash.indexOf('#') + 1).split('/');
             var destinationPage = defaultPage;
-            if (navigationInfo[0] in Page_4.Page) {
-                destinationPage = Page_4.Page[navigationInfo[0]];
+            if (navigationInfo[0] in Page_5.Page) {
+                destinationPage = Page_5.Page[navigationInfo[0]];
             }
             var navigationArgs = navigationInfo.length > 1 ? navigationInfo.slice(1).join('/') : null;
-            if (destinationPage == Page_4.Page.Login && this.User()) {
-                this.Navigate(Page_4.Page.Exams);
+            if (destinationPage == Page_5.Page.Login && this.User()) {
+                this.Navigate(Page_5.Page.Exams);
             }
-            else if (destinationPage != Page_4.Page.Login && !this.User()) {
-                this.Navigate(Page_4.Page.Login);
+            else if (destinationPage != Page_5.Page.Login && destinationPage != Page_5.Page.AdminLogin && !this.User()) {
+                this.Navigate(Page_5.Page.Login);
             }
             else {
                 this.CurrentPage = destinationPage;
@@ -477,12 +532,12 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         };
         LayoutViewModel.prototype.BackToHome = function () {
             if (confirm(this.Locale().BackToHomeConfirmation)) {
-                this.Navigate(Page_4.Page.Exams);
+                this.Navigate(Page_5.Page.Exams);
             }
         };
         LayoutViewModel.prototype.Login = function (user) {
             this.User(user);
-            this.NavigateAccordingToHash(Page_4.Page.Exams);
+            this.NavigateAccordingToHash(Page_5.Page.Exams);
         };
         LayoutViewModel.prototype.Logout = function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -492,7 +547,7 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
                         case 1:
                             _a.sent();
                             this.User(null);
-                            this.Navigate(Page_4.Page.Login);
+                            this.Navigate(Page_5.Page.Login);
                             return [2 /*return*/];
                     }
                 });
@@ -501,15 +556,6 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
         return LayoutViewModel;
     }());
     exports.LayoutViewModel = LayoutViewModel;
-});
-define("Results/SlackAuthorizationUrlResult", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var SlackAuthorizationUrlResult = (function () {
-        function SlackAuthorizationUrlResult() {
-        }
-        return SlackAuthorizationUrlResult;
-    }());
-    exports.SlackAuthorizationUrlResult = SlackAuthorizationUrlResult;
 });
 define("Login", ["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
@@ -578,7 +624,7 @@ define("Requests/AnswerRequest", ["require", "exports"], function (require, expo
     }());
     exports.AnswerRequest = AnswerRequest;
 });
-define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page", "Requests/BookmarkRequest", "Requests/AnswerRequest"], function (require, exports, ko, QuestionIndicator_1, Page_5, BookmarkRequest_1, AnswerRequest_1) {
+define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator", "Models/Page", "Requests/BookmarkRequest", "Requests/AnswerRequest"], function (require, exports, ko, QuestionIndicator_1, Page_6, BookmarkRequest_1, AnswerRequest_1) {
     "use strict";
     var QuestionsViewModel = (function () {
         function QuestionsViewModel(navigationContext) {
@@ -621,9 +667,9 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             _a.label = 2;
                         case 2:
                             if (number <= 0 || number > exam.Questions)
-                                this.navigationContext.Layout.Navigate(Page_5.Page.Exams);
+                                this.navigationContext.Layout.Navigate(Page_6.Page.Exams);
                             else
-                                this.navigationContext.Layout.Navigate(Page_5.Page.Questions, this.ExamId + "/" + number);
+                                this.navigationContext.Layout.Navigate(Page_6.Page.Questions, this.ExamId + "/" + number);
                             return [2 /*return*/];
                     }
                 });

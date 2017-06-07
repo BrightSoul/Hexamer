@@ -36,12 +36,32 @@ namespace Hexamer.Controllers
             this.config = config;
         }
 
+        [HttpPost("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] AdminLoginRequest request) {
+            var password = config?.AdministratorPassword ?? string.Empty;
+            var username = request?.Username ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || !password.Equals(request?.Password, StringComparison.OrdinalIgnoreCase))
+                return BadRequest();
+
+            await SignIn(username);
+            
+            return Ok();
+        }
+
         [HttpPost("Impersonate")]
-        public async Task<IActionResult> Impersonate([FromBody] ImpersonateRequest impersonateRequest)
+        public async Task<IActionResult> Impersonate([FromBody] ImpersonateRequest request)
         {
-            var username = (impersonateRequest.Username ?? "").ToLower();
+            var username = (request.Username ?? "").ToLower();
             if (string.IsNullOrEmpty(username))
                 return BadRequest();
+
+            await SignIn(username);
+            
+            return Ok();
+        }
+
+        private async Task SignIn(string username) {
             string hash;
 
             using (var md5 = MD5.Create()) {
@@ -55,7 +75,6 @@ namespace Hexamer.Controllers
             };
 
             await authority.SignIn(user, HttpContext);
-            return Ok();
         }
 
         [HttpGet("Exams/{examId}")]

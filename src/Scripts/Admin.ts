@@ -47,6 +47,7 @@ class AdminViewModel {
         let exams = await this.navigationContext.Layout.Post<void, ImpersonateRequest>('/api/Admin/Impersonate', impersonateRequest);
         this.navigationContext.Layout.IsBusy(false);
         this.navigationContext.Layout.Navigate(Page.Exams);
+        window.location.reload();
     }
 
     private async GetExams() : Promise<void> {
