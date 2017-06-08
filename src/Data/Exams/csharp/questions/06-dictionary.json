@@ -1,0 +1,38 @@
+{
+  "Type": "CodeCompletion",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "A3,B2,C1,D1",
+  "Text": {
+	"It": "Lavori nel reparto IT di un famoso editore. L'Accademia della Crusca ti ha chiamato dicendo che puoi aggiungere il vocabolo \"petaloso\" e la sua definizione \"pieno di petali\" al dizionario della lingua italiana della tua casa editrice. Decidi di creare un metodo `AggiungiVocabolo` alla classe `DizionarioItaliano` per aggiungere questo e ogni altro neologismo che ti verrà comunicato in futuro.  
+	Il metodo restiuirà `true` se l'inserimento è avvenuto con successo altrimenti, se il vocabolo era già esistente, restituirà `false`.",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Il `Dictionary<TKey, TValue>` è un tipo di collezione chiave-valore e vanno forniti entrambi quando vogliamo aggiungere la coppia al dizionario mediante il suo metodo `Add`.  
+Non ci sono limitazioni sul tipo che chiave e valore possono assumere: in casi semplici come questo possono essere entrambi delle stringhe ma in altri casi possono essere degli oggetti complessi.  
+
+Prima di aggiungere una coppia chiave-valore al dizionario dobbiamo verificare se la chiave già esiste, infatti non sono ammessi duplicati di chiave (ma di valore sì). Prima di invocare il metodo `Add`, verifichiamo se la chiave esiste già con il metodo `ContainsKey`.
+
+**Materiale di studio**
+
+[Lezione 6, slide 29](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=29)",
+	"En": "",
+  },
+  "Group": "06",
+  "CodeText": { 
+	"It": "public bool AggiungiVocabolo(Dictionary&lt;string, string&gt; dizionario, string vocabolo, string definizione) {
+    if (dizionario.{A}(vocabolo))
+        return {B};
+	
+	dizionario.Add({C});
+	return {D};
+}",
+	"En": ""
+  },
+  "Blocks": [
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Find" }, { "Id": "2", "Text": "Has" }, { "Id": "3", "Text": "ContainsKey" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "true" }, { "Id": "2", "Text": "false " } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "vocabolo, definizione" }, { "Id": "2", "Text": "vocabolo" }, { "Id": "3", "Text": "definizione" } ] },
+	{ "Id": "D", "Options": [ { "Id": "1", "Text": "true" }, { "Id": "2", "Text": "false " } ] }
+  ]
+}

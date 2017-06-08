@@ -52,7 +52,10 @@ namespace Hexamer.Controllers
             string language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
             if (exam == null)
-                return NotFound();
+                return NotFound("Exam");
+
+            if (!exam.CanOpen)
+                return BadRequest("Timeout");                
 
             if (await answerRepository.CreateMissingAnswers(User.Identity.Name, exam))
             {
@@ -69,8 +72,11 @@ namespace Hexamer.Controllers
         {
             string language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
-            if (exam == null || !exam.CanOpen)
-                return NotFound();
+            if (exam == null)
+                return NotFound("Exam");
+
+            if (!exam.IsVisible)
+                return BadRequest("Timeout");                
 
             string contentPath = null;
             if (string.IsNullOrEmpty(path))
@@ -114,6 +120,9 @@ namespace Hexamer.Controllers
             var exam = examRepository.GetById(examId, language);
             if (exam == null)
                 return NotFound("Exam");
+
+            if (!exam.CanOpen)
+                return BadRequest("Timeout");
 
             var question = exam.Questions.SingleOrDefault(q => q.Id == answer.Question);
             if (question == null)

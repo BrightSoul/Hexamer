@@ -1,0 +1,32 @@
+{
+  "Type": "Reorder",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "D,E,B,A",
+  "Text": {
+	"It": "Vuoi crearti un database personale di tutti i film che possiedi in DVD. Decidi di scrivere un'applicazione che si avvale di _Entity Framework Core_ per leggere e scrivere i dati dei film su un database locale Sqlite. Hai scelto di usare l'approccio _code first_, quali sono i passi che ti porteranno a salvare il primo film nel database?
+",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Usando l'approccio _code first_ non è necessario creare il database a mano con comandi tipo `CREATE TABLE`. Invece, si inizia creando le classi del proprio modello, come la classe `Film` che conserverà i dati dei nostri film. Allo stesso tempo, si crea anche una classe che deriva da `DbContext`, che rappresenterà il nostro servizio di accesso al database.  
+	
+Poi, si \"mappa\" la classe `Film` ad una tabella del database e si indica quale, tra le sue proprietà, intendiamo usare come chiave primaria. Il \"mapping\" avviene dal metodo `OnModelCreating` della classe che abbiamo fatto derivare da `DbContext`.  
+
+A questo punto Entity Framework sa che vogliamo persistere nel db degli oggetti di tipo `Film` e basterà invocare il metodo `Database.EnsureCreated()` per fare in modo che il db venga creato in maniera conforme alla struttura della nostra classe `Film`.  
+
+Quindi non resta che aggiungere istanze della classe `Film` usando il metodo `Add` della classe che deriva da `DbContext` ed invocare il suo metodo `SaveChangesAsync` per persisterle tutte nel database.  
+
+**Materiale di studio**
+
+[Lezione 7, slide 36](https://files.slack.com/files-pri/T4LSU7RKJ-F56QEGDR7/07-lezione-async-await-entityframework.pdf#page=36)",
+	"En": "",
+  },
+  "Group": "07",
+  "Options": [
+	{ "Id": "A", "Text": { "It": "Usa i metodi Add e SaveChangesAsync per aggiungere un Film al db", "En": "" } },
+	{ "Id": "B", "Text": { "It": "Invoca il metodo Database.EnsureCreated() per creare il database", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Crea il db con istruzioni SQL tipo CREATE TABLE", "En": "" } },
+	{ "Id": "D", "Text": { "It": "Crea la classe Film e una classe che deriva da DbContext", "En": "" } },
+	{ "Id": "E", "Text": { "It": "Mappa la classe Film, indicando il nome della tabella e la chiave primaria", "En": "" } }
+  ]
+}

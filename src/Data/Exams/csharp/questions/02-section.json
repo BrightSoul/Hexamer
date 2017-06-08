@@ -1,0 +1,22 @@
+{
+  "Type": "ClickImage",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "0,133,50,50",
+  "Text": {
+	"It": "Stai lavorando ad un progetto e vuoi fare un commit delle modifiche che hai appena apportato. Cosa clicchi in Visual Studio Code per aprire il pannello che ti permette di scrivere un commento ed eseguire il commit?
+",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Lungo il margine sinistro, Visual Studio Code ha una \"Activity bar\" con varie icone, che permette di accedere ad altrettanti pannelli, tra cui quello per il controllo di versione con Git.  
+Per eseguire un commit, è necessario aggiungere un commento e cliccare il segno di spunta che si trova subito sopra (oppure premere CTRL+Invio).  
+![Riquadro del controllo di versione](vscode-git.png)  
+
+**Materiale di studio**
+
+[Lezione 2, slide 7](https://slack-files.com/files-pri/T4LSU7RKJ-F4Q1R8REV/02-lezione-modellazione.pdf#page=7)",
+	"En": "",
+  },
+  "Group": "02",
+  "Image": "vscode.png"
+}

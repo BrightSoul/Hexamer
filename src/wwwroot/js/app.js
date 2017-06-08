@@ -687,7 +687,6 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                 _this.NavigateToQuestionNumber(question.Number - 1);
             };
             this.GetExam = function (examId, questionNumber) { return __awaiter(_this, void 0, void 0, function () {
-                var _this = this;
                 var exam, questionIndicators, i, indicator, question;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
@@ -696,6 +695,8 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             return [4 /*yield*/, this.navigationContext.Layout.Get("/api/Exams/" + examId)];
                         case 1:
                             exam = _a.sent();
+                            if (exam.RemainingSeconds)
+                                this.EndTime = (new Date()).getTime() + (exam.RemainingSeconds * 1000);
                             questionIndicators = [];
                             for (i = 1; i <= exam.Questions; i++) {
                                 indicator = new QuestionIndicator_1.QuestionIndicator();
@@ -719,8 +720,13 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                             this.IsCurrentQuestionBookmarked(question.IsBookmarked);
                             this.Question(question);
                             this.navigationContext.Layout.IsBusy(false);
-                            window["jQuery"](".question").off("swipeleft").on("swipeleft", function () { _this.PreviousQuestion(); });
-                            window["jQuery"](".question").off("swiperight").on("swiperight", function () { _this.NextQuestion(); });
+                            if (this.EndTime) {
+                                this.UpdateTime();
+                                if ('countdown' in this.navigationContext.Layout) {
+                                    clearInterval(this.navigationContext.Layout['countdown']);
+                                }
+                                this.navigationContext.Layout['countdown'] = setInterval(this.UpdateTime, 1000);
+                            }
                             return [2 /*return*/];
                     }
                 });
@@ -753,14 +759,28 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
                 var currentTime = (new Date()).getTime();
                 var remainingMilliseconds = _this.EndTime - currentTime;
                 if (remainingMilliseconds <= 0) {
-                    _this.RemainingTime("Tempo scaduto");
+                    _this.RemainingTime("--");
                 }
                 else {
-                    var remainingTime = new Date(remainingMilliseconds).toISOString().substr(11, 8);
-                    remainingTime = remainingTime.substr(0, 1) == '0' ? remainingTime.substr(1) : remainingTime;
-                    remainingTime = remainingTime.substr(0, 2) == '0:' ? remainingTime.substr(2) : remainingTime;
+                    var remainingTime = new Date(remainingMilliseconds).toISOString().substr(11, 5);
+                    //remainingTime = remainingTime.substr(0, 1) == '0' ? remainingTime.substr(1) : remainingTime;
+                    //remainingTime = remainingTime.substr(0, 2) == '0:' ? remainingTime.substr(2) : remainingTime;
                     _this.RemainingTime(remainingTime);
                     _this.TimeIsRunningOut(remainingMilliseconds < 30 * 60 * 1000);
+                    var exam = _this.Exam();
+                    var remainingQuestions = exam.Questions - exam.QuestionsAnswered.length;
+                    if (remainingQuestions > 1) {
+                        var perQuestion = (remainingMilliseconds / remainingQuestions) / 1000;
+                        perQuestion = Math.floor(perQuestion / 10) * 10;
+                        var seconds = (perQuestion % 60).toString();
+                        var minutes = Math.floor(perQuestion / 60).toString();
+                        seconds = (seconds.length == 1 ? "0" : "") + seconds;
+                        minutes = (minutes.length == 1 ? "0" : "") + minutes;
+                        _this.AverageTimePerAnswer(minutes + "'" + seconds + "''");
+                    }
+                    else {
+                        _this.AverageTimePerAnswer(null);
+                    }
                 }
             };
             this.RemainingTime = ko.observable("");
@@ -773,6 +793,7 @@ define("Questions", ["require", "exports", "knockout", "Models/QuestionIndicator
             this.Exam = ko.observable(null);
             this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
             this.IsLastQuestion = ko.computed(this.UpdateIsLastQuestion);
+            this.AverageTimePerAnswer = ko.observable(null);
             var args = navigationContext.NavigationArgs.split("/");
             this.ExamId = args[0];
             if (args.length > 1 && !isNaN(parseInt(args[1], 10)))
@@ -826,7 +847,7 @@ define("Localization/Locale/En", ["require", "exports"], function (require, expo
             this.Explanation = "Explanation";
             this.TimesUp = "Time's up!";
             this.BookmarkAnswer = "Review this question later";
-            this.AverageTimePerAnswer = "approximately per question";
+            this.AverageTimePerAnswer = "circa per remaning question";
             this.BackToHome = "Back to home";
             this.BackToHomeConfirmation = "Are you sure you want to go back to the homepage? Any edit to the current question will be lost.";
             this.Logout = "Logout";
@@ -881,7 +902,7 @@ define("Localization/Locale/It", ["require", "exports"], function (require, expo
             this.Reorder = "Sposta i blocchi nel contenitore della soluzione, sistemandoli in ordine dall'alto in basso. L'ordine è importante!";
             this.Explanation = "Spiegazione";
             this.BookmarkAnswer = "Ricontrolla la domanda più tardi";
-            this.AverageTimePerAnswer = "circa per domanda";
+            this.AverageTimePerAnswer = "circa per ogni domanda restante";
             this.BackToHome = "Torna alla home";
             this.BackToHomeConfirmation = "Sei sicuro di voler tornare alla home? Le modifiche alla domanda attuale verranno perse!";
             this.Logout = "Esci";

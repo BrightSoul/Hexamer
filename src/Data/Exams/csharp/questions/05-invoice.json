@@ -1,0 +1,50 @@
+{
+  "Type": "CodeCompletion",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "A2,B2,C1",
+  "Text": {
+	"It": "Nel tuo software gestionale stai sviluppando una funzionalità che ti permette di conoscere a quanto ammonta l'importo complessivo di fatture non pagate di un dato cliente. La classe `Fattura` contiene, tra le altre, le seguenti proprietà:  
+```
+public class Fattura {
+    public int IdCliente { get; private set; }
+    public decimal ImportoFattura { get; private set; }
+    public bool Pagata { get; private set; }
+}
+```
+Completa l'implementazione del metodo `CalcolaImportiNonPagati` per ottenere la somma dovuta dal cliente. 
+",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Ogni volta che vogliamo filtrare gli elementi di una lista, usiamo il metodo `Where`.  
+I metodi come `Where` possono essere ripetuti più volte all'interno di una query LINQ. In questo caso, i due filtri (fattura non pagata e id cliente) verranno combinati in modo che nel risultato appariranno solo le fatture non pagate di quel particolare cliente.  
+
+Il metodo `Select` ci serve nel momento in cui vogliamo proiettare l'elemento originale (di tipo `Fattura`) su un tipo differente (come il decimal fornito dalla proprietà `ImportoFattura`). La `List<Fattura>` originale, dopo aver usato il `Select` viene trasformata in un elenco di `decimal`.
+
+Il metodo di aggregazione `Sum`, quindi, si troverà ad effettuare la sommatoria degli importi `decimal` ottenuti con la precedente invocazione di `Select`.  
+
+Il metodo `OrderBy` in questo caso non è utile perché il risultato finale deve essere un valore `decimal` aggregato, quindi poco importa quale sia l'ordine delle fatture.  
+
+**Materiale di studio**
+
+[Esercitazione 5, slide 33](https://slack-files.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=33)  
+[Esercitazione 5, slide 45](https://slack-files.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=45)",
+	"En": "",
+  },
+  "Group": "05",
+  "CodeText": { 
+	"It": "public decimal CalcolaImportiNonPagati(IEnumerable&lt;Fattura&gt; fatture, int idCliente) {
+    return fatture
+            .{A}(fattura =&gt; !fattura.Pagata)
+            .{B}(fattura =&gt; fattura.IdCliente == idCliente)
+            .{C}(fattura =&gt; fattura.ImportoFattura)
+            .Sum();
+}",
+	"En": ""
+  },
+  "Blocks": [
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Select" }, { "Id": "2", "Text": "Where" }, { "Id": "3", "Text": "OrderBy" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "Select" }, { "Id": "2", "Text": "Where" }, { "Id": "3", "Text": "OrderBy" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "Select" }, { "Id": "2", "Text": "Where" }, { "Id": "3", "Text": "OrderBy" } ] }
+  ]
+}

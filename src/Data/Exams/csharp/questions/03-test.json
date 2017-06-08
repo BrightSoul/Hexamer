@@ -1,0 +1,39 @@
+{
+  "Type": "CodeCompletion",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "A1,B1,C3",
+  "Text": {
+	"It": "Ti è stato passato un progetto per il controllo remoto dell'irrigazione di una coltivazione di insalata. Lo sviluppatore che aveva realizzato il progetto non aveva scritto unit test e ora il proprietario della coltivazione si lamenta che alcune piante muoiono perché non ricevono il giusto quantitativo d'acqua. Decidi di scrivere uno unit test parametrico con xUnit per verificare che il metodo `ApriRubinetto` della classe `ImpiantoIrrigazione` si comporti secondo la specifica in base all'altezza di ciascuna piantina.",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Gli unit test parametrici scritti con xUnit sono dei semplici metodi pubblici decorati con l'attributo `[Theory]`.  
+Gli attributi `[Test]` e `[TestMethod]` sono usati in altri framework di unit testing, ma non in xUnit.  
+Quando usiamo `[Theory]`, il test accetta dei valori in input indicati dagli attributi `[InlineData]`, e questo ci permette di scrivere un solo test che verrà riusato per piantine di varie altezze.  
+All'interno del metodo, inseriremo uno o più `Assert` per verificare che le durate di apertura dei rubinetti siano conformi alla specifica.  
+
+**Materiale di studio**
+
+[Esercitazione 3, slide 3](https://files.slack.com/files-pri/T4LSU7RKJ-F4V31SZ7E/03-esercitazione-unit-testing.pdf#page=3)",
+	"En": "",
+  },
+  "Group": "03",
+  "CodeText": { 
+	"It": "public class TestImpiantoIrrigazione {
+    {A}
+    {B}
+    public void ApriRubinettoPerIrrigarePianta(int altezzaPiantaInCm, double durataInSecondi) {
+        ImpiantoIrrigazione impianto = new ImpiantoIrrigazione();
+        Pianta pianta = new Pianta(altezza: 15);
+        TimeSpan durata = impianto.ApriRubinetto(pianta);
+        {C}.Equal(durataInSecondi, durata.TotalSeconds);
+    }
+}",
+	"En": ""
+  },
+  "Blocks": [
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "[Theory]" }, { "Id": "2", "Text": "[Test]" }, { "Id": "3", "Text": "[TestMethod]" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "[InlineData(15, 3.0)]" }, { "Id": "2", "Text": "[Input(15, 3.0)]" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "Confirm" }, { "Id": "2", "Text": "Verify" }, { "Id": "3", "Text": "Assert" } ] }
+  ]
+}

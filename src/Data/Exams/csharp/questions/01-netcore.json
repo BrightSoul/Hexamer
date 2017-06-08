@@ -1,0 +1,25 @@
+﻿{
+  "Type": "MultipleChoice",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "B,D",
+  "Text": {
+	"It": "Ti trovi da un cliente per valutare insieme a lui le tecnologie da usare nello sviluppo di una nuova applicazione. Nel suo datacenter ci sono solo server Linux e sembra contrario ad usare software proprietario. Che argomenti usi per convincerlo ad usare il .NET Core come piattaforma di sviluppo, che ti permetterebbe di impiegare le tue competenze in C#?",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Il .NET Core è gratuito ed open-source, quindi non richiede l'acquisto di alcuna licenza, neanche per grandi progetti.  
+Inoltre, è multipiattaforma e quindi il cliente non dovrà acquistare nessuna licenza di Windows Server ma potrà riutilizzare i suoi server Linux.  
+
+**Materiale di studio**
+
+[Lezione 1, slide 23](https://slack-files.com/files-pri/T4LSU7RKJ-F4MLLGSJW/01-lezione-dotnetcore.pdf#page=23)",
+	"En": "",
+  },
+  "Group": "01",
+  "Options": [
+	{ "Id": "A", "Text": { "It": "Il .NET Core ha dei costi di licenza per i grandi progetti ma sono bassi", "En": "" } },
+	{ "Id": "B", "Text": { "It": "Il .NET Core è multipiattaforma e quindi può funzionare sui server Linux", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Il .NET Core richiede Windows Server ma dato che è una tecnologia snella basterà comprarne solo una copia", "En": "" } },
+	{ "Id": "D", "Text": { "It": "Il .NET Core è open-source, non ci sono parti proprietarie", "En": "" } }
+  ]
+}

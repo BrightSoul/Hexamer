@@ -1,0 +1,29 @@
+{
+  "Type": "Reorder",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "B,E,D",
+  "Text": {
+	"It": "Insieme al tuo team, stai iniziando un nuovo progetto importante che si prevede richiederà almeno un anno di sviluppo. La tua preoccupazione è che dopo qualche tempo il codice diventi ingestibile per via della complessità del lavoro. Tutti insieme decidete di eseguire 3 passi per ogni punto della specifica, in modo da avere le migliori probabilità di successo. Quali sono?",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "In un team, i vari sviluppatori hanno competenze e stili diversi, per non parlare delle loro diverse interpretazioni dei problemi da risolvere. In questa situazione, è facile che il codice diventi presto disomogeneo e ingestibile. E' importante essere disciplinati per evitare che ciò succeda.  
+Se l'intero team si accorda sulla creazione di `unit test` prima che venga scritta l'`implementazione` sarà anche più facile fare `refactoring` per tenere ordinato il codice e fare in modo che il progetto non rallenti.  
+Se il team non si accorda su queste buone pratiche, verrà presto introdotto del `debito tecnico` che non verrà mai smaltito, ovvero delle magagne fatte in preda alla frustrazione pur di far funzionare qualcosa. Se mancano gli `unit test`, nessuno si prenderà mai la responsabilità di toccare un qualcosa che, seppur in maniera pessima, funziona.  
+Quando il progetto è complesso, si preferisce creare classi `debolmente accoppiate` tra loro, ovvero che hanno pochi punti di contatto e che possono essere sostituite con altre implementazioni abbastanza facilmente nel caso in cui la specifica dovesse cambiare.  
+Scrivere classi `fortemente accoppiate` è invece il modo più rapido per creare una matassa che nessuno vorrà mai sbrogliare.  
+
+**Materiale di studio**
+
+[Lezione 10, slide 12](https://files.slack.com/files-pri/T4LSU7RKJ-F5HP1EQLA/10-lezione-refactoring-model-binding.pdf#page=12)",
+	"En": "",
+  },
+  "Group": "10",
+  "Options": [
+	{ "Id": "A", "Text": { "It": "Introdurre debito tecnico", "En": "" } },
+	{ "Id": "B", "Text": { "It": "Scrivere un test e osservarlo fallire (fase rossa)", "En": "" } },
+	{ "Id": "C", "Text": { "It": "Scrivere un'implementazione che sia fortemente accoppiata ad altri componenti", "En": "" } },
+	{ "Id": "D", "Text": { "It": "Fare refactoring per migliorare il codice", "En": "" } },
+	{ "Id": "E", "Text": { "It": "Scrivere l'implementazione finché il test non passa (fase verde)", "En": "" } }
+  ]
+}

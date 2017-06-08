@@ -34,7 +34,7 @@ export class It implements ILocale {
     Reorder: string = "Sposta i blocchi nel contenitore della soluzione, sistemandoli in ordine dall'alto in basso. L'ordine è importante!";
     Explanation: string = "Spiegazione";
     BookmarkAnswer: string = "Ricontrolla la domanda più tardi";
-    AverageTimePerAnswer: string = "circa per domanda";
+    AverageTimePerAnswer: string = "circa per ogni domanda restante";
     BackToHome: string = "Torna alla home";
     BackToHomeConfirmation: string = "Sei sicuro di voler tornare alla home? Le modifiche alla domanda attuale verranno perse!";
     Logout: string = "Esci";

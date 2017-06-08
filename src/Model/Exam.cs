@@ -22,7 +22,15 @@ namespace Hexamer.Model
         public int MaximumQuestions { get; set; }
         public DateTimeOffset? ValidFrom { get; set; }
         public DateTimeOffset? ValidTo { get; set; }
+        public DateTimeOffset? VisibleFrom { get; set; }
+        public DateTimeOffset? VisibleTo { get; set; }
         public bool Hidden { get; set; }
+
+        public bool IsVisible {
+            get {
+                return !Hidden && IsInVisibilityInterval;
+            }
+        }
 
         public static Exam FromFile(string fileName, string language = null)
         {
@@ -157,18 +165,31 @@ namespace Hexamer.Model
             }
         }
 
+        private bool IsInVisibilityInterval {
+            get {
+                return (!VisibleTo.HasValue || VisibleTo.Value > DateTimeOffset.Now) && (!VisibleFrom.HasValue || VisibleFrom.Value < DateTimeOffset.Now);
+            }
+        }
+
         public bool CanShowAnswer
         {
             get
             {
-                return !Hidden && IsMockExam && IsInTimeInterval;
+                return !Hidden && IsMockExam && IsInTimeInterval && IsInVisibilityInterval;
             }
         }
         public bool CanOpen
         {
             get
             {
-                return !Hidden && IsInTimeInterval;
+                return !Hidden && IsInTimeInterval && IsInVisibilityInterval;
+            }
+        }
+
+        public bool CanShowScore {
+            get 
+            {
+                return !Hidden && (!IsInTimeInterval || IsMockExam) && IsInVisibilityInterval;
             }
         }
 

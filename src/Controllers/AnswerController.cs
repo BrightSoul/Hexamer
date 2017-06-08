@@ -38,6 +38,9 @@ namespace Hexamer.Controllers
             if (exam == null)
                 return NotFound("Exam");
 
+            if (!exam.CanOpen)
+                return BadRequest("Timeout");
+
             var question = exam.Questions.SingleOrDefault(q => q.Id == answer.Question);
             if (question == null)
                 return NotFound("Question");
@@ -55,6 +58,14 @@ namespace Hexamer.Controllers
         [HttpPost("{examId}/{questionNumber}/Bookmark")]
         public async Task<IActionResult> Bookmark(string examId, int questionNumber, [FromBody] BookmarkRequest request)
         {
+
+            var exam = examRepository.GetById(examId, Request.GetLanguage(config.DefaultLocalization));
+            if (exam == null)
+                return NotFound("Exam");
+
+            if (!exam.CanOpen)
+                return BadRequest("Timeout");
+
             var result = await answerRepository.UpdateBookmark(User.Identity.Name, examId, questionNumber, request.IsBookmarked);
             if (result)
                 return Ok();

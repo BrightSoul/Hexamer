@@ -1,13 +1,15 @@
 ﻿{
-  "Hidden":  true,
+  "Hidden":  false,
   "IsMockExam": false,
   "DefaultLanguage": "It",
   "SupportedLanguages": [ "It", "En" ],
   "Title": { "It": "Programmazione C#", "En": "C# programming" },
-  "Subtitle": { "It": "(simulazione d'esame)", "En": "(practice test)" },
+  "Subtitle": { "It": "", "En": "" },
   "MaximumQuestions": 34,
   "MinimumScore": 18.0,
   "MaximumScore": 30.0,
-  "ValidFrom": "2017/06/28 09:00 +02:00",
-  "ValidTo": "2017/06/28 12:00 +02:00"
+  "VisibleFrom": "2017/06/08 17:00:00 +02:00",
+  "ValidFrom": "2017/06/08 17:00:00 +02:00",
+  "ValidTo": "2017/06/08 23:15:00 +02:00",
+  "VisibleTo": "2017/06/08 23:26:00 +02:00"
 }

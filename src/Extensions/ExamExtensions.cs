@@ -8,7 +8,7 @@ namespace Hexamer.Extensions
     {
         public static IEnumerable<Exam> Visible(this IEnumerable<Exam> exams)
         {
-            return exams.Where(exam => exam.CanOpen);
+            return exams.Where(exam => exam.IsVisible);
         }
     }
 }

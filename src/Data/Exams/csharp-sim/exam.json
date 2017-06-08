@@ -5,9 +5,11 @@
   "SupportedLanguages": [ "It", "En" ],
   "Title": { "It": "Programmazione C#", "En": "C# programming" },
   "Subtitle": { "It": "(Simulazione)", "En": "(Mock exam)" },
-  "MaximumQuestions": 40,
+  "MaximumQuestions": 34,
   "MinimumScore": 18.0,
   "MaximumScore": 30.0,
+  "VisibleFrom": null,
   "ValidFrom": null,
-  "ValidTo": "2017/06/28 00:00:00 +02:00"
+  "ValidTo": "2017/06/15 12:00:00 +02:00",
+  "VisibleTo": "2017/06/15 12:00:00 +02:00"
 }

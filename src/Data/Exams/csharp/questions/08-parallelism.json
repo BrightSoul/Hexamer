@@ -1,0 +1,37 @@
+{
+  "Type": "CodeCompletion",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "A2,B1",
+  "Text": {
+	"It": "Stai lavorando per realizzare un filtro antispam. Il tuo metodo `CalcolaPunteggioSpam` è in grado di analizzare un messaggio e-mail parola per parola per ottenere un punteggio che indica la probabilità che sia spam.  
+Essendo un lavoro intensivo per la CPU, hai scoperto che potresti ottenere performance migliori parallelizzando il lavoro su vari thread. Hai misurato che le performance ottimali le ottieni quando usi contemporaneamente 3 thread. Come modifichi il metodo `CalcolaPunteggioSpam` per parallelizzare il lavoro?",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Quando dobbiamo svolgere un lavoro gravoso per la CPU, chiediamoci se il lavoro può essere parallelizzato sui vari core fisici, in modo da completarlo in una frazione del tempo. Non tutti gli algoritmi possono essere parallelizzati ma, quando ciò è possibile, usiamo `AsParallel` su una lista di elementi per fare in modo che i metodi di LINQ che useremo di seguito vengano elaborati su thread differenti.  
+LINQ, usato in questo modo, viene definito `Parallel LINQ` (o più brevemente PLINQ).  
+Di default, quando usiamo il metodo `AsParallel` su una lista, il lavoro verrà distribuito su tanti thread quanti sono i core della CPU della macchina locale. Per cambiare il numero di thread, usiamo il metodo `WithDegreeOfParallelism` passandogli come argomento il numero di thread da usare.  
+E' importante monitorare quali sono le performance al variare del numero di thread usati. In casi particolari, quando sono coinvolte delle operazioni asincrone, potrebbe anche essere vantaggioso usare più thread di quanti core esistono nella CPU.	
+
+**Materiale di studio**
+
+[Esercitazione 8, slide 9](https://files.slack.com/files-pri/T4LSU7RKJ-F5BKMUU04/08-lezione-parallelismo.pdf#page=9)",
+	"En": "",
+  },
+  "Group": "08",
+  "CodeText": { 
+	"It": "public double CalcolaPunteggioSpam(string messaggio) {
+    string[] parole = messaggio.Split(' ');
+    return parole
+             .{A}()
+             .{B}(3)
+             .Select(parola =&gt; CalcolaPunteggioPerParola(parola))
+             .Avg();
+}",
+	"En": ""
+  },
+  "Blocks": [
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "AsSequential" }, { "Id": "2", "Text": "AsParallel" }, { "Id": "3", "Text": "MultiThread" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "WithDegreeOfParallelism" }, { "Id": "2", "Text": "WithThreads" }, { "Id": "3", "Text": "WithConcurrency" } ] }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "Type": "CodeCompletion",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "A3,B2,C1",
+  "Text": {
+	"It": "Stai gestendo un sito e-commerce che comprende un catalogo di 3.000 prodotti. Ogni giorno devono essere rimossi dal catalogo quei prodotti la cui `DataValidità` è ormai trascorsa. Per fare ciò, hai impostato un'operazione pianificata che alla mezzanotte invoca automaticamente il tuo metodo `RimuoviProdottiNonPiùValidi`.",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Usare `List<Prodotto>` è necessario perché dobbiamo rimuovere elementi dalla collezione e questa classe ci dà appunto un metodo `RemoveAt` per farlo.  
+Un `Prodotto` non avrebbe funzionato perché il metodo `RimuoviProdottiNonPiùValidi` esegue un ciclo sull'elenco che gli viene passato, e un singolo oggetto `Prodotto` non è ciclabile.  
+Il tipo `IEnumerable<Prodotto>`, invece, è inadatto perché non consente di modificare l'elenco ma permette solo di scorrerlo in avanti.  
+Per esaminare ogni elemento della lista, in questo caso usiamo un `ciclo for` dato che è l'unico che può funzionare con i parametri che si trovano tra le parentesi.  
+Un ciclo `ciclo foreach` avrebbe richiesto una variabile di tipo Prodotto e la parola chiave `in`, mentre il `ciclo while` sarebbe stato inadatto in questo caso.  
+Quando si dice che una data è \"trascorsa\", vuol dire che è nel passato e quindi usiamo l'operatore `<=` per verificare che sia inferiore a `DateTime.Now`, che restituisce la data/ora corrente.  
+
+**Materiale di studio**
+
+[Lezione 4, slide 51](https://files.slack.com/files-pri/T4LSU7RKJ-F4XRA1B4M/04-lezione-esame-unittest-eventi-lambdaexpressions.pdf#page=51)  
+[Lezione 4, slide 54](https://files.slack.com/files-pri/T4LSU7RKJ-F4XRA1B4M/04-lezione-esame-unittest-eventi-lambdaexpressions.pdf#page=54)",
+	"En": "",
+  },
+  "Group": "04",
+  "CodeText": { 
+	"It": "public void RimuoviProdottiNonPiùValidi({A} prodotti) {
+    {B} (int i = prodotti.Count-1; i &gt;= 0; i--) {
+        if (prodotti[i].DataValidità {C} DateTime.Now) {
+            prodotti.RemoveAt(i);
+        }
+    }
+}",
+	"En": ""
+  },
+  "Blocks": [
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "IEnumerable&lt;Prodotto&gt;" }, { "Id": "2", "Text": "Prodotto" }, { "Id": "3", "Text": "List&lt;Prodotto&gt;" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "foreach" }, { "Id": "2", "Text": "for" }, { "Id": "3", "Text": "while" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "&lt;=" }, { "Id": "2", "Text": "==" }, { "Id": "3", "Text": "&gt;=" } ] }
+  ]
+}

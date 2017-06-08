@@ -1,0 +1,33 @@
+{
+  "Type": "CodeCompletion",
+  "ScoreAwarded": 1.0,
+  "CorrectAnswer": "A2,B2,C3,D2",
+  "Text": {
+	"It": "Ti è stato chiesto di creare una classe per il calcolo del codice fiscale italiano. Prima di procedere con l'implementazione, ti crei un'interfaccia per avere la libertà di progettare senza la distrazione dei dettagli implementativi. Hai deciso di definire un metodo `CalcolaCodiceFiscale` che effettua il calcolo e una proprietà `UltimoCodiceFiscaleCalcolato` da cui puoi recuperare il risultato dell'ultimo calcolo. Completa il codice dell'interfaccia.",
+	"En": ""
+  },
+  "AnswerText": {
+	"It": "Secondo la [linea guida](https://msdn.microsoft.com/en-us/library/8bc1fexb(v=vs.71).aspx), i nomi delle interfacce dovrebbero essere prefissati da una **I**.  
+Tutti i membri definiti in un'interfaccia devono intendersi pubblici, quindi non vanno assolutamente indicati accessori come `public` o `private`.  
+Il codice fiscale italiano è una stringa di 16 caratteri, quindi il tipo restituito da `UltimoCodiceFiscaleCalcolato` non può essere int.  
+
+**Materiale di studio**
+
+[Lezione 3, slide 6](https://files.slack.com/files-pri/T4LSU7RKJ-F4TDZ36UR/03-lezione-modellazione-testing.pdf#page=6)",
+	"En": "",
+  },
+  "Group": "03",
+  "CodeText": { 
+	"It": "public interface {A} {
+    {B} CalcolaCodiceFiscale(string nome, string cognome, string luogoDiNascita, DateTime dataDiNascita, Sesso sesso);
+    {C} UltimoCodiceFiscaleCalcolato { {D} }
+}",
+	"En": ""
+  },
+  "Blocks": [
+	{ "Id": "A", "Options": [ { "Id": "1", "Text": "CodiceFiscale" }, { "Id": "2", "Text": "ICodiceFiscale" }, { "Id": "3", "Text": "codiceFiscale" } ] },
+	{ "Id": "B", "Options": [ { "Id": "1", "Text": "public void" }, { "Id": "2", "Text": "void" } ] },
+	{ "Id": "C", "Options": [ { "Id": "1", "Text": "int" }, { "Id": "2", "Text": "public string" }, { "Id": "3", "Text": "string" } ] },
+	{ "Id": "D", "Options": [ { "Id": "1", "Text": "get; private set;" }, { "Id": "2", "Text": "get;" } ] }
+  ]
+}

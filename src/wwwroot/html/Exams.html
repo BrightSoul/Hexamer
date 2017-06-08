@@ -19,7 +19,7 @@
         </section>
         <footer>
           <button type="button" class="btn btn-link btn-block" data-bind="visible: CanReset, locale: 'ResetExam', click:$parent.ResetExam"></button>
-          <button type="button" class="btn btn-start btn-block btn-primary btn-lg" data-bind="locale: QuestionsAnswered.length == 0 ? 'BeginExam' : (QuestionsAnswered.length >= Questions ? 'ReviewExam' : 'ContinueExam'), 'BeginExam', click:$parent.OpenExam"></button>
+          <button type="button" class="btn btn-start btn-block btn-primary btn-lg" data-bind="visible: CanOpen, locale: QuestionsAnswered.length == 0 ? 'BeginExam' : (QuestionsAnswered.length >= Questions ? 'ReviewExam' : 'ContinueExam'), 'BeginExam', click:$parent.OpenExam"></button>
         </footer>
     </li>
 </ul>

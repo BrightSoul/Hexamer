@@ -12,6 +12,7 @@ class QuestionsViewModel {
     public Exam: KnockoutObservable<Exam>;
     private EndTime: number;
     public RemainingTime: KnockoutObservable<string>;
+    public AverageTimePerAnswer: KnockoutObservable<string>;
     public TimeIsRunningOut: KnockoutObservable<boolean>;
     public HasExpirationTime: KnockoutObservable<boolean>;
     public Question: KnockoutObservable<Question>;
@@ -35,6 +36,7 @@ class QuestionsViewModel {
         this.Exam = ko.observable(null);
         this.BookmarkUpdater = ko.computed(this.UpdateBookmark);
         this.IsLastQuestion = ko.computed(this.UpdateIsLastQuestion);
+        this.AverageTimePerAnswer = ko.observable(null);
 
         let args = navigationContext.NavigationArgs.split("/");
         this.ExamId = args[0];
@@ -103,6 +105,10 @@ class QuestionsViewModel {
     private GetExam = async (examId: string, questionNumber: number): Promise<void> => {
         this.navigationContext.Layout.IsBusy(true);
         let exam = await this.navigationContext.Layout.Get<Exam>(`/api/Exams/${examId}`);
+
+        if (exam.RemainingSeconds)
+            this.EndTime = (new Date()).getTime() + (exam.RemainingSeconds * 1000);
+
         let questionIndicators: QuestionIndicator[] = [];
         for (let i: number = 1; i <= exam.Questions; i++) {
             let indicator = new QuestionIndicator();
@@ -127,8 +133,16 @@ class QuestionsViewModel {
         this.Question(question);
         this.navigationContext.Layout.IsBusy(false);
 
-        window["jQuery"](".question").off("swipeleft").on("swipeleft", () => { this.PreviousQuestion(); });
-        window["jQuery"](".question").off("swiperight").on("swiperight", () => { this.NextQuestion(); });
+        if (this.EndTime) {
+            this.UpdateTime();
+            if ('countdown' in this.navigationContext.Layout) {
+                clearInterval(this.navigationContext.Layout['countdown']);
+            }
+            this.navigationContext.Layout['countdown'] = setInterval(this.UpdateTime, 1000);
+        }
+
+        //window["jQuery"](".question").off("swipeleft").on("swipeleft", () => { this.PreviousQuestion(); });
+        //window["jQuery"](".question").off("swiperight").on("swiperight", () => { this.NextQuestion(); });
 
     }
 
@@ -152,14 +166,27 @@ class QuestionsViewModel {
         let currentTime = (new Date()).getTime();
         let remainingMilliseconds = this.EndTime - currentTime;
         if (remainingMilliseconds <= 0) {
-            this.RemainingTime("Tempo scaduto");
+            this.RemainingTime("--");
         } else {
-            let remainingTime = new Date(remainingMilliseconds).toISOString().substr(11, 8);
-            remainingTime = remainingTime.substr(0, 1) == '0' ? remainingTime.substr(1) : remainingTime;
-            remainingTime = remainingTime.substr(0, 2) == '0:' ? remainingTime.substr(2) : remainingTime;
+            let remainingTime = new Date(remainingMilliseconds).toISOString().substr(11, 5);
+            //remainingTime = remainingTime.substr(0, 1) == '0' ? remainingTime.substr(1) : remainingTime;
+            //remainingTime = remainingTime.substr(0, 2) == '0:' ? remainingTime.substr(2) : remainingTime;
             this.RemainingTime(remainingTime);
             this.TimeIsRunningOut(remainingMilliseconds < 30 * 60 * 1000);
-
+            let exam = this.Exam();
+            let remainingQuestions = exam.Questions - exam.QuestionsAnswered.length;
+            if (remainingQuestions > 1) {
+                let perQuestion = (remainingMilliseconds / remainingQuestions) / 1000;
+                perQuestion = Math.floor(perQuestion / 10) * 10;
+                let seconds = (perQuestion % 60).toString();
+                let minutes = Math.floor(perQuestion / 60).toString();
+                seconds = (seconds.length == 1 ? "0" : "") + seconds;
+                minutes = (minutes.length == 1 ? "0" : "") + minutes;
+                this.AverageTimePerAnswer(minutes + "'" + seconds + "''");
+            } else {
+                this.AverageTimePerAnswer(null);
+            }
+            
         }
     }
 }
