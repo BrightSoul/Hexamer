@@ -3,15 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Hexamer.Services
 {
     public class ExamRepository : IExamRepository
     {
         private readonly string examsDataDirectory;
-        public ExamRepository(AppConfig config)
+        private readonly IMemoryCache memoryCache;
+        public ExamRepository(IMemoryCache memoryCache, AppConfig config)
         {
-            examsDataDirectory = config.ExamsDataDirectory; 
+            examsDataDirectory = config.ExamsDataDirectory;
+            this.memoryCache = memoryCache; 
         }
         public IEnumerable<Exam> GetAll(string language)
         {
@@ -25,7 +28,14 @@ namespace Hexamer.Services
                .Where(filter)
                .Select(directory => Path.Combine(directory, "exam.json"))
                .Where(examFile => File.Exists(examFile))
-               .Select(examFile => Exam.FromFile(examFile, language));
+               .Select(examFile => memoryCache.GetOrCreate(
+                   key: $"{examFile}|{File.GetLastWriteTimeUtc(examFile).Ticks}",
+                   factory: cacheEntry => {
+                       cacheEntry.AbsoluteExpiration = DateTimeOffset.Now.AddHours(3);
+                       return Exam.FromFile(examFile, language);
+                   }
+               )
+               );
         }
 
         public Exam GetById(string id, string language)

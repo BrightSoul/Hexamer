@@ -51,6 +51,7 @@ namespace Hexamer
             services.AddSingleton<AppConfig, AppConfig>(provider => AppConfig.FromConfiguration(Configuration, contentRootPath));
             services.AddSingleton<IStatistics, FileStatistics>();
             services.AddSingleton<IAuthority, CookieAuthority>();
+            services.AddMemoryCache();
             services.AddMvc(options => {
                 var policy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()
