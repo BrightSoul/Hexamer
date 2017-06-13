@@ -2,7 +2,7 @@
   "Hidden":  false,
   "IsMockExam": true,
   "DefaultLanguage": "It",
-  "SupportedLanguages": [ "It", "En" ],
+  "SupportedLanguages": [ "It" ],
   "Title": { "It": "Programmazione C#", "En": "C# programming" },
   "Subtitle": { "It": "(Simulazione)", "En": "(Mock exam)" },
   "MaximumQuestions": 34,

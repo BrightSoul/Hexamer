@@ -16,6 +16,7 @@ using System.Data.Common;
 using Microsoft.Data.Sqlite;
 using CommonMark;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Hexamer
 {
@@ -52,14 +53,16 @@ namespace Hexamer
             services.AddSingleton<IStatistics, FileStatistics>();
             services.AddSingleton<IAuthority, CookieAuthority>();
             services.AddMemoryCache();
-            services.AddMvc(options => {
+            services.AddMvc(options =>
+            {
                 var policy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()
                      .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-            
-            services.AddAuthorization(options => {
+
+            services.AddAuthorization(options =>
+            {
                 var administratorPolicy = new AuthorizationPolicyBuilder()
                 .RequireClaim(ClaimTypes.Role, "Administrator")
                 .Build();
@@ -76,16 +79,25 @@ namespace Hexamer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseDefaultFiles(new DefaultFilesOptions {
-                 DefaultFileNames = new List<string> { "/Layout.html" }
+            app.UseDefaultFiles(new DefaultFilesOptions
+            {
+                DefaultFileNames = new List<string> { "/Layout.html" }
             });
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=6000");
+                }
+            });
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            } else {
+            }
+            else
+            {
                 app.UseExceptionHandler("/Error.html");
             }
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
@@ -95,6 +107,7 @@ namespace Hexamer
                 AccessDeniedPath = new PathString("/Error.html"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
+                //Events 
             });
             app.UseMvc();
             app.UseSwagger();

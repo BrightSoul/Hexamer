@@ -29,7 +29,7 @@ namespace Hexamer.Services
                .Select(directory => Path.Combine(directory, "exam.json"))
                .Where(examFile => File.Exists(examFile))
                .Select(examFile => memoryCache.GetOrCreate(
-                   key: $"{examFile}|{File.GetLastWriteTimeUtc(examFile).Ticks}",
+                   key: $"{examFile}|{language.ToLowerInvariant()}|{File.GetLastWriteTimeUtc(examFile).Ticks}",
                    factory: cacheEntry => {
                        cacheEntry.AbsoluteExpiration = DateTimeOffset.Now.AddHours(3);
                        return Exam.FromFile(examFile, language);

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +15,7 @@ using Hexamer.Results;
 using Hexamer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Hexamer.Controllers
 {
@@ -49,6 +53,45 @@ namespace Hexamer.Controllers
             return Ok();
         }
 
+        [HttpGet("Impersonate")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Impersonate(string token) {
+            if (string.IsNullOrWhiteSpace(token))
+                return BadRequest();
+
+            var key = Guid.Parse(config.SymmetricKey).ToByteArray();
+            var signingKey = new SymmetricSecurityKey(key);
+                
+            var tokenHandler = new JwtSecurityTokenHandler();
+                var validationParameters = new TokenValidationParameters
+                {
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = signingKey,
+                    ValidIssuer = "Hexamer",
+                    ClockSkew = TimeSpan.Zero
+                };
+            SecurityToken securityToken;
+            try
+            {
+                
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                var name = principal.Identity.Name;
+                if (string.IsNullOrWhiteSpace(name))
+                    return BadRequest();
+
+                await SignIn(principal.Identity.Name);
+                return Redirect("/");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("Impersonate")]
         public async Task<IActionResult> Impersonate([FromBody] ImpersonateRequest request)
         {
@@ -59,6 +102,35 @@ namespace Hexamer.Controllers
             await SignIn(username);
             
             return Ok();
+        }
+
+        [HttpPost("ImpersonateLink")]
+        public IActionResult ImpersonateLink([FromBody] ImpersonateRequest request)
+        {
+            var username = (request.Username ?? "").ToLower();
+            if (string.IsNullOrEmpty(username))
+                return BadRequest();
+
+            var identity = new ClaimsIdentity();
+            identity.AddClaim(new Claim(identity.NameClaimType, username));
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Guid.Parse(config.SymmetricKey).ToByteArray();
+            var signingKey = new SymmetricSecurityKey(key);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = identity,
+                Expires = DateTime.Now.AddMinutes(20),
+                Issuer = "Hexamer",
+                //Lifetime = new Lifetime(DateTime.Now, DateTime.Now.Add(scadenza)),
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var encodedToken = tokenHandler.WriteToken(token);
+
+            var url = $"{Request.Scheme}://{Request.Host}/api/Admin/Impersonate?token=" + WebUtility.UrlEncode(encodedToken);
+            
+            return Ok(url);
         }
 
         private async Task SignIn(string username) {

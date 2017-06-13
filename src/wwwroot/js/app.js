@@ -164,8 +164,22 @@ define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/Score
                     }
                 });
             }); };
+            this.ImpersonateLinkBySearch = function () { return __awaiter(_this, void 0, void 0, function () {
+                var scoreResult;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            scoreResult = new ScoreResult_1.ScoreResult();
+                            scoreResult.Username = this.Search();
+                            return [4 /*yield*/, this.ImpersonateLink(scoreResult)];
+                        case 1:
+                            _a.sent();
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
             this.Impersonate = function (scoreResult) { return __awaiter(_this, void 0, void 0, function () {
-                var impersonateRequest, exams;
+                var impersonateRequest;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -174,10 +188,27 @@ define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/Score
                             impersonateRequest.Username = scoreResult.Username;
                             return [4 /*yield*/, this.navigationContext.Layout.Post('/api/Admin/Impersonate', impersonateRequest)];
                         case 1:
-                            exams = _a.sent();
+                            _a.sent();
                             this.navigationContext.Layout.IsBusy(false);
                             this.navigationContext.Layout.Navigate(Page_2.Page.Exams);
                             window.location.reload();
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
+            this.ImpersonateLink = function (scoreResult) { return __awaiter(_this, void 0, void 0, function () {
+                var impersonateRequest, impersonateLink;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            this.navigationContext.Layout.IsBusy(true);
+                            impersonateRequest = new ImpersonateRequest_1.ImpersonateRequest();
+                            impersonateRequest.Username = scoreResult.Username;
+                            return [4 /*yield*/, this.navigationContext.Layout.Post('/api/Admin/ImpersonateLink', impersonateRequest)];
+                        case 1:
+                            impersonateLink = _a.sent();
+                            this.navigationContext.Layout.IsBusy(false);
+                            console.log(scoreResult.Username, impersonateLink);
                             return [2 /*return*/];
                     }
                 });
@@ -383,7 +414,8 @@ define("Layout", ["require", "exports", "knockout", "axios", "Models/NavigationC
             };
             var templateEngine = ko["amdTemplateEngine"];
             templateEngine.defaultPath = "/html";
-            templateEngine.defaultSuffix = ".html?v=" + Math.random();
+            //templateEngine.defaultSuffix = ".html?v=" + Math.random();
+            templateEngine.defaultSuffix = ".html";
             this.User = ko.observable(null);
             this.IsBusy = ko.observable(null);
             this.NavigationContext = ko.observable(null);

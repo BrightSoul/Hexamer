@@ -11,7 +11,7 @@
     <tr>
       <td><input type="search" class="form-control" data-bind="value: Search, valueUpdate: 'keyup'" style="width: 100%" /></td>
       <td colspan="3"><select class="form-control" data-bind="options: Exams, optionsText: 'Title', optionsValue: 'Id', value: SelectedExam" style="width:100%"></select></td>
-      <td><button type="button" class="btn btn-default" data-bind="click: ImpersonateBySearch, locale: 'Impersonate'"></button></td>
+      <td><button type="button" class="btn btn-default" data-bind="click: ImpersonateLinkBySearch"><span class="glyphicon glyphicon-link"></span></button> <button type="button" class="btn btn-default" data-bind="click: ImpersonateBySearch"><span class="glyphicon glyphicon-user"></span></button></td>
     </tr>
   </thead>
   <tbody data-bind="foreach: FilteredScoreResults">
@@ -20,7 +20,7 @@
       <td><span data-bind="text: CorrectQuestions"></span>/<span data-bind="text: AnsweredQuestions"></span></td>
       <td><span data-bind="text: NormalizedScore, attr: {title: Score}"></span><span style="margin-left:6px;" data-bind="locale: 'CumLaude', visible: Excellence"></span></td>
       <td data-bind="foreach: Tokens"><div data-bind="text: $data"></div></td>
-      <td><button type="button" class="btn btn-default" data-bind="locale: 'Impersonate', click: $parent.Impersonate"></button></td>
+      <td><button type="button" class="btn btn-default" data-bind="click: $parent.ImpersonateLink"><span class="glyphicon glyphicon-link"></span></button> <button type="button" class="btn btn-default" data-bind="click: $parent.Impersonate"><span class="glyphicon glyphicon-user"></span></button></td>
     </tr>
   </tbody>
 </table>

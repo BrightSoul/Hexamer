@@ -39,15 +39,29 @@ class AdminViewModel {
         scoreResult.Username = this.Search();
         await this.Impersonate(scoreResult);
     };
+    public ImpersonateLinkBySearch = async () : Promise<void> => {
+        let scoreResult = new ScoreResult();
+        scoreResult.Username = this.Search();
+        await this.ImpersonateLink(scoreResult);
+    };
 
     public Impersonate = async (scoreResult: ScoreResult) : Promise<void> => {
         this.navigationContext.Layout.IsBusy(true);
         let impersonateRequest = new ImpersonateRequest();
         impersonateRequest.Username = scoreResult.Username;
-        let exams = await this.navigationContext.Layout.Post<void, ImpersonateRequest>('/api/Admin/Impersonate', impersonateRequest);
+        await this.navigationContext.Layout.Post<void, ImpersonateRequest>('/api/Admin/Impersonate', impersonateRequest);
         this.navigationContext.Layout.IsBusy(false);
         this.navigationContext.Layout.Navigate(Page.Exams);
         window.location.reload();
+    }
+
+    public ImpersonateLink = async (scoreResult: ScoreResult) : Promise<void> => {
+        this.navigationContext.Layout.IsBusy(true);
+        let impersonateRequest = new ImpersonateRequest();
+        impersonateRequest.Username = scoreResult.Username;
+        let impersonateLink = await this.navigationContext.Layout.Post<string, ImpersonateRequest>('/api/Admin/ImpersonateLink', impersonateRequest);
+        this.navigationContext.Layout.IsBusy(false);
+        console.log(scoreResult.Username, impersonateLink);
     }
 
     private async GetExams() : Promise<void> {

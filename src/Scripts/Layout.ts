@@ -23,7 +23,8 @@ export class LayoutViewModel implements ILayout {
     constructor() {
         let templateEngine: any = ko["amdTemplateEngine"];
         templateEngine.defaultPath = "/html";
-        templateEngine.defaultSuffix = ".html?v=" + Math.random();
+        //templateEngine.defaultSuffix = ".html?v=" + Math.random();
+        templateEngine.defaultSuffix = ".html";
         this.User = ko.observable(null);
         this.IsBusy = ko.observable(null);
         this.NavigationContext = ko.observable(null);

@@ -44,6 +44,7 @@ namespace Hexamer.Model
         public string[] SupportedLogins { get; set; }
         public string AdministratorUsername { get; set; }
         public string AdministratorPassword { get; set; }
+        public string SymmetricKey { get; set; }
         public string DefaultLocalization { get; set; }
         public string AuthenticationScheme { get; set; }
         public string SlackClientId { get; set; }
