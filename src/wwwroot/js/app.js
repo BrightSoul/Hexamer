@@ -196,6 +196,23 @@ define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/Score
                     }
                 });
             }); };
+            this.ToggleBlock = function (scoreResult) { return __awaiter(_this, void 0, void 0, function () {
+                var impersonateRequest, blockStatus;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            this.navigationContext.Layout.IsBusy(true);
+                            impersonateRequest = new ImpersonateRequest_1.ImpersonateRequest();
+                            impersonateRequest.Username = scoreResult.Username;
+                            return [4 /*yield*/, this.navigationContext.Layout.Post('/api/Admin/ToggleBlock', impersonateRequest)];
+                        case 1:
+                            blockStatus = _a.sent();
+                            this.navigationContext.Layout.IsBusy(false);
+                            scoreResult.IsRunning(!blockStatus);
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
             this.ImpersonateLink = function (scoreResult) { return __awaiter(_this, void 0, void 0, function () {
                 var impersonateRequest, impersonateLink;
                 return __generator(this, function (_a) {
@@ -214,7 +231,7 @@ define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/Score
                 });
             }); };
             this.GetScoreResults = function () { return __awaiter(_this, void 0, void 0, function () {
-                var examId, scoreResults;
+                var examId, scoreResults, _i, scoreResults_1, scoreResult;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -225,6 +242,10 @@ define("Admin", ["require", "exports", "knockout", "Models/Page", "Results/Score
                             return [4 /*yield*/, this.navigationContext.Layout.Get('/api/Admin/Exams/' + examId)];
                         case 1:
                             scoreResults = _a.sent();
+                            for (_i = 0, scoreResults_1 = scoreResults; _i < scoreResults_1.length; _i++) {
+                                scoreResult = scoreResults_1[_i];
+                                scoreResult.IsRunning = ko.observable(!scoreResult.IsBlocked);
+                            }
                             this.ScoreResults(scoreResults);
                             this.navigationContext.Layout.IsBusy(false);
                             return [2 /*return*/];

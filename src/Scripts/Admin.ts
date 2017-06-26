@@ -55,6 +55,15 @@ class AdminViewModel {
         window.location.reload();
     }
 
+    public ToggleBlock = async (scoreResult: ScoreResult) : Promise<void> => {
+        this.navigationContext.Layout.IsBusy(true);
+        let impersonateRequest = new ImpersonateRequest();
+        impersonateRequest.Username = scoreResult.Username;
+        let blockStatus = await this.navigationContext.Layout.Post<boolean, ImpersonateRequest>('/api/Admin/ToggleBlock', impersonateRequest);
+        this.navigationContext.Layout.IsBusy(false);
+        scoreResult.IsRunning(!blockStatus);
+    }
+
     public ImpersonateLink = async (scoreResult: ScoreResult) : Promise<void> => {
         this.navigationContext.Layout.IsBusy(true);
         let impersonateRequest = new ImpersonateRequest();
@@ -76,6 +85,9 @@ class AdminViewModel {
             return;
         this.navigationContext.Layout.IsBusy(true);
         let scoreResults = await this.navigationContext.Layout.Get<ScoreResult[]>('/api/Admin/Exams/' + examId);
+        for (let scoreResult of scoreResults) {
+            scoreResult.IsRunning = ko.observable(!scoreResult.IsBlocked);
+        }
         this.ScoreResults(scoreResults);
         this.navigationContext.Layout.IsBusy(false);
     }

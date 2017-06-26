@@ -31,6 +31,9 @@ namespace Hexamer.Controllers
         [HttpGet]
         public async Task<IEnumerable<ExamResult>> GetAll()
         {
+            if (answerRepository.IsUserLocked(User.Identity.Name))
+                return Enumerable.Empty<ExamResult>();
+
             string language = Request.GetLanguage(config.DefaultLocalization);
             var enabledExams = examRepository.GetAll(language).Visible().ToList();
             var examResults = enabledExams.Select(exam => ExamResult.FromEntity(exam, language)).ToList();
@@ -49,6 +52,11 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}")]
         public async Task<IActionResult> Detail(string examId)
         {
+
+            if (answerRepository.IsUserLocked(User.Identity.Name))
+                return NotFound("Locked");
+
+
             string language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
             if (exam == null)
@@ -70,6 +78,9 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}/Image")]
         public IActionResult Image(string examId, string path)
         {
+            if (answerRepository.IsUserLocked(User.Identity.Name))
+                return NotFound("Locked");
+
             string language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
             if (exam == null)
@@ -111,6 +122,9 @@ namespace Hexamer.Controllers
         [HttpGet("{examId}/{questionNumber}")]
         public async Task<IActionResult> QuestionDetail(string examId, int questionNumber)
         {
+            if (answerRepository.IsUserLocked(User.Identity.Name))
+                return NotFound("Locked");
+
             var language = Request.GetLanguage(config.DefaultLocalization);
 
             var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
@@ -145,6 +159,9 @@ namespace Hexamer.Controllers
         [HttpPost("{examId}")]
         public async Task<IActionResult> Reset(string examId)
         {
+            if (answerRepository.IsUserLocked(User.Identity.Name))
+                return NotFound("Locked");
+
             var language = Request.GetLanguage(config.DefaultLocalization);
             var exam = examRepository.GetById(examId, language);
             if (exam == null)

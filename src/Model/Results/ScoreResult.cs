@@ -5,7 +5,7 @@ using Hexamer.Extensions;
 
 namespace Hexamer.Model.Results {
     public class ScoreResult {
-        private ScoreResult(User user, Exam exam, IEnumerable<Answer> answers, IEnumerable<string> tokens)
+        private ScoreResult(User user, Exam exam, IEnumerable<Answer> answers, bool isBlocked, IEnumerable<string> tokens)
         {
             Username = user.Name;
             AnsweredQuestions = answers.Answered().Count();
@@ -15,6 +15,7 @@ namespace Hexamer.Model.Results {
             Excellence = normalizedScore > exam.MaximumScore;
             NormalizedScore = Math.Min(exam.MaximumScore, normalizedScore);
             Tokens = tokens.ToArray();
+            IsBlocked = isBlocked;
         }
         public string Username {get; private set;}
         public int AnsweredQuestions {get; private set;}
@@ -23,8 +24,9 @@ namespace Hexamer.Model.Results {
         public double Score { get; private set; }
         public decimal NormalizedScore { get; private set; }
         public bool Excellence {get; private set;}
-        public static ScoreResult FromEntities(User user, Exam exam, IEnumerable<Answer> answers, IEnumerable<string> token) {
-            return new ScoreResult(user, exam, answers, token);
+        public bool IsBlocked {get; private set;}
+        public static ScoreResult FromEntities(User user, Exam exam, IEnumerable<Answer> answers, bool isBlocked, IEnumerable<string> token) {
+            return new ScoreResult(user, exam, answers, isBlocked, token);
         }
     }
 }

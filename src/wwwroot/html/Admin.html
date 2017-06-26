@@ -20,7 +20,7 @@
       <td><span data-bind="text: CorrectQuestions"></span>/<span data-bind="text: AnsweredQuestions"></span></td>
       <td><span data-bind="text: NormalizedScore, attr: {title: Score}"></span><span style="margin-left:6px;" data-bind="locale: 'CumLaude', visible: Excellence"></span></td>
       <td data-bind="foreach: Tokens"><div data-bind="text: $data"></div></td>
-      <td><button type="button" class="btn btn-default" data-bind="click: $parent.ImpersonateLink"><span class="glyphicon glyphicon-link"></span></button> <button type="button" class="btn btn-default" data-bind="click: $parent.Impersonate"><span class="glyphicon glyphicon-user"></span></button></td>
+      <td><button type="button" class="btn" data-bind="click: $parent.ToggleBlock, css: {'btn-default':IsRunning(), 'btn-danger':!IsRunning()}"><span data-bind="visible: !IsRunning()" class="glyphicon glyphicon-stop"></span><span data-bind="visible: IsRunning()" class="glyphicon glyphicon-play"></span></button> <button type="button" class="btn btn-default" data-bind="click: $parent.ImpersonateLink"><span class="glyphicon glyphicon-link"></span></button> <button type="button" class="btn btn-default" data-bind="click: $parent.Impersonate"><span class="glyphicon glyphicon-user"></span></button></td>
     </tr>
   </tbody>
 </table>

@@ -81,7 +81,7 @@ namespace Hexamer.Model
                 new
                 {
                     Id = Path.GetFileNameWithoutExtension(file),
-                    Content = JsonConvert.DeserializeObject(File.ReadAllText(file)) as JObject
+                    Content = DeserializeQuestion(file)
                 }
             ).ToList();
             foreach (var question in questions)
@@ -96,6 +96,15 @@ namespace Hexamer.Model
                 questionList.Add(q);
             }
             return questionList;
+        }
+
+        private static JObject DeserializeQuestion(string filePath) {
+            try {
+                var jObject = JsonConvert.DeserializeObject(File.ReadAllText(filePath)) as JObject;
+                return jObject;
+            } catch (Exception exc) {
+                throw new Exception(Path.GetFileNameWithoutExtension(filePath), exc);
+            }
         }
 
         private static string GetMarkupFromMarkdown(string examId, string text)

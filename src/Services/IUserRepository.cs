@@ -9,5 +9,6 @@ namespace Hexamer.Services
     {
         Task<IEnumerable<User>> GetAll();
         Task CreateUserIfNotExists(ClaimsPrincipal claimsPrincipal);
+        Task<bool> ToggleBlock(string username);
     }
 }

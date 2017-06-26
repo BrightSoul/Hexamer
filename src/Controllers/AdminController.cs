@@ -104,6 +104,17 @@ namespace Hexamer.Controllers
             return Ok();
         }
 
+        [HttpPost("ToggleBlock")]
+        public async Task<IActionResult> ToggleBlock([FromBody] ImpersonateRequest request)
+        {
+            var username = (request.Username ?? "").ToLower();
+            if (string.IsNullOrEmpty(username))
+                return BadRequest();
+
+            var result = await userRepository.ToggleBlock(username);
+            return Ok(result);
+        }
+
         [HttpPost("ImpersonateLink")]
         public IActionResult ImpersonateLink([FromBody] ImpersonateRequest request)
         {
@@ -174,7 +185,8 @@ namespace Hexamer.Controllers
                 if (stat != null){
                     tokens = stat.Tokens.Select(pair => $"[{pair.Value.ToString("yyyyMMdd.HHmmss.fff")}]{pair.Key}").ToArray();
                 }
-                var scoreResult = ScoreResult.FromEntities(user, exam, answers, tokens ?? new string[0]);
+                var isBlocked = answerRepository.IsUserLocked(user.Name);
+                var scoreResult = ScoreResult.FromEntities(user, exam, answers, isBlocked, tokens ?? new string[0]);
                 userScores.Add(scoreResult);
             }
             return Ok(userScores);

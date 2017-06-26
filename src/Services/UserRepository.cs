@@ -31,5 +31,16 @@ namespace Hexamer.Services
                 .Select(db => new User { Name = Path.GetFileNameWithoutExtension(db) })
             );
         }
+
+        public async Task<bool> ToggleBlock(string username) {
+            var lockFile = Path.Combine(config.UserDataDirectory, $"{username}.lock");
+            if (File.Exists(lockFile)) {
+                File.Delete(lockFile);
+                return false;
+            } else {
+                File.AppendAllText(lockFile, DateTimeOffset.Now.ToString());
+                return true;
+            }
+        }
     }
 }

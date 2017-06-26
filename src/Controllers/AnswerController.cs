@@ -30,6 +30,9 @@ namespace Hexamer.Controllers
         [HttpPost("{examId}/{questionNumber}")]
         public async Task<IActionResult> Post(string examId, int questionNumber, [FromBody] AnswerRequest request)
         {
+            if (answerRepository.IsUserLocked(User.Identity.Name))
+                return NotFound("Locked");
+
             var answer = await answerRepository.GetByNumber(User.Identity.Name, examId, questionNumber);
             if (answer == null)
                 return NotFound("Answer");
@@ -49,7 +52,7 @@ namespace Hexamer.Controllers
             var result = await answerRepository.UpdateAnswer(User.Identity.Name, examId, questionNumber, request.AnswerProvided, score, isCorrectAnswer, isCompleteAnswer);
 
             var token = User.Identity.Token(HttpContext);
-            statistics.LogQuestionAnswered(User.Identity.Name, User.Identity.Token(HttpContext), examId, question.Id, answer.Number, answer.ScoreAwarded ?? 0.0, answer.IsCorrectAnswer);
+            statistics.LogQuestionAnswered(User.Identity.Name, User.Identity.Token(HttpContext), examId, question.Id, answer.Number, score, isCorrectAnswer);
 
             return Ok();
         }
@@ -58,6 +61,8 @@ namespace Hexamer.Controllers
         [HttpPost("{examId}/{questionNumber}/Bookmark")]
         public async Task<IActionResult> Bookmark(string examId, int questionNumber, [FromBody] BookmarkRequest request)
         {
+            if (answerRepository.IsUserLocked(User.Identity.Name))
+                return NotFound("Locked");
 
             var exam = examRepository.GetById(examId, Request.GetLanguage(config.DefaultLocalization));
             if (exam == null)

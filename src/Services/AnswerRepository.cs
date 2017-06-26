@@ -146,7 +146,7 @@ namespace Hexamer.Services
             }
         }
         public async Task<bool> CreateMissingAnswers(string username, Exam exam)
-        {
+        {            
             using (var conn = await GetDbConnectionForUser(username))
             {
                 //This transaction will automatically rollback if anything happens
@@ -226,6 +226,11 @@ namespace Hexamer.Services
                 await CreateUserDatabaseSchema(connection);
             }
             return connection;
+        }
+
+        public bool IsUserLocked(string username) {
+            string lockPath = Path.Combine(config.UserDataDirectory, $"{username}.lock");
+            return File.Exists(lockPath);
         }
 
         private async Task CreateUserDatabaseSchema(DbConnection connection)
