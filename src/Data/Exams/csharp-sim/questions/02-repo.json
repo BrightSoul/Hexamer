@@ -4,7 +4,7 @@
   "CorrectAnswer": "B,A,E,C",
   "Text": {
 	"It": "Vuoi iniziare a sviluppare una nuova applicazione e hai deciso di renderla open-source sul tuo account GitHub. All'inizio il repository è vuoto ma subito ti metti a scrivere codice sul tuo PC di sviluppo e dopo un paio d'ore vuoi pubblicare il tuo lavoro sul repository GitHub in modo che tutti lo vedano. Quali passi devi compiere?",
-	"En": ""
+	"En": "You want to start developing an application and you decided to release it as an open-source project on your GitHub account. At first the repository is empty but you start writing code on your PC and after a few hours you want to publish your work in that repository so that everyone can see it. Which steps will you go through?"
   },
   "AnswerText": {
 	"It": "Git è un sistema di controllo di versione distribuito. Vuol dire che non esiste un repository \"centrale\" ma esistono varie copie dello stesso repository che devono essere sincronizzare tra loro.  
@@ -16,15 +16,19 @@ Il `Revert` qui non c'entra perché la domanda non chiede di annullare dei commi
 **Materiale di studio**
 
 [Lezione 2, slide 4](https://slack-files.com/files-pri/T4LSU7RKJ-F4Q1R8REV/02-lezione-modellazione.pdf#page=4)",
-	"En": "",
+	"En": "Git is a distributed version control system. It means that there's no \"central\" repository but there various copies of the same repository that have to be synchronized with each other.  
+After creating a new repository on GitHub, it is necessary to `Clone` it in order to get a local copy on your PC so you can start editing it.  
+When you've done modifications, do a `Commit` to record changes in the local repository. Then, do a `Push` to send that commit(s) to the remote repository that's hosted on GitHub.  
+A `Pull request` is not useful in this case, since it's only needed when you're not the owner of a repository and you want to make the owner integrare your commits in his repository. The question explains that there's only one repository which belongs to you. A `Push` will be sufficient to send your local commits to GitHub.  
+A `Revert` is not needed here since you don't have to remove some commits you pushed by mistake.",
   },
   "Group": "02",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Clona il repository", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Crea un nuovo repository su GitHub", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Fai un push", "En": "" } },
-	{ "Id": "D", "Text": { "It": "Crea una pull request", "En": "" } },
-	{ "Id": "E", "Text": { "It": "Scrivi codice e fai un commit", "En": "" } },
-	{ "Id": "F", "Text": { "It": "Fai un revert", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Clona il repository", "En": "Clone the repository" } },
+	{ "Id": "B", "Text": { "It": "Crea un nuovo repository su GitHub", "En": "Create a new repository" } },
+	{ "Id": "C", "Text": { "It": "Fai un push", "En": "Push your commits" } },
+	{ "Id": "D", "Text": { "It": "Crea una pull request", "En": "Create a Pull Request" } },
+	{ "Id": "E", "Text": { "It": "Scrivi codice e fai un commit", "En": "Write some code and then do a Commit" } },
+	{ "Id": "F", "Text": { "It": "Fai un revert", "En": "Revert your commits" } }
   ]
 }

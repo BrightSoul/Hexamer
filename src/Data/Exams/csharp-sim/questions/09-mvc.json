@@ -4,7 +4,7 @@
   "CorrectAnswer": "C",
   "Text": {
 	"It": "Hai iniziato a studiare ASP.NET Core MVC per essere in grado di realizzare applicazioni web. Quale dei seguenti componenti riceve le richieste HTTP degli utenti e si occupa di fornire loro una risposta, orchestrando l'attività degli altri componenti del pattern MVC?",
-	"En": ""
+	"En": "You started studying ASP.NET Core MVC in order to be able to make web applications. Which of the following components handles HTTP requests from the users and has the responsibility of providing a response by coordinating the work of the other two components that belong to the MVC pattern?"
   },
   "AnswerText": {
 	"It": "Il `Controller` è il componente che si occupa di gestire le richieste HTTP degli utenti e può decidere di accedere al database o invocare un webservice per ottenere degli oggetti, che rappresentano il `Model` dei dati da mostrare all'utente.  
@@ -14,13 +14,14 @@ Un `ViewModel` è invece una classe che contiene in sé i riferimenti a tanti og
 **Materiale di studio**
 
 [Lezione 9, slide 44](https://files.slack.com/files-pri/T4LSU7RKJ-F5EAZRPB7/09-lezione-asp-net-core.pdf#page=44)",
-	"En": "",
+	"En": "The `Controller` is the component that has the responsibility of handling HTTP requests sent by the users and it can decide to get results from the database or get them from a webservice. Those results represent the `Model` which is then passed to a `View` so it can be presented in HTML for the user.  
+A `ViewModel`, instead, is a class containing various objects of different type from the `Model`. You would use a `ViewModel` as an adapter, e.g. when the `View` must present different type of objects, such as in a homepage, which presents lists of news, products, events and so on.",
   },
   "Group": "09",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Model", "En": "" } },
-	{ "Id": "B", "Text": { "It": "View", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Controller", "En": "" } },
-	{ "Id": "D", "Text": { "It": "ViewModel", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Model", "En": "Model" } },
+	{ "Id": "B", "Text": { "It": "View", "En": "View" } },
+	{ "Id": "C", "Text": { "It": "Controller", "En": "Controller" } },
+	{ "Id": "D", "Text": { "It": "ViewModel", "En": "ViewModel" } }
   ]
 }

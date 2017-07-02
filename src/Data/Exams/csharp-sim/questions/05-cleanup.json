@@ -4,7 +4,7 @@
   "CorrectAnswer": "B,C,E",
   "Text": {
 	"It": "Quali delle seguenti affermazioni sul _Garbage Collector_ sono vere?",
-	"En": ""
+	"En": "Which of the following is true for the _Garbage Collector_?"
   },
   "AnswerText": {
 	"It": "Il _Garbage Collector_ è uno dei servizi offerti dal runtime del .NET Core che permette allo sviluppatore di essere più produttivo e di non doversi preoccupare di allocare (e deallocare) la memoria RAM. Questa è una pratica che in altri linguaggi di più basso livello come il C deve essere svolta con cura, per non incappare in _memory leaks_, ovvero un sempre crescente uso della memoria RAM, man mano che il programma continua a funzionare.  
@@ -22,14 +22,18 @@ Durante la \"pulitura\" della memoria RAM, i thread dell'applicazione vengono fe
 [Esercitazione 5, slide 12](https://slack-files.com/files-pri/T4LSU7RKJ-F51GY0J5N/05-esercitazione-covarianza-stack-heap.pdf#page=12)  
 [Lezione 6, slide 4](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=4)  
 [Lezione 6, slide 6](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=6)",
-	"En": "",
+	"En": "The _Garbage Collector_ is a runtime service provided by the .NET Core that allows the developer to be more productive. In fact, must not worry to allocate and deallocate the RAM memory explicitly in order to use objects. In lower level languages such as C, this is a practice that must be done carefully in order to prevent _memory leaks_ that would make the RAM memory occupation grow the longer the application it's used.  
+The reponsibility of the _Garbage Collector_ is to free the RAM memory periodically by removing objects from the `heap` that are `reference types`, such as a `List<T>` that are not referenced anymore in the program.  
+It works automatically without any intervention but, in some rare cases, it might be useful to call it explicitly by invoking the method `GC.Collect()`.  
+`Value type` objects, such as primitive types int, bool, etc., are not removed by the `Garbage collector` because they are stored in the `stack` and are automatically removed when the execution of the method they are defined in completes.  
+During the collection, the application threads are suspended, just like when a restaurant needs to be closed when rooms need to be cleaned. It's almost never a problem since it's not even noticeable and the removal completed very rapidly.",
   },
   "Group": "05",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Va esplicitamente richiamato dallo sviluppatore, altrimenti non funziona", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Libera la memoria RAM dagli oggetti che non sono più in uso", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Durante la sua esecuzione, blocca i thread dell'applicazione", "En": "" } },
-	{ "Id": "D", "Text": { "It": "Agisce sia sugli oggetti reference type (come List&lt;T&gt;) che su quelli value type (come int)", "En": "" } },
-	{ "Id": "E", "Text": { "It": "E' un ausilio per lo sviluppatore C# che non esiste in altri linguaggi di più basso livello", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Va esplicitamente richiamato dallo sviluppatore, altrimenti non funziona", "En": "It needs to be invoked explicitly by the developer, or it won't work" } },
+	{ "Id": "B", "Text": { "It": "Libera la memoria RAM dagli oggetti che non sono più in uso", "En": "Frees the RAM memory by removing objects that are no longer in use" } },
+	{ "Id": "C", "Text": { "It": "Durante la sua esecuzione, blocca i thread dell'applicazione", "En": "During its execution, the application threads are suspended" } },
+	{ "Id": "D", "Text": { "It": "Agisce sia sugli oggetti reference type (come List&lt;T&gt;) che su quelli value type (come int)", "En": "It acts on both reference types (such as List&lt;T&gt;) and value types (such as int)" } },
+	{ "Id": "E", "Text": { "It": "E' un ausilio per lo sviluppatore che si trova in altri linguaggi di basso livello", "En": "It's an aid to the developer that is not present in other lower level languages" } }
   ]
 }

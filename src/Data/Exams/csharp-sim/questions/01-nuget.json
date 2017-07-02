@@ -4,7 +4,7 @@
   "CorrectAnswer": "C",
   "Text": {
 	"It": "Mentre stai sviluppando un'applicazione console con il .NET Core, ti rendi conto di aver bisogno di un componente creato da un altro sviluppatore che è stato reso disponibile come pacchetto. Qual è il _package manager_ che usi per ottenere tale pacchetto?",
-	"En": ""
+	"En": "While you're developing an application for the .NET Core, you realize you need a library that's been made by another developer and that was distributed as a package. Which _package manager_ will you use to get that package?"
   },
   "AnswerText": {
 	"It": "Il package manager per le applicazioni .NET è **NuGet**, visibile su [https://www.nuget.org/](https://www.nuget.org/).  
@@ -14,7 +14,9 @@ _Bower_ contiene per lo più pacchetti per lo sviluppo client-side di un'applica
 **Materiale di studio**
 
 [Lezione 1, slide 28](https://slack-files.com/files-pri/T4LSU7RKJ-F4MLLGSJW/01-lezione-dotnetcore.pdf#page=28)",
-	"En": "",
+	"En": "The package manager for .NET applications is **NuGet**, which you can visit on [https://www.nuget.org/](https://www.nuget.org/).  
+_Maven_, on the other hand, is for managing Java projects while _PyPI_ is for Python applications.  
+_Bower_ holds packages for client-side development of a web applications. It can be used along with _NuGet_ when you develop ASP.NET Core applications but it won't be used in console applications, as stated by the question.",
   },
   "Group": "01",
   "Options": [

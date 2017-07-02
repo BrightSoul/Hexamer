@@ -3,12 +3,13 @@
   "ScoreAwarded": 1.0,
   "CorrectAnswer": "A3,B1,C2",
   "Text": {
-	"It": "Stai realizzando un'applicazione web per il CUP Regionale, per la prenotazione di visite mediche specialistiche. I pazienti possono visitare una pagina web e compilare un form per prenotarsi autonomamente.  
+	"It": "Stai realizzando un'applicazione ASP.NET Core per il CUP Regionale, per la prenotazione di visite mediche specialistiche. I pazienti possono visitare una pagina web e compilare un form per prenotarsi autonomamente.  
 Finora hai scritto l'action `Prenota` che riceve i dati inviati dal form. La prenotazione viene accettata solo se il paziente ha digitato correttamente tutte le informazioni. Se è così, viene reindirizzato all'action `Index`, dove potrà visualizzare il riepilogo di tutte le sue prenotazioni. Invece, se i dati inviati non fossero corretti, vedrà riapparire la stessa View da cui dovrà correggere i dati prima di inviarli di nuovo. Come realizzi l'action `Prenota`?",
-	"En": ""
+	"En": "You're making an application for the regional health system. Patients will be able to book their medical examinations by visiting a web page and filling a form with their data. You decided to use ASP.NET Core.  
+So far, you wrote the action `BookMedicalExamination` that receives data sent with the form. The booking is accepted only if the patient typed all of the informations required. If so, the patient gets redirected to the `Index` action, where he will be able to view a list of all his examinations. Instead, if the data provided was incomplete, he will be presented with the same view so he can complete the form and send it again. How do you write the action `BookMedicalExamination`?"
   },
   "AnswerText": {
-	"It": "Ogni volta che riceviamo dei dati dagli utenti, ricordiamoci di verificare che siano validi con `ModelState.IsValid`. ASP.NET MVC si assicurerà che tutti gli attributi come `[Required]` che abbiamo posto sulle proprietà della nostra classe `Prenotazione` siano rispettati.  
+	"It": "Ogni volta che riceviamo dei dati dagli utenti, ricordiamoci di verificare che siano validi con `ModelState.IsValid`. ASP.NET Core MVC si assicurerà che tutti gli attributi come `[Required]` che abbiamo posto sulle proprietà della nostra classe `Prenotazione` siano rispettati.  
 Questa si chiama **validazione lato server** e ci assicura che nel nostro sistema entrino solo dati validi.  
 
 Se la prenotazione è valida, la aggiungiamo al servizio prenotazioni e poi reindirizziamo l'utente verso la pagina Index usando il metodo `RedirectToAction`.  
@@ -20,7 +21,12 @@ Invece, se i dati della prenotazione non fossero validi, mostriamo di nuovo la p
 **Materiale di studio**
 
 [Lezione 9, slide 8](https://files.slack.com/files-pri/T4LSU7RKJ-F5EAZRPB7/09-lezione-asp-net-core.pdf#page=8)",
-	"En": "",
+	"En": "Each time an action receives data from the user, remember to check if it's valid with `ModelState.IsValid`. ASP.NET Core MVC will ensure that all attributes such as `[Required]` you put on the model type properties will be honored. This is referred to as **server side validation** and it is necessary to prevent invalid data from entering our system.  
+If the booking is valid, we add it to a booking service and then we redirect the user to the `Index` action by using the `RedirectToAction` method.  
+The method `File`, instead, is used to serve a file to the user, for instance if we wanted to send him a PDF confirmation of his booking.  
+The method `Ok` is used to return data in JSON or XML format but it's not useful in this case since we're developing a web site and not a web api.  
+
+In case the booking data was not valid, we display the same view again so that the user can complete the form and send it again.",
   },
   "Group": "09",
   "CodeText": { 
@@ -33,7 +39,15 @@ public async Task&lt;IActionResult&gt; Prenota(Prenotazione prenotazione) {
         return {C}(prenotazione);
     }
 }",
-	"En": ""
+	"En": "[HttpPost]
+public async Task&lt;IActionResult&gt; BookMedicalExamination(Booking booking) {
+    if ({A}) {
+        await bookingService.Add(booking);
+        return {B}(\"Index\");
+    } else {
+        return {C}(booking);
+    }
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Correct" }, { "Id": "2", "Text": "!ModelState.IsValid" }, { "Id": "3", "Text": "ModelState.IsValid" } ] },

@@ -13,7 +13,16 @@ public class Fattura {
 ```
 Completa l'implementazione del metodo `CalcolaImportiNonPagati` per ottenere la somma dovuta dal cliente. 
 ",
-	"En": ""
+	"En": "You're working on a line-of-business application and you're developing a feature that will allow you to know the cumulative amount of unpaid invoices for a given customer. The class `Invoice` contains the following properties:
+```
+public class Invoice {
+    public int CustomerId { get; private set; }
+    public decimal TotalAmount { get; private set; }
+    public bool Paid { get; private set; }
+}
+```
+Complete the implementation of the method `CalculateUnpaidAmounts` in order to obtain the value.
+"
   },
   "AnswerText": {
 	"It": "Ogni volta che vogliamo filtrare gli elementi di una lista, usiamo il metodo `Where`.  
@@ -29,7 +38,11 @@ Il metodo `OrderBy` in questo caso non è utile perché il risultato finale deve
 
 [Esercitazione 5, slide 33](https://slack-files.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=33)  
 [Esercitazione 5, slide 45](https://slack-files.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=45)",
-	"En": "",
+	"En": "Each time we need to filter elements in a list, we use the method `Where`.  
+Methods like `Where` can appear multiple times in a LINQ query. In this case, the two filters (unpaid state of the invoce and customer id) will be combined so that the resulting collection will contain just the elements that match both criteria.  
+The `Select` method is needed when we want to transform the original element (of type `Invoice`) to another type (such as a `decimal` representing the `TotalAmount` of the invoice). The original `List<Invoice>` will be transformed to a collection of `decimal` after using the `Select` method.  
+The aggregation method `Sum`, then, will do a sum on those `decimal` values.  
+The method `OrderBy` in this case is not useful since we are not asked to reorder invoices by a particular criteria.",
   },
   "Group": "05",
   "CodeText": { 
@@ -40,7 +53,13 @@ Il metodo `OrderBy` in questo caso non è utile perché il risultato finale deve
             .{C}(fattura =&gt; fattura.ImportoFattura)
             .Sum();
 }",
-	"En": ""
+	"En": "public decimal CalcolateUnpaidAmount(IEnumerable&lt;Invoice&gt; invoices, int customerId) {
+    return invoices
+            .{A}(invoice =&gt; !invoice.Paid)
+            .{B}(invoice =&gt; invoice.CustomerId == customerId)
+            .{C}(invoice =&gt; invoice.TotalAmount)
+            .Sum();
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Select" }, { "Id": "2", "Text": "Where" }, { "Id": "3", "Text": "OrderBy" } ] },

@@ -4,7 +4,7 @@
   "CorrectAnswer": "A1,B4,C2",
   "Text": {
 	"It": "Hai iniziato a sviluppare un'applicazione console chiamata _Calcoolatrice_. In questo momento stai scrivendo il metodo per calcolare il quadrato di un numero che l'utente digita via console. Completa l'implementazione.",
-	"En": ""
+	"En": "You started developing an application named _Calcoolator_. At this moment, you're doing the method that will calculate the square of a number the user inputs via the console. Complete the implementation."
   },
   "AnswerText": {
 	"It": "`Console.ReadLine()` chiede all'utente di digitare un testo ed è un metodo che restituisce sempre una stringa, a prescindere da cosa abbia digitato l'utente.  
@@ -17,7 +17,10 @@ Per calcolare il quadrato, in questo caso usiamo l'operatore `*=` che assegnerà
 
 [Esercitazione 1, slide 17](https://slack-files.com/files-pri/T4LSU7RKJ-F4P9ZQPK9/01-esercitazione.pdf#page=17)  
 [Esercitazione 2, slide 3](https://slack-files.com/files-pri/T4LSU7RKJ-F4RK3EEF4/02-esercitazione-modellazione.pdf#page=3)",
-	"En": "",
+	"En": "`Console.ReadLine()` asks the user to input a text and it's a method returning a string, regardless of what the user typed  
+So, if we want to treat the user input as an integer number, we'll have to use `int.TryParse` to convert the text to an integer. `int.Parse` could also be used but not in this case, since it appears as an `if` condition and it's not a method that resturns a boolean.  
+`Convert` is not a method of the `int` type.  
+When we need to calculate the square of a number, we can use the `*=` operator which will multiply the value of a variable for the operand that's on its right. In this case, the number will be multiplied by itself and the result assigned to the variable.",
   },
   "Group": "02",
   "CodeText": { 
@@ -31,7 +34,16 @@ Per calcolare il quadrato, in questo caso usiamo l'operatore `*=` che assegnerà
         Console.WriteLine(\"Errore\");
     }
 }",
-	"En": ""
+	"En": "public void CalculateSquare() {
+    Console.WriteLine(\"Type an integer number\");
+    {C} input = Console.ReadLine();
+    if (int.{A}(input, out int number)) {
+        number {B} number;
+        Console.WriteLine($\"The square of {input} is {number}\");
+    } else {
+        Console.WriteLine(\"Error\");
+    }
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "TryParse" }, { "Id": "2", "Text": "Convert" }, { "Id": "3", "Text": "Parse" } ] },

@@ -4,7 +4,7 @@
   "CorrectAnswer": "C",
   "Text": {
 	"It": "Sei stato assunto nel reparto IT di una banca e stai sviluppando un'applicazione che calcola i tassi di interesse sugli investimenti finanziari dei clienti. Ti serve una variabile a cui assegnerai il risultato del calcolo. Che tipo scegli per dichiarare la variabile?",
-	"En": ""
+	"En": "You've been hired by a bank and you're developing an application for calculating interest rates on financial investments of your customers. You need to assign the result of the calculation to a variable. Which type will you choose for that variable?"
   },
   "AnswerText": {
 	"It": "`decimal` è il tipo più indicato in quanto ti permette di rappresentare numeri in virgola mobile (come percentuali e importi monetari) in maniera esatta. Inoltre, essendo un tipo numerico, ti permette agevolmente di effettuare calcoli matematici.   
@@ -14,13 +14,15 @@
 **Materiale di studio**
 
 [Esercitazione 2, slide 13](https://slack-files.com/files-pri/T4LSU7RKJ-F4RK3EEF4/02-esercitazione-modellazione.pdf#page=13)",
-	"En": "",
+	"En": "`decimal` is the best choice here since it can exactly represent decimal numbers (such as percentages and currency values). In addition, since it is a numeric type, you can easily use it to perform mathematical calculations.  
+`float` and `double` can also work but they're not suggested in financial applications since they approximate numbers and that is not desired.  
+`string` is a textual data type that could represent a number in an exact manner but then you couldn't use it to perform calculations.",
   },
   "Group": "02",
   "Options": [
-	{ "Id": "A", "Text": { "It": "double", "En": "" } },
-	{ "Id": "B", "Text": { "It": "float", "En": "" } },
-	{ "Id": "C", "Text": { "It": "decimal", "En": "" } },
-	{ "Id": "D", "Text": { "It": "string", "En": "" } }
+	{ "Id": "A", "Text": { "It": "double", "En": "double" } },
+	{ "Id": "B", "Text": { "It": "float", "En": "float" } },
+	{ "Id": "C", "Text": { "It": "decimal", "En": "decimal" } },
+	{ "Id": "D", "Text": { "It": "string", "En": "string" } }
   ]
 }

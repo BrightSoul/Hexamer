@@ -4,7 +4,7 @@
   "CorrectAnswer": "A1,B2",
   "Text": {
 	"It": "Hai scritto una riga di codice che invoca `ScaricaDati()` ma hai visto che questo metodo può sollevare un'eccezione perché va a leggere dei dati da un webservice che ogni tanto risulta irraggiungibile. Siccome non puoi farci nulla, decidi almeno di gestire questo problema nella tua applicazione, in modo che non abbia ripercussioni negative sui tuoi utenti. Quindi scrivi del codice per catturare l'ecccezione e visualizzare il testo dell'errore all'utente.",
-	"En": ""
+	"En": "You've written a line of code that invokes the `DownloadData()` method but you've noticed that this method can throw an exception when the webservice it relies on is unreachable. Since you can't do anything about it, you decide you will at least handle the exception so it won't be detrimental to the user experience. So, you proceed to handle the exception and show an informative message to your users."
   },
   "AnswerText": {
 	"It": "Quando l'invocazione di un metodo solleva un'eccezione, questa ha un effetto negativo sull'applicazione e la manda in crash se non viene gestita con un `try...catch`.  
@@ -15,7 +15,10 @@ Il blocco `finally`, invece, contiene righe di codice che andranno in esecuzione
 **Materiale di studio**
 
 [Lezione 2, slide 13](https://slack-files.com/files-pri/T4LSU7RKJ-F4Q1R8REV/02-lezione-modellazione.pdf#page=13)",
-	"En": "",
+	"En": "When an exception occurs, it will make the application crash unless it is handled with a `try...catch` block.  
+Inside the `try` block, put the lines of code that _might_ throw an exception. In the `catch` block, put the lines of code that will be executed only when an exception is raised.  
+The `catch` block allows to specify which type of exception we want to handle and we can also provide a variable name (_exc_, for instance) so that we keep a reference to that exception and can inspect it in code. Each exception has a `Message` property describing the cause of the problem which we can then show to the user.  
+Inside the `finally` block, put the lines of code that will be always executed after the ones in the `try` block. It doesn't matter if an exception was raised or not, they will be executed in both cases.",
   },
   "Group": "02",
   "CodeText": {
@@ -29,7 +32,16 @@ Il blocco `finally`, invece, contiene righe di codice che andranno in esecuzione
         Console.WriteLine($\"Si è verificato l'errore: {exc.Message}\");
     }
 }",
-	"En": ""
+	"En": "public async Task ShowData() {
+    Console.WriteLine(\"Data download starting...\");
+    {A}
+    {
+        string data = await DownloadData();
+        Console.WriteLine($\"Here's the data: {data}\");
+    {B}
+        Console.WriteLine($\"An error occurred: {exc.Message}\");
+    }
+}"
   },
   "Blocks": [
     { "Id": "A", "Options": [ { "Id": "1", "Text": "try" }, { "Id": "2", "Text": "capture" }, { "Id": "3", "Text": "async" } ] },

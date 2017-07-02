@@ -7,7 +7,9 @@
 Finora hai scritto le classi `Padrone` e `Cane` e tra loro hai determinato che esiste una relazione 1-a-molti. Infatti, secondo la specifica che ti è stata fornita dall'anagrafe, un padone può registrare molti cani, ma un cane DEVE essere registrato con uno e un solo padrone.  
 Come mappi la relazione tra `Cane` e `Padrone` nel metodo `OnModelCreating`?
 ",
-	"En": ""
+	"En": "The Marche region has entrusted you with the development of an application for the Canine Registry. The application is needed to register dogs on a database and their owners. You chose _Entity Framework Core_ as the persistence technology.  
+So far, you've written the classes `Dog` and `Owner` and determined that a one-to-many relationship exists between them. In fact, according to the specification, an owner can register many dogs and a dog MUST be registered with one only owner.  
+How do you map the relationship between `Dog` and `Owner` in the method `OnModelCreating`?"
   },
   "AnswerText": {
 	"It": "Una relazione 1-a-molti può essere mappata sia partendo dall'entità principale `Padrone` ma anche dall'entità dipendente `Cane`. In questa domanda, la relazione viene mappata partendo dall'entità dipendente `Cane`.  
@@ -20,7 +22,12 @@ Il codice delle classi `Cane` e `Padrone` non è stato mostrato, ma non è rilev
 **Materiale di studio**
 
 [Lezione 8, slide 32](https://files.slack.com/files-pri/T4LSU7RKJ-F5AE3AWGZ/08-lezione-entityframework-relazioni.pdf#page=32)",
-	"En": "",
+	"En": "A one-to-many relation can be mapped by starting from the principal entity `Owner` or from the dependent entity `Dog`. In this question, the relation is mapped by starting from the dependent entity `Dog`.  
+We know that a `Dog` must have just one `Owner`, so we choose the `HasOne` method by passing the navigation property named `Owner` as an argument.  
+Now the mapping continues from the point of view of the `Owner`. Since an owner can have many `Dogs`, we will use the method `WithMany`.  
+In conclusion, we need to specify that having an `Owner` is mandatory for a `Dog` by using the method `IsRequired`.  
+_Entity Framework Core_ will make sure that the foreign key constraint will be put on a column on the `Dogs` table and that won't be nullable.  
+The code for the classes `Dog` and `Owner` is not shown here but it irrelevant to provide a correct solution.",
   },
   "Group": "08",
   "CodeText": { 
@@ -32,7 +39,14 @@ Il codice delle classi `Cane` e `Padrone` non è stato mostrato, ma non è rilev
         .{B}(padrone =&gt; padrone.Cani)
         .{C}();
 }",
-	"En": ""
+	"En": "protected override void OnModelCreating(ModelBuilder mb){
+    mb.Entity&lt;Owner&gt;().ToTable(\"Owners\").HasKey(owner => owner.Id);
+    mb.Entity&lt;Dog&gt;().ToTable(\"Dogs\").HasKey(dog => dog.Id);
+    mb.Entity&lt;Dog&gt;()
+        .{A}(dog =&gt; dog.Owner)
+        .{B}(owner =&gt; owner.Dogs)
+        .{C}();
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "HasOne" }, { "Id": "2", "Text": "HasMany" } ] },

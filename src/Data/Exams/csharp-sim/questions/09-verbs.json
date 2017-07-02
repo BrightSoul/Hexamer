@@ -4,23 +4,25 @@
   "CorrectAnswer": "D",
   "Text": {
 	"It": "Stai realizzando il sito web per un famoso ristorante. Nella homepage del sito hai aggiunto un link per condurre l'utente alla pagina di prenotazione online dei tavoli. Che tipo di richiesta verrà inviata al server cliccando tale link?",
-	"En": ""
+	"En": "You're making a website for a famous restaurant. In its homepage, you added a link to a page containing a reservation form. Which type of request will be sent to the server when the user clicks that link?"
   },
   "AnswerText": {
-	"It": "Clicchare un link produce una richiesta `GET` al server, proprio come digitare un URL nella barra degli indirizzi del browser.  
+	"It": "Cliccare un link produce una richiesta `GET` al server, proprio come digitare un URL nella barra degli indirizzi del browser.  
 Il `Controller` di ASP.NET Core MVC, in risposta alla richiesta `GET`, fornirà al client la `View` che contiene il form di prenotazione.  
 Solo successivamente, quando l'utente cliccherà un tasto \"Prenota\", si verificherà una richiesta `POST` in cui vengono inviati i dati di prenotazione.  
 
 **Materiale di studio**
 
 [Lezione 9, slide 23](https://files.slack.com/files-pri/T4LSU7RKJ-F5EAZRPB7/09-lezione-asp-net-core.pdf#page=23)",
-	"En": "",
+	"En": "By clicking a link, a `GET` request will be sent to the server, just like the one you send when you type an URL in the address bar of the browser.  
+A `Controller` of ASP.NET Core MVC will handle that `GET` request and return a `View` containing the reservation form.  
+Only after the user fills and sends the form, a `POST` request would occur.",
   },
   "Group": "09",
   "Options": [
-	{ "Id": "A", "Text": { "It": "DELETE", "En": "" } },
-	{ "Id": "B", "Text": { "It": "POST", "En": "" } },
-	{ "Id": "C", "Text": { "It": "PUT", "En": "" } },
-	{ "Id": "D", "Text": { "It": "GET", "En": "" } }
+	{ "Id": "A", "Text": { "It": "DELETE", "En": "DELETE" } },
+	{ "Id": "B", "Text": { "It": "POST", "En": "POST" } },
+	{ "Id": "C", "Text": { "It": "PUT", "En": "PUT" } },
+	{ "Id": "D", "Text": { "It": "GET", "En": "GET" } }
   ]
 }

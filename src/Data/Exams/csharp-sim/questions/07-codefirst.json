@@ -5,7 +5,7 @@
   "Text": {
 	"It": "Vuoi crearti un database personale di tutti i film che possiedi in DVD. Decidi di scrivere un'applicazione che si avvale di _Entity Framework Core_ per leggere e scrivere i dati dei film su un database locale Sqlite. Hai scelto di usare l'approccio _code first_, quali sono i passi che ti porteranno a salvare il primo film nel database?
 ",
-	"En": ""
+	"En": "You want to create your own personal database of all the films you own in DVD. You decide to write an application that uses _Entity Framework Core_ to read and write data of those films on a local Sqlite database. You chose the _code first_ approach, so, which are the steps you need to do before being able to save your first film in the database?"
   },
   "AnswerText": {
 	"It": "Usando l'approccio _code first_ non è necessario creare il database a mano con comandi tipo `CREATE TABLE`. Invece, si inizia creando le classi del proprio modello, come la classe `Film` che conserverà i dati dei nostri film. Allo stesso tempo, si crea anche una classe che deriva da `DbContext`, che rappresenterà il nostro servizio di accesso al database.  
@@ -19,14 +19,17 @@ Quindi non resta che aggiungere istanze della classe `Film` usando il metodo `Ad
 **Materiale di studio**
 
 [Lezione 7, slide 36](https://files.slack.com/files-pri/T4LSU7RKJ-F56QEGDR7/07-lezione-async-await-entityframework.pdf#page=36)",
-	"En": "",
+	"En": "By using the _code first_ approach it's not necessary to create the database by hand using commands such as `CREATE TABLE`. Instead, you start by creating classes in your model, such as the class `Film` which will hold data for a film. At the same time, you also create a class deriving from `DbContext` which represents our data access service.  
+Then, you \"map\" the class `Film` to a table in the database e tell which, among its properties, you intend to use as a primary key. The \"mapping\" is done inside the overridden method `OnModelCreating` in the class deriving from `DbContext`.  
+At this point, Entity Framework knows we want to persist objects of type `Film` in our database and we just need to invoke the method `Database.EnsureCreated()` in order to create the database to accomodate the shape of our class `Film`.  
+Now, we just need to add instances of the class `Film` to the class deriving from `DbContext` by using its method `Add`. Then, invoke the method `SaveChangesAsync` to persist them in the database.",
   },
   "Group": "07",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Usa i metodi Add e SaveChangesAsync per aggiungere un Film al db", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Invoca il metodo Database.EnsureCreated() per creare il database", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Crea il db con istruzioni SQL tipo CREATE TABLE", "En": "" } },
-	{ "Id": "D", "Text": { "It": "Crea la classe Film e una classe che deriva da DbContext", "En": "" } },
-	{ "Id": "E", "Text": { "It": "Mappa la classe Film, indicando il nome della tabella e la chiave primaria", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Usa i metodi Add e SaveChangesAsync per aggiungere un Film al db", "En": "Use the methods Add and SaveChangesAsync to persist a Film in the database" } },
+	{ "Id": "B", "Text": { "It": "Invoca il metodo Database.EnsureCreated() per creare il database", "En": "Invoke the method Database.EnsureCreated() to create the database" } },
+	{ "Id": "C", "Text": { "It": "Crea il database usando comandi SQL come CREATE TABLE", "En": "Create a database with SQL commands like CREATE TABLE" } },
+	{ "Id": "D", "Text": { "It": "Crea la classe Film e una classe che deriva da DbContext", "En": "Create the class Film and a class deriving from DbContext" } },
+	{ "Id": "E", "Text": { "It": "Mappa la classe Film, indicando il nome della tabella e la chiave primaria", "En": "Map the class Film, indicating the name of the table and the primary key" } }
   ]
 }

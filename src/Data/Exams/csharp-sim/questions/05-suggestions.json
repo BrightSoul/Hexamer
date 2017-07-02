@@ -4,7 +4,7 @@
   "CorrectAnswer": "54,150,35,35",
   "Text": {
 	"It": "Stai creando un'applicazione per l'anagrafe che genera statistiche sui Comuni italiani. Dopo aver ottenuto la lista di tutti i Comuni d'Italia, vuoi filtrarli per ottenere solo quelli della provincia di Macerata. Il compilatore ti sottolinea in rosso la query LINQ ma in questo momento non ti viene in mente quale potrebbe essere il problema, visto che la sintassi sembra corretta. Cosa clicchi per avere suggerimenti su come risolvere il problema?",
-	"En": ""
+	"En": "You're making an application for displaying statistics about the italian cities. After you've loaded the list of all the italian cities, you need to filter it in order to obtain just the ones in the Macerata province. The compiler shows an error with a red squiggly line but, at the moment, you can't think of a reason since the syntax seems ok. What do you click in order to get suggestions on how to resolve the problem?"
   },
   "AnswerText": {
 	"It": "La lampadina che appare di fianco alle righe di codice è un ausilio che serve a mostrare i suggerimenti del compilatore `Roslyn`, in situazioni d'errore o quando esistono modi per ottimizzare il codice che abbiamo scritto.  
@@ -13,7 +13,8 @@ L'elenco dei suggerimenti può essere richiamato anche premendo la combinazione 
 **Materiale di studio**
 
 [Esercitazione 5, slide 47](https://slack-files.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=47)",
-	"En": "",
+	"En": "The light bulb that's appearing beside the lines of code is an aid that will show suggestions provided by the compiler `Roslyn`.  
+The suggestions can also be shown by pressing CTRL+. on the keyboard.",
   },
   "Group": "05",
   "Image": "suggestions.png"

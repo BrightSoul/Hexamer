@@ -14,7 +14,17 @@ public IEnumerable<Libro> FiltraPerGenere(Libro[] libri, string genere) {
 }
 ```  
 Ora vuoi sostituire questo metodo perché hai scoperto che potresti fare la stessa cosa in maniera molto più compatta usando _LINQ_ e una _lambda expression_. Quale tra le seguenti istruzioni restituisce lo stesso risultato del metodo `FiltraPerGenere`?",
-	"En": ""
+	"En": "You're working on a web site for the local library and you wrote a method named `FilterByGenre` in order to display just the books that belong to the provided literary genre. The method is as follows: 
+```
+public IEnumerable<Book> FilterByGenre(Book[] books, string genre) {
+   foreach (Book book in books) {
+        if (book.Genre == genre) {
+           yield return book;
+        }
+   }
+}
+```  
+Now you want to replace this method since you've found out that you could do the same in a more compact and readable way by using _LINQ_ and a _lambda expression_. Which of the following instructions returns the same result as the method `FilterByGenre`?"
   },
   "AnswerText": {
 	"It": "Il metodo `Where` è quello che si occupa di filtrare una lista e restituire un numero di elementi inferiore o uguale al numero di elementi di partenza.  
@@ -27,15 +37,19 @@ Quando scriviamo la _lambda expression_ per la `Where`, facciamo attenzione a co
 
 [Lezione 4, slide 46](https://files.slack.com/files-pri/T4LSU7RKJ-F4XRA1B4M/04-lezione-esame-unittest-eventi-lambdaexpressions.pdf#page=46)  
 [Lezione 5, slide 36](https://files.slack.com/files-pri/T4LSU7RKJ-F51KDBC8M/05-lezione-linq-leggibilit__.pdf#page=36)",
-	"En": "",
+	"En": "The method `Where` is the one responsible for filtering a list and return a number of elements that's less or equal than the original element count.  
+The method `Select`, instead, is responsible for \"projecting\" elements of a collection, i.e. returning the same number of elements but of a different type, depending on the value returned by the _lambda expression_. By using `Select`, in this case, we would get a collection of boolean values instead of a collection of books.  
+The method `Take` is responsible for returning a subset of elements but here it would be used incorrectly since it expects the number of elements instead of a lambda expression. 
+The method `All` doesn't return a collection of elements but a simple boolean value which is going to be _true_ if all of the elements in the original list match the given criteria.  
+When writing the lambda expression, don't forget to involve the `Genre` property, otherwise we would compare a `string` value (held by the `genre` variable) with the instance of `Book` and that would result in a compilation error. ",
   },
   "Group": "04",
   "Options": [
-	{ "Id": "A", "Text": { "It": "libri.Select(libro => libro.Genere == genere);", "En": "" } },
-	{ "Id": "B", "Text": { "It": "libri.All(libro => libro.Genere == genere);", "En": "" } },
-	{ "Id": "C", "Text": { "It": "libri.Where(libro => libro == genere);", "En": "" } },
-	{ "Id": "D", "Text": { "It": "libri.Where(libro => libro.Genere == genere);", "En": "" } },
-	{ "Id": "E", "Text": { "It": "libri.Select(libro => libro == genere);", "En": "" } },
-	{ "Id": "F", "Text": { "It": "libri.Take(libro => libro == genere);", "En": "" } }
+	{ "Id": "A", "Text": { "It": "libri.Select(libro => libro.Genere == genere);", "En": "books.Select(book => book.Genre == genre);" } },
+	{ "Id": "B", "Text": { "It": "libri.All(libro => libro.Genere == genere);", "En": "books.All(book => book.Genre == genre);" } },
+	{ "Id": "C", "Text": { "It": "libri.Where(libro => libro == genere);", "En": "books.Where(book => book == genre);" } },
+	{ "Id": "D", "Text": { "It": "libri.Where(libro => libro.Genere == genere);", "En": "books.Where(book => book.Genre == genre);" } },
+	{ "Id": "E", "Text": { "It": "libri.Select(libro => libro == genere);", "En": "books.Select(book => book == genre);" } },
+	{ "Id": "F", "Text": { "It": "libri.Take(libro => libro == genere);", "En": "books.Take(book => book == genre);" } }
   ]
 }

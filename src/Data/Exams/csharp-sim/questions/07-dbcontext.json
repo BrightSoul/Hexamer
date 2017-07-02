@@ -11,7 +11,14 @@ public class Film {
     public DateTime DataPubblicazione { get; private set; }
 }
 ```",
-	"En": ""
+	"En": "You're creating an application for reading and writing informations about films in a Sqlite database. To do so, you chose _Entity Framework Core_ as the persistence technology. Now you're writing the class that derives from `DbContext` and you proceed to create a mapping for the class `Film` to its database table. The class `Film` contains the following properties:  
+```
+public class Film {
+    public int Id { get; private set; }
+    public string Title { get; private set; }
+    public DateTime PublishDate { get; private set; }
+}
+```"
   },
   "AnswerText": {
 	"It": "Per usare _Entity Framework Core_ dobbiamo creare una classe che deriva da `DbContext` e che rappresenterà il nostro servizio per l'accesso al database, sia in lettura che in scrittura. Questa classe astrae dal database relazionale sottostante e ci permette di lavorare con un modello ad oggetti, anziché con le righe di una tabella. In questo modo possiamo sfruttare tutti i concetti della programmazione orientata agli oggetti.  
@@ -25,7 +32,13 @@ Se vogliamo usare una delle nostre classi con Entity Framework è necessario che
 **Materiale di studio**
 
 [Lezione 7, slide 41](https://files.slack.com/files-pri/T4LSU7RKJ-F56QEGDR7/07-lezione-async-await-entityframework.pdf#page=41)",
-	"En": "",
+	"En": "In order to use _Entity Framework Core_ we must first create a class deriving from `DbContext` representing our data access service, both for reading and for writing. This class is an abstraction of the database and allows us to query a model made of objects, instead of the typical rows in a database. As a consequence, we can benefit from all of the pillars of object-oriented programming, such as inheritance.  
+Inside the class derived from `DbContext` we override two methods:  
+`OnConfiguring`, to configure the connection to a database. For instance, by using the method `UseSqlite` and providing a connection string we instruct Entity Framework it will have to connect to a Sqlite database;  
+`OnModelCreating`, to configure the \"mapping\" between classes in our model and tables of the database.  
+
+To configure a mapping, there are several useful methods. Two of them are `ToTable`, which we use to specify the name of the table that will hold the data and `HasKey` which is used to specify the property acting as the primary key.  
+If we want to use _Entity Framework Core_ then it's necessary that each class possess a **primary key** (e.g. Id) and a parameterless constructor (it can be `private`).",
   },
   "Group": "07",
   "CodeText": { 
@@ -37,7 +50,14 @@ Se vogliamo usare una delle nostre classi con Entity Framework è necessario che
         mb.Entity&lt;Film&gt;().ToTable(\"Film\").HasKey({C});
     }
 }",
-	"En": ""
+	"En": "public Database : DbContext {
+    protected override void OnConfiguring(DbContextOptionsBuilder db){
+        db.{A}(@\"Data Source=..\\..\\..\\mydb.db;\");
+    }  
+    protected override void {B}(ModelBuilder mb){
+        mb.Entity&lt;Film&gt;().ToTable(\"Film\").HasKey({C});
+    }
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "UseSqlite" }, { "Id": "2", "Text": "UseSqlServer" }, { "Id": "3", "Text": "WithDatabase" } ] },

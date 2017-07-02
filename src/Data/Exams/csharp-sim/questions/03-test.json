@@ -4,7 +4,7 @@
   "CorrectAnswer": "A1,B1,C3",
   "Text": {
 	"It": "Ti è stato passato un progetto per il controllo remoto dell'irrigazione di una coltivazione di insalata. Lo sviluppatore che aveva realizzato il progetto non aveva scritto unit test e ora il proprietario della coltivazione si lamenta che alcune piante muoiono perché non ricevono il giusto quantitativo d'acqua. Decidi di scrivere uno unit test parametrico con xUnit per verificare che il metodo `ApriRubinetto` della classe `ImpiantoIrrigazione` si comporti secondo la specifica in base all'altezza di ciascuna piantina.",
-	"En": ""
+	"En": "You've received a project that remotely controls the irrigation of a salad plantation. The original developer that made the project didn't write any unit test and now the owner of the plantation complains that some of the plants wither because they don't receive the right amount of water. You decide to write a parametric unit test using xUnit in order to verify that the method `Irrigate` of the class `IrrigationSystem` behaves correctly according to the specification which states that each plant should receive a varying amount of water depending on its height."
   },
   "AnswerText": {
 	"It": "Gli unit test parametrici scritti con xUnit sono dei semplici metodi pubblici decorati con l'attributo `[Theory]`.  
@@ -15,7 +15,10 @@ All'interno del metodo, inseriremo uno o più `Assert` per verificare che le dur
 **Materiale di studio**
 
 [Esercitazione 3, slide 3](https://files.slack.com/files-pri/T4LSU7RKJ-F4V31SZ7E/03-esercitazione-unit-testing.pdf#page=3)",
-	"En": "",
+	"En": "Parametric unit tests in xUnit are simple public methods decorated with the attribute `[Theory]`.  
+Attributes `[Test]` and `[TestMethod]` are used by other unit testing frameworks but not by xUnit.  
+When we use `[Theory]`, we can also use `[InlineData]` attributes to provide parameter values. This way, we can test various situations with a single test.  
+Inside the test, we use `Assert` to verify that results match our expectations. ",
   },
   "Group": "03",
   "CodeText": { 
@@ -29,7 +32,16 @@ All'interno del metodo, inseriremo uno o più `Assert` per verificare che le dur
         {C}.Equal(durataInSecondi, durata.TotalSeconds);
     }
 }",
-	"En": ""
+	"En": "public class IrrigationSystemTests {
+    {A}
+    {B}
+    public void IrrigateShouldProvideTheRightAmountOfWater(int plantHeighInCm, double durationInSeconds) {
+        IrrigationSystem system = new IrrigationSystem();
+        Plant plant = new Plant(height: 15);
+        TimeSpan duration = system.Irrigate(plant);
+        {C}.Equal(durationInSeconds, duration.TotalSeconds);
+    }
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "[Theory]" }, { "Id": "2", "Text": "[Test]" }, { "Id": "3", "Text": "[TestMethod]" } ] },

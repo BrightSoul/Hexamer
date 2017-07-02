@@ -19,7 +19,22 @@ public abstract class Animale {
 }
 ```  
 A questo punto, inizi ad implementare una classe `Tigre` che deriva da `Animale`, e così farai per ogni altra specie ospitata nel parco. Fai in modo che la classe `Tigre` possa ridefinire il nome del file MP3 da riprodurre.",
-	"En": ""
+	"En": "A zoological park has asked you to develop an application that will allow visitors to interact with a touch display. The application will show the images of the animals present in the park and, whenever a visitor interacts with one of those, the application will play an MP3 file containing the sound made by the animal.  
+Since the behavior of making a sound is shared by all animals, you decide to create a base class `Animale` (animal).  
+```
+public abstract class Animale {
+    protected virtual string NomeFileMp3 {
+        get {
+            return \"silence.mp3\";
+        }
+    }
+    
+    public void RiproduciVersoDellAnimale() {
+        System.Media.Play(NomeFileMp3);
+    }
+}
+```  
+At this point, you start to implement a class `Tigre` (Tiger) deriving from `Animale`, and you will do so for each other animal species in the park. Make the class `Tigre` so that it can redefine the name of the MP3 file that will be played."
   },
   "AnswerText": {
 	"It": "Per derivare dalla classe base `Animale` si usa la sintassi `public class Tigre : Animale`.  
@@ -32,7 +47,9 @@ Dunque facciamo l'override di `NomeFileMp3` per indicare lo specifico file MP3 d
 
 [Lezione 6, slide 41](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=41)  
 [Lezione 6, slide 46](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=46)",
-	"En": "",
+	"En": "In order to derive from the base class `Animale`, you need to use the syntax `public class Tigre : Animale`.  
+In the derived class `Tigre` it is possible to redefine the behavior of members of the base class `Animale` that are marked with `virtual`. In this case, the property `NomeFileMp3` can be overrided.  
+So we override the property `NomeFileMp3` in order to specify which MP3 file has to be played when a visitor taps on the image of the tiger.",
   },
   "Group": "06",
   "CodeText": { 
@@ -43,7 +60,13 @@ Dunque facciamo l'override di `NomeFileMp3` per indicare lo specifico file MP3 d
         }
     }
 }",
-	"En": ""
+	"En": "public class {A} : {B} {
+    protected {C} string {D} {
+        get {
+            return \"roar.mp3\";
+        }
+    }
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Animale" }, { "Id": "2", "Text": "Tigre" }, { "Id": "3", "Text": "Object" } ] },

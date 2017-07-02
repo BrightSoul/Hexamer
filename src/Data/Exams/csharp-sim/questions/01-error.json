@@ -5,7 +5,8 @@
   "Text": {
 	"It": "Visual Studio Code ti sta segnalando un problema in corrispondenza della riga di codice illustrata qui sotto. Qual è il problema?   
 ![Errore](error.png)",
-	"En": ""
+	"En": "Visual Studio Code is reporting a problem with the line of code shown below. What's the problem?   
+![Errore](error.png)"
   },
   "AnswerText": {
 	"It": "Nell'immagine, si sta cercando di sommare un numero intero ad una stringa, che sono tipi diversi, e di riassegnare il risultato alla variabile `numero`.  
@@ -19,13 +20,17 @@ Il numero non sarebbe troppo grande per un `int`. Infatti, il valore massimo che
 **Materiale di studio**
 
 [Lezione 1, slide 19](https://slack-files.com/files-pri/T4LSU7RKJ-F4P9ZQPK9/01-esercitazione.pdf#page=19)",
-	"En": "",
+	"En": "As shown in the image, we are trying to add an integer number to a string but they are of different type, and then assigning the result to the `numero` variable.  
+C# is type-safe and this is not allowed. We can't just re-assign an `int` variable to a `string` value.  
+The operator `+=` is used to increment the value of an `int` variable but it's necessary that the operand on its right is an `int` itself ad not a `string` as shown in the image.  
+The solution consists of removing the quotes from the number so it won't be interpreted as a string.  
+The number won't be too big for an `int` since the maximum value allowed for an `int` is `2147483647`.",
   },
   "Group": "01",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Il numero indicato è troppo grande per essere assegnato ad una variabile int", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Si sta cercando di incrementare una variabile int con un valore di tipo diverso", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Una variabile non può essere riassegnata dopo la sua inizializzazione", "En": "" } },
-	{ "Id": "D", "Text": { "It": "L'operatore += non può essere usato per incrementare il valore di una variabile int", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Il numero indicato è troppo grande per essere assegnato ad una variabile int", "En": "The number is too large to be assigned to an int variable" } },
+	{ "Id": "B", "Text": { "It": "Si sta cercando di incrementare una variabile int con un valore di tipo diverso", "En": "You're trying to increment an integer variabile with a value of a different type" } },
+	{ "Id": "C", "Text": { "It": "Una variabile non può essere riassegnata dopo la sua inizializzazione", "En": "A variable cannot be reassigned after its initialization" } },
+	{ "Id": "D", "Text": { "It": "L'operatore += non può essere usato per incrementare il valore di una variabile int", "En": "The += operator cannot be used to increment an int variable" } }
   ]
 }

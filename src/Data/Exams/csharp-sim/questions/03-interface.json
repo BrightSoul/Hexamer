@@ -4,7 +4,8 @@
   "CorrectAnswer": "A2,B2,C3,D2",
   "Text": {
 	"It": "Ti è stato chiesto di creare una classe per il calcolo del codice fiscale italiano. Prima di procedere con l'implementazione, ti crei un'interfaccia per avere la libertà di progettare senza la distrazione dei dettagli implementativi. Hai deciso di definire un metodo `CalcolaCodiceFiscale` che effettua il calcolo e una proprietà `UltimoCodiceFiscaleCalcolato` da cui puoi recuperare il risultato dell'ultimo calcolo. Completa il codice dell'interfaccia.",
-	"En": ""
+	"En": "You've been asked to create a class for calculating the italian _codice fiscale_ (an identifier each person has that's calculated on a few values, such as first and last name and date and place of birth). Before proceding with the implementation, you create an interface so you won't be distracted by implementation details. You've decided to define a method named `CalculateCodiceFiscale` that will perform the calculation and a property named `LastCodiceFiscaleCalculated` which will be used to retrieve the last _codice fiscale_ calculated.  
+Complete the interface code."
   },
   "AnswerText": {
 	"It": "Secondo la [linea guida](https://msdn.microsoft.com/en-us/library/8bc1fexb(v=vs.71).aspx), i nomi delle interfacce dovrebbero essere prefissati da una **I**.  
@@ -14,7 +15,9 @@ Il codice fiscale italiano è una stringa di 16 caratteri, quindi il tipo restit
 **Materiale di studio**
 
 [Lezione 3, slide 6](https://files.slack.com/files-pri/T4LSU7RKJ-F4TDZ36UR/03-lezione-modellazione-testing.pdf#page=6)",
-	"En": "",
+	"En": "According to the [naming convention](https://msdn.microsoft.com/en-us/library/8bc1fexb(v=vs.71).aspx), interface names should be prefixed with an **I**.  
+All members defined in an interface are meant to be `public`, so you must not use accessors like `public` or `private`. 
+The italian _codice fiscale_ is a string of 16 characters, so the type returned by `LastCodiceFiscaleCalculated` can't be an `int`.",
   },
   "Group": "03",
   "CodeText": { 
@@ -22,7 +25,10 @@ Il codice fiscale italiano è una stringa di 16 caratteri, quindi il tipo restit
     {B} CalcolaCodiceFiscale(string nome, string cognome, string luogoDiNascita, DateTime dataDiNascita, Sesso sesso);
     {C} UltimoCodiceFiscaleCalcolato { {D} }
 }",
-	"En": ""
+	"En": "public interface {A} {
+    {B} CalculateCodiceFiscale(string firstName, string lastName, string placeOfBirth, DateTime dateOfBirth, Gender gender);
+    {C} LastCodiceFiscaleCalculated { {D} }
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "CodiceFiscale" }, { "Id": "2", "Text": "ICodiceFiscale" }, { "Id": "3", "Text": "codiceFiscale" } ] },

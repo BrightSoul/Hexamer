@@ -5,23 +5,26 @@
   "Text": {
 	"It": "Hai creato un'applicazione web ASP.NET Core MVC per la registrazione degli studenti agli esami. L'applicazione informa gli studenti via e-mail ogni volta che si verifica una variazione alla data di un esame o per confermare l'avvenuta iscrizione. Dato che l'invio e-mail è un servizio molto utilizzato in questa applicazione, hai deciso di inserire la sua logica in una classe chiamata `InvioEmail` e di registrarla come servizio nel metodo `Startup.ConfigureServices`.  
 Vuoi che ASP.NET Core fornisca sempre la stessa istanza ad ogni Controller che abbia bisogno di inviare e-mail, dato che la classe `InvioEmail` è thread-safe e può essere riutilizzata per tutto il ciclo di vita dell'applicazione. Come registri la classe?",
-	"En": ""
+	"En": "You created a web application with ASP.NET Core MVC in order to make students register for exams. The application notifies students via e-mail whenever they register for an exam or when a professor changes the date or place of the exam. Since sending e-mail is a common requirement for this application, you decided to insert logic in a class named `EmailSender` and to register it as an ASP.NET Core service in the method `Startup.ConfigureServices`.  
+	You want ASP.NET Core to reuse the very same instance of `EmailSender` whenever a `Controller` (or any other component in your application) needs to send an e-mail, since this class is thread-safe and can be reused for the whole lifespan of the application. How do you register the `EmailSender` class?"
   },
   "AnswerText": {
-	"It": "Il ciclo di vita `Singleton` è quello indicato, in questo. Alcune classi come la nostra `InvioEmail` sono indicate ad essere riutilizzate più volte, ma è necessario che siano `thread-safe`, ovvero devono poter sopportare le invocazioni contemporanee di più thread.  
+	"It": "In questo caso, il ciclo di vita `Singleton` è quello indicato. Alcune classi come la nostra `InvioEmail` sono indicate ad essere riutilizzate più volte, ma è necessario che siano `thread-safe`, ovvero devono poter sopportare le invocazioni contemporanee di più thread.  
 Un `DbContext` di _Entity Framework Core_, per esempio, NON sarebbe idoneo ad essere registrato come `Singleton`, perché NON è `thread-safe` e perciò dovrebbe essere regitrato come `Scoped`, ovvero creato e distrutto nel contesto di una richiesta HTTP, che viene gestita solo da un thread alla volta.  
 Il ciclo di vita `Transient`, invece, determinerebbe la creazione di una nuova istanza ogni volta che un `Controller` (o qualsiasi altro componente del nostro software) ne abbia bisogno per funzionare.  
 
 **Materiale di studio**
 
 [Lezione 10, slide 21](https://files.slack.com/files-pri/T4LSU7RKJ-F5HP1EQLA/10-lezione-refactoring-model-binding.pdf#page=21)",
-	"En": "",
+	"En": "In this case, `Singleton` is the best choice. Some classes, such as our `EmailSender`, can be reused multiple times, by various concurrent threads but only if they're built to be `thread-safe`.  
+A `DbContext` of _Entity Framework Core_, for instance, is NOT `thread-safe` and it's NOT suitable to be registered as a `Singleton`. It should be registered as `Scoped`, that is reused just within the scope of an HTTP request, which is typically executed with a single thread at a time.  
+With `Transient`, instead, we would get a new instance each time a `Controller` (or any other component in our application) needs it.",
   },
   "Group": "10",
   "Options": [
-	{ "Id": "A", "Text": { "It": "services.AddScoped(typeof(InvioEmail));", "En": "" } },
-	{ "Id": "B", "Text": { "It": "services.AddSingleton(typeof(InvioEmail));", "En": "" } },
-	{ "Id": "C", "Text": { "It": "services.AddTransient(typeof(InvioEmail));", "En": "" } },
-	{ "Id": "D", "Text": { "It": "services.Add(typeof(InvioEmail));", "En": "" } }
+	{ "Id": "A", "Text": { "It": "services.AddScoped(typeof(InvioEmail));", "En": "services.AddScoped(typeof(EmailSender));" } },
+	{ "Id": "B", "Text": { "It": "services.AddSingleton(typeof(InvioEmail));", "En": "services.AddSingleton(typeof(EmailSender));" } },
+	{ "Id": "C", "Text": { "It": "services.AddTransient(typeof(InvioEmail));", "En": "services.AddTransient(typeof(EmailSender));" } },
+	{ "Id": "D", "Text": { "It": "services.Add(typeof(InvioEmail));", "En": "services.Add(typeof(EmailSender));" } }
   ]
 }

@@ -5,7 +5,8 @@
   "Text": {
 	"It": "Stai lavorando per realizzare un filtro antispam. Il tuo metodo `CalcolaPunteggioSpam` è in grado di analizzare un messaggio e-mail parola per parola per ottenere un punteggio che indica la probabilità che sia spam.  
 Essendo un lavoro intensivo per la CPU, hai scoperto che potresti ottenere performance migliori parallelizzando il lavoro su vari thread. Hai misurato che le performance ottimali le ottieni quando usi contemporaneamente 3 thread. Come modifichi il metodo `CalcolaPunteggioSpam` per parallelizzare il lavoro?",
-	"En": ""
+	"En": "You're making an antispam filter application. Your method `CalculateSpamScore` is capable of analyzing an e-mail message, word by word, in order to find the probability that it is a spam message.  
+Since this is a CPU-intesive task, you've found out that you could get better performances if you parallelized the calculation on multiple threads. You measured optimal performances when using 3 threads. How do you change the method `CalculateSpamScore` to leverage parallelization?"
   },
   "AnswerText": {
 	"It": "Quando dobbiamo svolgere un lavoro gravoso per la CPU, chiediamoci se il lavoro può essere parallelizzato sui vari core fisici, in modo da completarlo in una frazione del tempo. Non tutti gli algoritmi possono essere parallelizzati ma, quando ciò è possibile, usiamo `AsParallel` su una lista di elementi per fare in modo che i metodi di LINQ che useremo di seguito vengano elaborati su thread differenti.  
@@ -16,7 +17,11 @@ E' importante monitorare quali sono le performance al variare del numero di thre
 **Materiale di studio**
 
 [Esercitazione 8, slide 9](https://files.slack.com/files-pri/T4LSU7RKJ-F5BKMUU04/08-lezione-parallelismo.pdf#page=9)",
-	"En": "",
+	"En": "When you must perform some CPU-intensive task, first try to undertand if you can benefit from parallelism, that can make you save time by using multiple cores of a CPU simultaneously. Not every algorithm can be easily parallelizable but, when that's possible, use `AsParallel` on a collection of elements to make each following LINQ method run on multiple threads.  
+When LINQ is used this way, is referred to as `Parallel LINQ` (or PLINQ for short).  
+By default, when we use `AsParallel` on a collection, the calculation will be distributed among the physical cores of the CPU (one thread per core).  
+If you want to change the number of threads, use `WithDegreeOfParallelism` and pass the number of thread you want to use.  
+It's important you make a decision based on real performance measurement. When asynchronous operations are involved, it might be beneficial to use more threads than the number of physical cores available.",
   },
   "Group": "08",
   "CodeText": { 
@@ -28,7 +33,14 @@ E' importante monitorare quali sono le performance al variare del numero di thre
              .Select(parola =&gt; CalcolaPunteggioPerParola(parola))
              .Avg();
 }",
-	"En": ""
+	"En": "public double CalculateSpamScore(string messagge) {
+    string[] words = message.Split(' ');
+    return words
+             .{A}()
+             .{B}(3)
+             .Select(word =&gt; CalculateScoreForWord(word))
+             .Avg();
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "AsSequential" }, { "Id": "2", "Text": "AsParallel" }, { "Id": "3", "Text": "MultiThread" } ] },

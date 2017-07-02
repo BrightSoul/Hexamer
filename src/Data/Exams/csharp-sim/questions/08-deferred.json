@@ -4,7 +4,7 @@
   "CorrectAnswer": "87,164,200,33",
   "Text": {
 	"It": "_Entity Framework Core_ permette di interrogare il database usando query LINQ. La query può essere raffinata con istruzioni successive, finché non manifestiamo l'intenzione di voler leggere i risultati dal database. E' solo in quel momento che _Entity Framework Core_ prepara una query SQL conforme alla query LINQ che abbiamo composto e la invia al database. Nel seguente blocco di codice, indica qual è il metodo che costringe Entity Framework a preparare la query SQL e ad inviarla al database.",
-	"En": ""
+	"En": "_Entity Framework Core_ is used for querying a database using LINQ. A LINQ query can be refined with multiple lines of C# code, until we intend to read the results. It's in that moment that _Entity Framework Core_ translates our LINQ query in the SQL language and sends it to the database. In the following block of code, click on the line that forces _Entity Framework Core_ to prepare and send the SQL query to the database."
   },
   "AnswerText": {
 	"It": "Finché usiamo metodi come `Where`, `Select`, `OrderBy`, `Skip` e `Take`, stiamo soltando creando e raffiando una query LINQ, che è semplicemente un albero di espressioni residente in memoria.  
@@ -19,7 +19,15 @@ Un grosso indizio ci arriva dal fatto che `ToListAsync` ha come suffisso la paro
 **Materiale di studio**
 
 [Lezione 8, slide 11](https://files.slack.com/files-pri/T4LSU7RKJ-F5AE3AWGZ/08-lezione-entityframework-relazioni.pdf#page=11)",
-	"En": "",
+	"En": "As long as we're using methods like `Where`, `Select`, `OrderBy`, `Skip` and `Take` we're just creating and refining a LINQ query, which is just an expression tree residing in memory.  
+But, when we use methods like `ToListAsync`, `CountAsync` or when we use a `foreach loop`, that's when Entity Framework Core is forced to send a query to the database to retrieve results. In fact, `ToListAsync`, in this case, has the effect of creating a List of in-memory objects and this is possible only if the data is fetched from the database first.  
+
+This feature of _Entity Framework Core_ is known as [deferred execution](https://blogs.msdn.microsoft.com/charlie/2007/12/10/linq-and-deferred-execution/).  
+
+Also, a `CountAsync` would force _Entity Framework Core_ to send the query. In fact, in this case we want to know how many results are there, and this can be known only by looking at hown many rows are in the database table.  
+
+A strong clue comes at looking at the method `ToListAsync`, that has a suffix of `Async` and it's the only asynchronous operation in the block of code shown in the image. Reading data from a database is an asynchronous operation.  
+",
   },
   "Group": "08",
   "Image": "query.png"

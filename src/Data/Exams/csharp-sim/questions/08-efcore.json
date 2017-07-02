@@ -4,7 +4,7 @@
   "CorrectAnswer": "A,C,E",
   "Text": {
 	"It": "Quali di queste affermazioni su _Entity Framework Core_ sono vere?",
-	"En": ""
+	"En": "Which of the following sentences are true for _Entity Framework Core_?"
   },
   "AnswerText": {
 	"It": "_Entity Framework Core_ si occupa di `tradurre le nostre query LINQ in SQL` e perciò richiede che le `classi abbiano una chiave primaria` per un motivo pratico: deve poterle distinguere univocamente nel momento in le legge, le aggiorna o le elimina dal database;  
@@ -16,14 +16,16 @@ Quando aggiungiamo un oggetto con il metodo `Add` alla classe che deriva dal `Db
 [Lezione 7, slide 43](https://files.slack.com/files-pri/T4LSU7RKJ-F580809R8/07-esercitazione-entityframework.pdf#page=43)  
 [Lezione 8, slide 11](https://files.slack.com/files-pri/T4LSU7RKJ-F5AE3AWGZ/08-lezione-entityframework-relazioni.pdf#page=11)  
 [Lezione 8, slide 12](https://files.slack.com/files-pri/T4LSU7RKJ-F5AE3AWGZ/08-lezione-entityframework-relazioni.pdf#page=12)",
-	"En": "",
+	"En": "_Entity Framework Core_ has the responsibility of translating LINQ queries to SQL queries and, for that, it required that classes have a property representing a primary key. That's for a practical reason: it needs to distinguish between objects when reading, updating or removing them, without impacting other objects;  
+Classes in the model should not derive from any particular class, in fact it is said that classes can stay _POCO_ (plain-old C# object);  
+When we add objects with the `Add` method to the class that derived from `DbContext`, our object is not yet added to the database. It just \"tracked\" so that when you later invoke the method `SaveChangesAsync` it can be saved alongside with any other object that was added, edited or removed. It does so in the context of a transaction: it means that if an error occurs while persisting objects, the whole batch will fail and the transaction is rolled back. That is to protect our database and to prevent incosistent situations for our data.",
   },
   "Group": "08",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Richiede che le classi del modello possiedano una proprietà che agirà da chiave primaria", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Richiede che le classi del modello derivino da DbEntity", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Traduce le query LINQ in query SQL", "En": "" } },
-	{ "Id": "D", "Text": { "It": "Gli oggetti vengono inseriti nel database nonappena si invoca il metodo Add", "En": "" } },
-	{ "Id": "E", "Text": { "It": "Invocando SaveChangesAsync, gli oggetti vengono salvati nel database nel contesto di una transazione (tutti o nessuno)", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Richiede che le classi del modello possiedano una proprietà che agirà da chiave primaria", "En": "It requires classes in the model to possess a property which represents the primary key" } },
+	{ "Id": "B", "Text": { "It": "Richiede che le classi del modello derivino da DbEntity", "En": "It requires that classes derive from DbEntity" } },
+	{ "Id": "C", "Text": { "It": "Traduce le query LINQ in query SQL", "En": "It translates LINQ queries to SQL queries" } },
+	{ "Id": "D", "Text": { "It": "Gli oggetti vengono inseriti nel database nonappena si invoca il metodo Add", "En": "Objects are saved in the database as soon as the Add method is invoked" } },
+	{ "Id": "E", "Text": { "It": "Invocando SaveChangesAsync, gli oggetti vengono salvati nel database nel contesto di una transazione (tutti o nessuno)", "En": "By invoking SaveChangesAsync, objects are saved in the database in the context of a transaction (all or nothing)" } }
   ]
 }

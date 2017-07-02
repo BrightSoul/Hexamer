@@ -4,7 +4,7 @@
   "CorrectAnswer": "B,E,D",
   "Text": {
 	"It": "Insieme al tuo team, stai iniziando un nuovo progetto importante che si prevede richiederà almeno un anno di sviluppo. La tua preoccupazione è che dopo qualche tempo il codice diventi ingestibile per via della complessità del lavoro. Tutti insieme decidete di eseguire 3 passi per ogni punto della specifica, in modo da avere le migliori probabilità di successo. Quali sono?",
-	"En": ""
+	"En": "With your team, you're starting a new important project which will require at least one year of development. You worry about the complexity of the job, which could render your code unmaintainable and unreadable after a while. All together you decide to follow 3 steps for each line in the specification, so that you will get the best chances of success. Which are those 3 suggested steps?"
   },
   "AnswerText": {
 	"It": "In un team, i vari sviluppatori hanno competenze e stili diversi, per non parlare delle loro diverse interpretazioni dei problemi da risolvere. In questa situazione, è facile che il codice diventi presto disomogeneo e ingestibile. E' importante essere disciplinati per evitare che ciò succeda.  
@@ -16,14 +16,16 @@ Scrivere classi `fortemente accoppiate` è invece il modo più rapido per creare
 **Materiale di studio**
 
 [Lezione 10, slide 12](https://files.slack.com/files-pri/T4LSU7RKJ-F5HP1EQLA/10-lezione-refactoring-model-binding.pdf#page=12)",
-	"En": "",
+	"En": "In a team, various developers have different skills and programming styles. In this situation, it's easy to have a code base that will soon become messy. It's important to be disciplined to prevent that for happening. If the whole team agrees on writing `unit tests` before writing the `implementation`, it will be easier to do a `refactoring` to clean up the code without the project being slown down.  
+If the team doesn't agree on those good practices, it will introduce some `technical debt` which will keep accumulating. This is poor code written in a rush to deliver a feature as soon as possible, which will make its way to the final product. If the team doesn't write `unit tests`, nobody will want to take responsibility in refactoring the code to improve it at the risk of breaking it.  
+With complex projects, it's preferrable to create classes that are `weakly coupled` so that they are easily replaceable with new versions of better quality.",
   },
   "Group": "10",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Introdurre debito tecnico", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Scrivere un test e osservarlo fallire (fase rossa)", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Scrivere un'implementazione che sia fortemente accoppiata ad altri componenti", "En": "" } },
-	{ "Id": "D", "Text": { "It": "Fare refactoring per migliorare il codice", "En": "" } },
-	{ "Id": "E", "Text": { "It": "Scrivere l'implementazione finché il test non passa (fase verde)", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Introdurre debito tecnico", "En": "Introduce technical debt" } },
+	{ "Id": "B", "Text": { "It": "Scrivere un test e osservarlo fallire (fase rossa)", "En": "Write a test and watch it fail (red phase)" } },
+	{ "Id": "C", "Text": { "It": "Scrivere un'implementazione che sia fortemente accoppiata ad altri componenti", "En": "Write an implementation that's strongly coupled with other components" } },
+	{ "Id": "D", "Text": { "It": "Fare refactoring per migliorare il codice", "En": "Refactor code to improve its quality" } },
+	{ "Id": "E", "Text": { "It": "Scrivere l'implementazione finché il test non passa (fase verde)", "En": "Write the implementation until the test passes (green phase)" } }
   ]
 }

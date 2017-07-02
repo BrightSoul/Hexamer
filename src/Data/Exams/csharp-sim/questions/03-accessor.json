@@ -4,7 +4,7 @@
   "CorrectAnswer": "D",
   "Text": {
 	"It": "Hai ideato un nuovo algortimo di compressione e lo vuoi distribuire come pacchetto NuGet affinché tutti gli altri sviluppatori lo possano reimpiegare nei loro progetti. Il cuore del tuo algoritmo l'hai modellato con una classe molto complicata chiamata `CompressionEngine` che viene usata da tante altre classi più semplici nel tuo progetto. Tuttavia, proprio per il fatto che è molto complicata e solo tu sapresti come usarla opportunamente, decidi di non esporla a tutti, in modo che per gli altri sviluppatori sia impossibile usarla direttamente. Invece, la useranno indirettamente senza saperlo grazie alle altri classi più semplici che hai deciso di esporre. Che tipo di accessore scegli per la classe `CompressionEngine`?",
-	"En": ""
+	"En": "You invented a new compression algorithm and you want to distribute it as a NuGet package so that every developer in the world will be able to use it in their project. The core of your algorithm is in a complex class you named `CompressionEngine` that is referenced by many other smaller classes in your project. However, since that class is so complex, other developers might have a hard time in understanding how to use it properly and you decide not to expose it to everyone. Instead, it will stay hidden in your project. Just the other smaller classes will be available for other developers to use. Which accessor will you use for the class `CompressionEngine`?"
   },
   "AnswerText": {
 	"It": "L'accessore `internal` permette ad una classe di essere visibile solo alle altre classi dello stesso assembly. In questo modo riesci facilmente ad usarla dalle altre classi del tuo progetto ma diventa inaccessibile da altri progetti che referenziano il tuo assembly.  
@@ -14,13 +14,15 @@ Gli accessori `private`	e `protected` renderebbero `CompressionEngine` inaccessi
 **Materiale di studio**
 
 [Lezione 3, slide 14](https://files.slack.com/files-pri/T4LSU7RKJ-F4TDZ36UR/03-lezione-modellazione-testing.pdf#page=14)",
-	"En": "",
+	"En": "The accessor `internal` makes a class visibile just to other classes in the same assembly. This way, you can easily make use of it from other classes in your project but it will be unaccessible from classes in other projects that reference your assembly. 
+The accessor `public` is not useful in this case, since `CompressionEngine` would be freely accessible from other projects. 
+The accessors `private` and `protected` would make `CompressionEngine` unaccessible even for classes in your project. In C#, accessors `private` and `protected` make sense for a class only when they've been defined inside another class (you can nest classes). The most common usage for `private` and `protected` is for _members_ of a class, such as properties and methods.",
   },
   "Group": "03",
   "Options": [
-	{ "Id": "A", "Text": { "It": "public", "En": "" } },
-	{ "Id": "B", "Text": { "It": "protected", "En": "" } },
-	{ "Id": "C", "Text": { "It": "private", "En": "" } },
-	{ "Id": "D", "Text": { "It": "internal", "En": "" } }
+	{ "Id": "A", "Text": { "It": "public", "En": "public" } },
+	{ "Id": "B", "Text": { "It": "protected", "En": "protected" } },
+	{ "Id": "C", "Text": { "It": "private", "En": "private" } },
+	{ "Id": "D", "Text": { "It": "internal", "En": "internal" } }
   ]
 }

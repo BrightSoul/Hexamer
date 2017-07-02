@@ -5,7 +5,7 @@
   "Text": {
 	"It": "Lavori nel reparto IT di un famoso editore. L'Accademia della Crusca ti ha chiamato dicendo che puoi aggiungere il vocabolo \"petaloso\" e la sua definizione \"pieno di petali\" al dizionario della lingua italiana della tua casa editrice. Decidi di creare un metodo `AggiungiVocabolo` alla classe `DizionarioItaliano` per aggiungere questo e ogni altro neologismo che ti verrà comunicato in futuro.  
 	Il metodo restiuirà `true` se l'inserimento è avvenuto con successo altrimenti, se il vocabolo era già esistente, restituirà `false`.",
-	"En": ""
+	"En": "You work for the IT department of a famous publisher and you are responsible for making an application that manages the digital version of the italian dictionary. They asked you to define a method that will be used to add words (vocabolo) and their definition (definizione) to the dictionary. Then you create a method named `AddWord` in the class `ItalianDictionary`. The method is going to return `true` if the insertion succeeded or `false` if the word was already present."
   },
   "AnswerText": {
 	"It": "Il `Dictionary<TKey, TValue>` è un tipo di collezione chiave-valore e vanno forniti entrambi quando vogliamo aggiungere la coppia al dizionario mediante il suo metodo `Add`.  
@@ -16,7 +16,9 @@ Prima di aggiungere una coppia chiave-valore al dizionario dobbiamo verificare s
 **Materiale di studio**
 
 [Lezione 6, slide 29](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=29)",
-	"En": "",
+	"En": "The class `Dictionary<TKey, TValue>` is a type of collection whose elements are key-value pairs. Both the key and the value need to be provided as arguments when invoking the method `Add` of the dictionary.  
+There are no limitations on the type of the key: they can be strings, integer numbers or complex objects.  
+Before actually adding a key-value pair to the dictionary, we must check if the key already exists since duplicate keys are not allowed. So, before invoking `Add` we check if the key exists by invoking the method `ContainsKey`.",
   },
   "Group": "06",
   "CodeText": { 
@@ -27,7 +29,13 @@ Prima di aggiungere una coppia chiave-valore al dizionario dobbiamo verificare s
 	dizionario.Add({C});
 	return {D};
 }",
-	"En": ""
+	"En": "public bool AddWord(Dictionary&lt;string, string&gt; dictionary, string vocabolo, string definizione) {
+    if (dictionary.{A}(word))
+        return {B};
+	
+	dictionary.Add({C});
+	return {D};
+}"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Find" }, { "Id": "2", "Text": "Has" }, { "Id": "3", "Text": "ContainsKey" } ] },

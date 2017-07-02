@@ -5,7 +5,8 @@
   "Text": {
 	"It": "Dopo aver realizzato l'applicazione degli scacchi, Bob ti ha richiamato per farti implementare una nuova funzionalità. Vuole che i giocatori possano annullare le proprie mosse per tornare ad uno stato precedente della sacchiera.  
 La prima mossa che può essere annullata è l'ultima compiuta. La seconda che può essere annullata è la penultima, e così via, potenzialmente fino ad annullarle tutte secondo il criterio _first-in last-out_. Tra le collezioni offerte dal .NET Core, qual è la più indicata per supportare questa funzionalità?",
-	"En": ""
+	"En": "While developing the Chess application, the customer called you to make you add one more feature. He wants the players to be able to cancel their moves so the chessboard will revert to its previous state.  
+The last move made by a player is the first one that can be canceled. The second to last move, is the second that can be canceled, and so on, until each move is been canceled according to the _first-in last-out_ criteria. The .NET core offers various kind of collections. Which is best to model this requirement?"
   },
   "AnswerText": {
 	"It": "La classe `Stack<T>` è indubbiamente la più indicata perché è specializzata nel gestire l'ingresso e l'uscita degli elementi secondo il criterio _first-in last-out_.  
@@ -16,13 +17,16 @@ Per la classe `ObservableCollection<T>` vale lo stesso discorso di `List<T>`. In
 **Materiale di studio**
 
 [Lezione 6, slide 26](https://slack-files.com/files-pri/T4LSU7RKJ-F54TQ55TM/06-lezione-collezioni-ereditariet__.pdf#page=26)",
-	"En": "",
+	"En": "The class `Stack<T>` is the best in this case since it's specialized in handling the addition and removal of elements according to the _first-in last-out_ criteria.  
+The class `List<T>` could also be used in this situation but it could also be used in various other ways and does not guarantee the _first-in last-out_ criteria.  
+The same goes for `ObservableCollection<T>`. In addition, the question does not state that there are subscribers that should be notified of changes in the collection.  
+The class `Queue<T>` is not usable in this case since it's specialized to model queues, that is an addition and removal of elements according to the _first-in first-out_ criteria.",
   },
   "Group": "06",
   "Options": [
-	{ "Id": "A", "Text": { "It": "List&lt;T&gt;", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Stack&lt;T&gt;", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Queue&lt;T&gt;", "En": "" } },
-	{ "Id": "D", "Text": { "It": "ObservableCollection&lt;T&gt;", "En": "" } }
+	{ "Id": "A", "Text": { "It": "List&lt;T&gt;", "En": "List&lt;T&gt;" } },
+	{ "Id": "B", "Text": { "It": "Stack&lt;T&gt;", "En": "Stack&lt;T&gt;" } },
+	{ "Id": "C", "Text": { "It": "Queue&lt;T&gt;", "En": "Queue&lt;T&gt;" } },
+	{ "Id": "D", "Text": { "It": "ObservableCollection&lt;T&gt;", "En": "ObservableCollection&lt;T&gt;" } }
   ]
 }

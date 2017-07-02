@@ -5,7 +5,8 @@
   "Text": {
 	"It": "In un'applicazione ASP.NET Core, stai realizzando una view per presentare un elenco di automobili.  
 Le automobili devono essere presentate in un elenco puntato e per ciascuna va scritto il modello e l'anno di produzione.",
-	"En": ""
+	"En": "In an ASP.NET Core application, you're making a view that will present a collection of cars. The class modeling a car is named `Automobile`.
+Cars should be presented as an unordered list and, for each of them, you have to display the model name and year of manufacturing."
   },
   "AnswerText": {
 	"It": "Dovendo presentare un `elenco di automobili`, la direttiva `@model` dovrà essere impostata sul tipo `IEnumerable<Automobile>` che rappresenta appunto un elenco.  
@@ -16,7 +17,9 @@ Usare le chiocciole è importante per introdurre un blocco di codice C# all'inte
 
 [Lezione 10, slide 7](https://files.slack.com/files-pri/T4LSU7RKJ-F5HP1EQLA/10-lezione-refactoring-model-binding.pdf#page=7)  
 [Lezione 10, slide 8](https://files.slack.com/files-pri/T4LSU7RKJ-F5HP1EQLA/10-lezione-refactoring-model-binding.pdf#page=8)",
-	"En": "",
+	"En": "Since you have to present a `collection of cars`, the `@model` directive will have to be assigned to the `IEnumerable<Automobile>` type, which represents a collection.  
+At this point, in the view we will be able to use a `Model` property referring to an object passed by the `Controller`. The type of the `Model` property will be the same we specified with the `@model` directive. We can iterate through its elements with a `@foreach`, so we can present the model name and the year of manufacturing as requested.  
+Using the at symbol @ is important to start writing C# code in the midst of the view, which will contain HTML markup for the main part.",
   },
   "Group": "10",
   "CodeText": { 
@@ -28,7 +31,14 @@ Usare le chiocciole è importante per introdurre un blocco di codice C# all'inte
         &lt;li&gt;Modello: @automobile.Modello - Anno: @automobile.Anno&lt;/li&gt;
     }
 &lt;/ul&gt;",
-	"En": ""
+	"En": "@using Cars.Model
+@using System.Collections.Generic
+@model {A}
+&lt;ul&gt; 
+    {B}(Automobile automobile in {C}) {
+        &lt;li&gt;Model name: @automobile.ModelName - Year of manufacturing: @automobile.Year&lt;/li&gt;
+    }
+&lt;/ul&gt;"
   },
   "Blocks": [
 	{ "Id": "A", "Options": [ { "Id": "1", "Text": "Automobile" }, { "Id": "2", "Text": "IEnumerable&lt;Automobile&gt;" } ] },

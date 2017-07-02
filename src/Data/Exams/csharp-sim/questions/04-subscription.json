@@ -5,7 +5,7 @@
   "Text": {
 	"It": "Stai scrivendo un'applicazione che tiene traccia degli appuntamenti dell'utente e lo avvisa con un promemoria quando mancano 10 minuti ad ogni orario prefissato. Nella classe `Calendario` hai già predisposto un orologio interno che solleva l'evento `NotificaAppuntamento` nel momento in cui l'utente deve essere avvisato. Ora non ti resta che sottoscriverti all'evento `NotificaAppuntamento` con una _lambda expression_ per visualizzare il promemoria. In che modo lo realizzi?
 ",
-	"En": ""
+	"En": "You're writing an application that keeps track of the user appointments and sends alerts when there are 10 minutes remaining to the appointed time.  In the class `Calendar` you have already defined an internal clock that raises the event `NotifyAppointment` when the user has to be notified. Now you just need to subscribe the event `NotifyAppointment` with a _lambda expression_ in order to display the notification. Which line of code will do this?"
   },
   "AnswerText": {
 	"It": "Per sottoscriterti ad un evento, usa l'operatore `+=`. Le altre opzioni contengono degli errori sintattici.  
@@ -25,13 +25,24 @@ Eventualmente, puoi fare in modo che l'evento passi come argomento l'oggetto `Ap
 
 [Lezione 4, slide 42](https://files.slack.com/files-pri/T4LSU7RKJ-F4XRA1B4M/04-lezione-esame-unittest-eventi-lambdaexpressions.pdf#page=42)  
 [Lezione 4, slide 43](https://files.slack.com/files-pri/T4LSU7RKJ-F4XRA1B4M/04-lezione-esame-unittest-eventi-lambdaexpressions.pdf#page=43)",
-	"En": "",
+	"En": "In order to subscribe an event, use the `+=` operator. The other options contain syntax errors.  
+You can subscribe the event using a lambda expression, as required by the question, or with a method like this:  
+```
+private void DisplayNotification(object sender, object args) {
+    Console.WriteLine(\"You've got an appointment\");
+}
+```  
+And you use it like this:  
+```
+calendar.NotifyAppointment += DisplayNotification;
+```  
+As an improvement, you can define the event so that is allows a parameter of type `Appointment`. In this way, the event handler will be able to display a more precise notification, that will show the description and date/time of the appointment.",
   },
   "Group": "04",
   "Options": [
-	{ "Id": "A", "Text": { "It": "calendario.NotificaAppuntamento += (sender, args) =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } },
-	{ "Id": "B", "Text": { "It": "calendario.NotificaAppuntamento.Subscribe((sender, args) =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); })", "En": "" } },
-	{ "Id": "C", "Text": { "It": "calendario.NotificaAppuntamento = sender, args =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } },
-	{ "Id": "D", "Text": { "It": "calendario.NotificaAppuntamento =&gt; (sender, args) { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "" } }
+	{ "Id": "A", "Text": { "It": "calendario.NotificaAppuntamento += (sender, args) =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "calendar.NotifyAppointment += (sender, args) =&gt; { Console.WriteLine(\"You've got an appointment!\"); }" } },
+	{ "Id": "B", "Text": { "It": "calendario.NotificaAppuntamento.Subscribe((sender, args) =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); })", "En": "calendar.NotifyAppointment.Subscribe((sender, args) =&gt; { Console.WriteLine(\"You've got an appointment!\"); })" } },
+	{ "Id": "C", "Text": { "It": "calendario.NotificaAppuntamento = sender, args =&gt; { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "calendar.NotifyAppointment = sender, args =&gt; { Console.WriteLine(\"You've got an appointment!\"); }" } },
+	{ "Id": "D", "Text": { "It": "calendario.NotificaAppuntamento =&gt; (sender, args) { Console.WriteLine(\"Hai un appuntamento!\"); }", "En": "calendar.NotifyAppointment =&gt; (sender, args) { Console.WriteLine(\"You've got an appointment!\"); }" } }
   ]
 }

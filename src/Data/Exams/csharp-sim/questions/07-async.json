@@ -4,7 +4,7 @@
   "CorrectAnswer": "A,C,F",
   "Text": {
 	"It": "Indica quali, tra queste, sono operazioni _asincrone_ e che perciò trarrebbero il massimo beneficio dall'uso delle parole chiave `async` e `await`.",
-	"En": ""
+	"En": "Which of the following are _asynchronous_ operations which, therefore, would benefit the most from the use of the keywords `async` and `await`?"
   },
   "AnswerText": {
 	"It": "Un'operazione si dice _asincrona_ quando il thread che sta eseguendo la nostra applicazione deve aspettare un certo tempo che arrivi un risultato da periferiche di I/O, come la scheda di rete o il disco fisso.  
@@ -22,15 +22,26 @@ Ogni operazione che richiede un uso attivo della CPU o della memoria RAM non è 
 **Materiale di studio**
 
 [Lezione 7, slide 12](https://files.slack.com/files-pri/T4LSU7RKJ-F56QEGDR7/07-lezione-async-await-entityframework.pdf#page=12)",
-	"En": "",
+	"En": "An operation is _asynchronous_ when the thread executing it must wait for an I/O device, such as the network card or the disk, to provide a result.   
+Each operation that requires an active use of the CPU is not considered asynchronous since the thread is already busy in executing it so it completes in the least amount of time.
+  
+`Sending a query to a database` is asynchronous because the thread needs to wait for the network card to provide results that are coming from the database server (which is usually hosted on another machine). Even if the database is on the local disk, that's also an asynchronous operation since this is also an I/O device;  
+`Sending a request to a webservice` is also an asynchronous operation since a webservice is hosted on the internet or the local intranet. Even if the request completes in a few milliseconds, that' a period of time the thread can be reused to do something else instead of just waiting;  
+`Waiting for 1 second` it's asynchronous because the thread has just to wait and can be reused to do something else.  
+
+`Resizing a JPG image`, is synchronous since sampling each pixel and creating a similar, smaller version of the image requires active use of the CPU. Math is involved;  
+`Calculating the first 1000 digits of PI` is synchronous since it needs the CPU to do calculations;  
+`Sorting an in-memory collection of objects` is synchronous since the objects are already present in the RAM memory of the PC, ready to be accessed by the sorting algorithm which will use the CPU to perform comparisons.  
+
+",
   },
   "Group": "07",
   "Options": [
-	{ "Id": "A", "Text": { "It": "Inviare una query ad un database", "En": "" } },
-	{ "Id": "B", "Text": { "It": "Ridimensionare un'immagine JPG", "En": "" } },
-	{ "Id": "C", "Text": { "It": "Inviare una richiesta ad un webservice", "En": "" } },
-	{ "Id": "D", "Text": { "It": "Calcolare le prime mille cifre del PI greco", "En": "" } },
-	{ "Id": "E", "Text": { "It": "Ordinare una lista di oggetti in memoria", "En": "" } },
-	{ "Id": "F", "Text": { "It": "Attendere 1 secondo prima di riprovare a compiere un'operazione che era fallita", "En": "" } }
+	{ "Id": "A", "Text": { "It": "Inviare una query ad un database", "En": "Sending a query to a database" } },
+	{ "Id": "B", "Text": { "It": "Ridimensionare un'immagine JPG", "En": "Resizing a JPG image" } },
+	{ "Id": "C", "Text": { "It": "Inviare una richiesta ad un webservice", "En": "Sending a request to a webservice" } },
+	{ "Id": "D", "Text": { "It": "Calcolare le prime mille cifre del PI greco", "En": "Calculating the first 1000 digits of PI" } },
+	{ "Id": "E", "Text": { "It": "Ordinare una lista di oggetti in memoria", "En": "Sorting a collection of in-memory objects" } },
+	{ "Id": "F", "Text": { "It": "Attendere 1 secondo prima di riprovare a compiere un'operazione che era fallita", "En": "Waiting for 1 second before retrying an operation which failed" } }
   ]
 }
