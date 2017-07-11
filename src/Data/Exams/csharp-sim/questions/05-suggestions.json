@@ -17,5 +17,5 @@ L'elenco dei suggerimenti può essere richiamato anche premendo la combinazione 
 The suggestions can also be shown by pressing CTRL+. on the keyboard.",
   },
   "Group": "05",
-  "Image": "suggestions.png"
+  "Image": { "It": "suggestions.png", "En": "suggestions.png" }
 }

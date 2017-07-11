@@ -87,7 +87,7 @@ namespace Hexamer.Model
             foreach (var question in questions)
             {
                 var jObject = FixTypes(question.Content);
-                jObject = FixLanguage(jObject, language, "Text", "AnswerText", "Options[*].Text", "CodeText");
+                jObject = FixLanguage(jObject, language, "Text", "AnswerText", "Options[*].Text", "CodeText", "Image");
                 var serialized = JsonConvert.SerializeObject(jObject);
                 var q = JsonConvert.DeserializeObject(serialized, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects }) as Question;
                 q.Id = question.Id;

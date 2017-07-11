@@ -30,5 +30,5 @@ A strong clue comes at looking at the method `ToListAsync`, that has a suffix of
 ",
   },
   "Group": "08",
-  "Image": "query.png"
+  "Image": { "It": "query.png", "En": "query.png" }
 }

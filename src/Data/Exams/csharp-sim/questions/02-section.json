@@ -20,5 +20,5 @@ In order to perform a commit, it is necessary to type a comment and click the ch
 ![Riquadro del controllo di versione](vscode-git.png)  ",
   },
   "Group": "02",
-  "Image": "vscode.png"
+  "Image": { "It": "vscode.png", "En": "vscode.png" }
 }

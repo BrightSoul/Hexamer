@@ -21,5 +21,5 @@ The question points out our application has been developed with a version of the
 And finally, it is required the least amount possible of manual intervention, so we pick the **installer**.",
   },
   "Group": "01",
-  "Image": "download-net-core.png"
+  "Image": { "It": "download-net-core.png", "En": "download-net-core.png" }
 }
